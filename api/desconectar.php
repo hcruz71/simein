@@ -1,0 +1,10 @@
+<?php 
+session_start();
+if($_SESSION['id_usuario']){	
+	session_destroy();
+	header("location:http://system-matrix.com/login.php");
+}
+else{
+	header("location:http://system-matrix.com/login.php");
+}
+?>

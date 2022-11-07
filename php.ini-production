@@ -1,0 +1,7 @@
+date.timezone = "America/Mazatlan"
+error_reporting =  E_ALL & ~E_USER_DEPRECATED & ~E_STRICT
+expose_php = Off
+session.sid_length = 32
+short_open_tag =On
+user_ini.cache_ttl =86400
+variables_order = EGPCS
