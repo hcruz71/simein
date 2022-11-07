@@ -3,7 +3,7 @@ class Capirestlogin {
 
 	function loginAPI($sFuncion, $arrDatos){
 	//API URL
-	$url = 'https://localhost/api/Login/'.$sFuncion.'/';
+	$url = 'https://simein.herokuapp.com/api/Login/'.$sFuncion.'/';
 	
 	//API key
 	$apiKey = 'Ve5muByyKs54wpm62d73lHEwDnXKGiYH1v6G7GyE';
