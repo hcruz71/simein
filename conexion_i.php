@@ -1,9 +1,14 @@
 <?php 
 
-$host = 'mysql5011.site4now.net';
+/*$host = 'mysql5011.site4now.net';
 $basededatos = 'db_a43baf_simein';
 $usuario = 'a43baf_simein';
-$contraseña = 'Sim572771.';
+$contraseña = 'Sim572771.';*/
+
+$host = '3573lf.stackhero-network.com';
+$basededatos = 'simeindb';
+$usuario = 'root';
+$contraseña = 'kx3QtnkJ2Boz1zPiFc4CCEV2QheQ2oYq';
 
 /*
 $host = '192.168.65.2';

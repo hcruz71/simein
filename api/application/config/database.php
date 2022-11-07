@@ -76,16 +76,22 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		$server="mysql5011.site4now.net";
 		$db="db_a43baf_simein";
 
+		//Conexion a datos
+		$host = '3573lf.stackhero-network.com';
+$basededatos = 'simeindb';
+$usuario = 'root';
+$contraseña = 'kx3QtnkJ2Boz1zPiFc4CCEV2QheQ2oYq';
+
 */
 $active_group = 'default';
 $query_builder = TRUE;
 
 $db['default'] = array(
 	'dsn'	=> '',
-	'hostname' => 'mysql5011.site4now.net',
-	'username' => 'a43baf_simein',
-	'password' => 'Sim572771.',
-	'database' => 'db_a43baf_simein',
+	'hostname' => '3573lf.stackhero-network.com',
+	'username' => 'root',
+	'password' => 'kx3QtnkJ2Boz1zPiFc4CCEV2QheQ2oYq',
+	'database' => 'simeindb',
 	'dbdriver' => 'mysqli',
 	'dbprefix' => '',
 	'pconnect' => FALSE,
