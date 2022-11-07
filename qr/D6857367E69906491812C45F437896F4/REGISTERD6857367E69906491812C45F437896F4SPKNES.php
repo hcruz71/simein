@@ -78,7 +78,7 @@
                 dataType: 'json',
                 data:datos,
                 success:function(r){
-					location.href='https://simein.herokuapp.com//graciasform.php';
+					location.href='https://simein.herokuapp.com/graciasform.php';
                 	//console.log (r.resp);
                     if(r.resp=='0'){
 					

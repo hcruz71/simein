@@ -24,7 +24,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 |
 */
 $config['rest_enable_access'] = TRUE;
-$config['base_url'] = 'https://simein.herokuapp.com//api/';
+$config['base_url'] = 'https://simein.herokuapp.com/api/';
 
 /*
 |--------------------------------------------------------------------------
