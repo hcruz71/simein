@@ -3,7 +3,7 @@
 //include("connect_db.php");
 
 //$miconexion = new connect_db;
-/*
+
    require "conexion_i.php";
    
 
@@ -28,7 +28,7 @@
         $_SESSION['id']=$filas['id'];
         echo $_SESSION['id_usuario'];
     }
-*/
+
   /*    echo json_encode(array('resp' => 1, 'xxx' => $conexion,
     'host' =>$host, 'usr' =>$usuario, 'cnt' =>$contraseña,'bd'=> $basededatos, 'sentencia' => $sentencia,
     'res' => $resultado
@@ -36,7 +36,7 @@
  ));*/
 
 
-
+/* ---------------------------------
 $username=$_POST['nb_usuario'];
 $pass=$_POST['pw_usuario'];
 
@@ -66,9 +66,9 @@ if($resultAPI)
                      $_SESSION['rol']=$resultAPI['registros'][0]['rol'];
                      $_SESSION['id']=$resultAPI['registros'][0]['id'];
                      echo json_encode(array('resp' => 0));
-                    /* echo $resultAPI['registros'][0]['id_usuario'];
-                     echo $resultAPI['registros'][0]['rol'];
-                     echo $resultAPI['registros'][0]['id'];*/
+                   //  echo $resultAPI['registros'][0]['id_usuario'];
+                   //  echo $resultAPI['registros'][0]['rol'];
+                   //  echo $resultAPI['registros'][0]['id'];
                 }
                 else
                 {
@@ -83,18 +83,19 @@ else
                // $arrDatos['descripcion'] = "Se presento un problema al ejecutar la consulta";
 
                 
-}
+} 
+----------------------*/
 
 
 
 
-  /*  $resultado=mysql_query($sentencia);
+   $resultado=mysql_query($sentencia);
     while($filas=mysql_fetch_assoc($resultado))
     {
         $_SESSION['id_usuario']=$filas['id_usuario'];
         $_SESSION['rol']=$filas['rol'];
         $_SESSION['id']=$filas['id'];
         echo $_SESSION['id_usuario'];
-    }*/
+    }
  ?>
 
