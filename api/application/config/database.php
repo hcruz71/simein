@@ -101,11 +101,18 @@ $db['default'] = array(
 	'char_set' => 'utf8',
 	'dbcollat' => 'utf8_general_ci',
 	'swap_pre' => '',
-	'encrypt' => FALSE,
 	'compress' => FALSE,
 	'stricton' => FALSE,
 	'failover' => array(),
-	'save_queries' => TRUE
+	'save_queries' => TRUE,
+	'encrypt' => array(
+		'ssl_key' =>'',
+		'ssl_cert' =>'isrgrootx1.pem',
+		'ssl_ca' =>'',
+		'ssl_capath' =>'',
+		'ssl_cipher' => '',
+		'ssl_verify' =>TRUE)
+
 );
 
 $db['default']['db_debug'] = FALSE;
