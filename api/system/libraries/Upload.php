@@ -6,7 +6,7 @@
  *
  * This content is released under the MIT License (MIT)
  *
- * Copyright (c) 2014 - 2017, British Columbia Institute of Technology
+ * Copyright (c) 2019 - 2022, CodeIgniter Foundation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,8 +29,9 @@
  * @package	CodeIgniter
  * @author	EllisLab Dev Team
  * @copyright	Copyright (c) 2008 - 2014, EllisLab, Inc. (https://ellislab.com/)
- * @copyright	Copyright (c) 2014 - 2017, British Columbia Institute of Technology (http://bcit.ca/)
- * @license	http://opensource.org/licenses/MIT	MIT License
+ * @copyright	Copyright (c) 2014 - 2019, British Columbia Institute of Technology (https://bcit.ca/)
+ * @copyright	Copyright (c) 2019 - 2022, CodeIgniter Foundation (https://codeigniter.com/)
+ * @license	https://opensource.org/licenses/MIT	MIT License
  * @link	https://codeigniter.com
  * @since	Version 1.0.0
  * @filesource
@@ -44,7 +45,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  * @subpackage	Libraries
  * @category	Uploads
  * @author		EllisLab Dev Team
- * @link		https://codeigniter.com/user_guide/libraries/file_uploading.html
+ * @link		https://codeigniter.com/userguide3/libraries/file_uploading.html
  */
 class CI_Upload {
 
@@ -376,7 +377,8 @@ class CI_Upload {
 		// Is $_FILES[$field] set? If not, no reason to continue.
 		if (isset($_FILES[$field]))
 		{
-			$_file = $_FILES[$field];
+			$_file = filter_var($_FILES[$field],FILTER_SANITIZE_SPECIAL_CHARS);
+			$_file = htmlspecialchars($_file); 
 		}
 		// Does the field name contain array notation?
 		elseif (($c = preg_match_all('/(?:^[^\[]+)|\[[^]]*\]/', $field, $matches)) > 1)
@@ -391,7 +393,8 @@ class CI_Upload {
 					break;
 				}
 
-				$_file = $_file[$field];
+				$_file = filter_var($_file[$field],FILTER_SANITIZE_SPECIAL_CHARS);
+				$_file = htmlspecialchars($_file);
 			}
 		}
 
@@ -563,9 +566,9 @@ class CI_Upload {
 		 * we'll use move_uploaded_file(). One of the two should
 		 * reliably work in most environments
 		 */
-		if ( ! @copy($this->file_temp, $this->upload_path.$this->file_name))
+		if ( ! @copy($this->file_temp, $this->upload_path.htmlspecialchars($this->file_name)))
 		{
-			if ( ! @move_uploaded_file($this->file_temp, $this->upload_path.$this->file_name))
+			if ( ! @move_uploaded_file($this->file_temp, $this->upload_path.htmlspecialchars($this->file_name)))
 			{
 				$this->set_error('upload_destination_error', 'error');
 				return FALSE;
@@ -678,10 +681,8 @@ class CI_Upload {
 			$this->set_error('upload_bad_filename', 'debug');
 			return FALSE;
 		}
-		else
-		{
-			return $new_filename;
-		}
+
+		return $new_filename;
 	}
 
 	// --------------------------------------------------------------------
@@ -869,7 +870,7 @@ class CI_Upload {
 			$this->file_type = 'image/jpeg';
 		}
 
-		$img_mimes = array('image/gif',	'image/jpeg', 'image/png');
+		$img_mimes = array('image/gif',	'image/jpeg', 'image/png', 'image/webp');
 
 		return in_array($this->file_type, $img_mimes, TRUE);
 	}
@@ -903,7 +904,7 @@ class CI_Upload {
 		}
 
 		// Images get some additional checks
-		if (in_array($ext, array('gif', 'jpg', 'jpeg', 'jpe', 'png'), TRUE) && @getimagesize($this->file_temp) === FALSE)
+		if (in_array($ext, array('gif', 'jpg', 'jpeg', 'jpe', 'png', 'webp'), TRUE) && @getimagesize($this->file_temp) === FALSE)
 		{
 			return FALSE;
 		}
@@ -1121,8 +1122,8 @@ class CI_Upload {
 				return FALSE; // Couldn't open the file, return FALSE
 			}
 
-			$opening_bytes = fread($file, 256);
-			fclose($file);
+			$opening_bytes = fread(htmlspecialchars($file), 256);
+			fclose(htmlspecialchars($file));
 
 			// These are known to throw IE into mime-type detection chaos
 			// <a, <body, <head, <html, <img, <plaintext, <pre, <script, <table, <title
@@ -1132,7 +1133,7 @@ class CI_Upload {
 			return ! preg_match('/<(a|body|head|html|img|plaintext|pre|script|table|title)[\s>]/i', $opening_bytes);
 		}
 
-		if (($data = @file_get_contents($file)) === FALSE)
+		if (($data = @file_get_contents(htmlspecialchars($file)) === FALSE)
 		{
 			return FALSE;
 		}
@@ -1229,7 +1230,7 @@ class CI_Upload {
 		if (function_exists('finfo_file'))
 		{
 			$finfo = @finfo_open(FILEINFO_MIME);
-			if (is_resource($finfo)) // It is possible that a FALSE value is returned, if there is no magic MIME database file found on the system
+			if ($finfo !== FALSE) // It is possible that a FALSE value is returned, if there is no magic MIME database file found on the system
 			{
 				$mime = @finfo_file($finfo, $file['tmp_name']);
 				finfo_close($finfo);
@@ -1270,7 +1271,7 @@ class CI_Upload {
 				 * anything that could already be set for $mime previously. This effectively makes the second parameter a dummy
 				 * value, which is only put to allow us to get the return status code.
 				 */
-				$mime = @exec($cmd, $mime, $return_status);
+				$mime = @exec(htmlspecialchars($cmd), $mime, $return_status);
 				if ($return_status === 0 && is_string($mime) && preg_match($regexp, $mime, $matches))
 				{
 					$this->file_type = $matches[1];
@@ -1280,7 +1281,7 @@ class CI_Upload {
 
 			if ( ! ini_get('safe_mode') && function_usable('shell_exec'))
 			{
-				$mime = @shell_exec($cmd);
+				$mime = @shell_exec(htmlspecialchars($cmd));
 				if (strlen($mime) > 0)
 				{
 					$mime = explode("\n", trim($mime));
@@ -1294,11 +1295,11 @@ class CI_Upload {
 
 			if (function_usable('popen'))
 			{
-				$proc = @popen($cmd, 'r');
+				$proc = @popen(htmlspecialchars($cmd), 'r');
 				if (is_resource($proc))
 				{
-					$mime = @fread($proc, 512);
-					@pclose($proc);
+					$mime = @fread(htmlspecialchars($proc), 512);
+					@pclose(htmlspecialchars($proc));
 					if ($mime !== FALSE)
 					{
 						$mime = explode("\n", trim($mime));
