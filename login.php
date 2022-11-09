@@ -82,7 +82,7 @@
                 dataType: 'json',
                 data:datos,
                 success:function(r){
-                	console.log (r);
+                	console.log ("Regreso", r);
                     if(r.resp=='0'){
                     	$('#alert').html("Los datos son correctos    ¡Bienvenido!");
                     	$('.alert').css("background-color", "#76cc96");
