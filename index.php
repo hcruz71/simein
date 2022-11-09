@@ -10,7 +10,7 @@
 
 
         <!-- navbar -->
-        <?php //include 'componentes/nav.php'; ?>
+        <?php include 'componentes/nav.php'; ?>
         <!-- end navbar -->
 
         <!-- left sidebar -->
