@@ -1,42 +1,4 @@
-
 <?php
-//include("connect_db.php");
-
-//$miconexion = new connect_db;
-/*
-   require "conexion_i.php";
-   
-
-
-    $username=$_POST['nb_usuario'];
-    
-    $pass=$_POST['pw_usuario'];
-
-    $sentencia="SELECT id_usuario, rol, id FROM usuarios where nb_usuario='$username' and pw_usuario='$pass' and sn_activo=1";
- 
-    
-
-
-    
-   $resultado=$conexion->query($sentencia);
-
-
-    while($filas = $resultado->fetch_assoc())
-    {
-        $_SESSION['id_usuario']=$filas['id_usuario'];
-        $_SESSION['rol']=$filas['rol'];
-        $_SESSION['id']=$filas['id'];
-        echo $_SESSION['id_usuario'];
-    }
-*/
-  /*    echo json_encode(array('resp' => 1, 'xxx' => $conexion,
-    'host' =>$host, 'usr' =>$usuario, 'cnt' =>$contraseña,'bd'=> $basededatos, 'sentencia' => $sentencia,
-    'res' => $resultado
- 
- ));*/
-
-
-
 $username=$_POST['nb_usuario'];
 $pass=$_POST['pw_usuario'];
 
@@ -47,7 +9,6 @@ $objAPI = new Capirestlogin();
 
 // Creamos los parametros para el método que vamos a consumir
 $arrData = array('nb_usuario' => $username, 'pw_usuario' => $pass);
-//$arrData = array('nb_usuario' => 'simein', 'pw_usuario' => '123');
 
 
 // Llamamos al método
@@ -83,18 +44,7 @@ else
                // $arrDatos['descripcion'] = "Se presento un problema al ejecutar la consulta";
 
                 
-} */
+}
 
-
-
-
-  /*  $resultado=mysql_query($sentencia);
-    while($filas=mysql_fetch_assoc($resultado))
-    {
-        $_SESSION['id_usuario']=$filas['id_usuario'];
-        $_SESSION['rol']=$filas['rol'];
-        $_SESSION['id']=$filas['id'];
-        echo $_SESSION['id_usuario'];
-    }*/
  ?>
 

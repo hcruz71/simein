@@ -4,14 +4,11 @@ class Capirestlogin {
 	function loginAPI($sFuncion, $arrDatos){
 	//API URL
 	$url = 'https://simein.herokuapp.com/api/Login/'.$sFuncion.'/';
-	//http://system-matrix.com/
+
 	//API key
 	$apiKey = 'Ve5muByyKs54wpm62d73lHEwDnXKGiYH1v6G7GyE';
 
 	//Auth credentials
-	//$username = "admin";
-	//$password = "1234";
-	//create a new cURL resource
 	$ch = curl_init($url);
 
 	curl_setopt($ch, CURLOPT_TIMEOUT, 30);
