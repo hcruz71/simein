@@ -1,4 +1,5 @@
         <div class="nav-left-sidebar" style="width: 20%">
+        <p>HECTOR CRUZ</p>
             <div class="menu-list">
                 <nav class="navbar navbar-expand-lg" style="position: fixed; z-index: 1000; background-color: #fff; width: 20%">
                     <div class="collapse navbar-collapse" id="navbarNav" style="background-color: #fff">
