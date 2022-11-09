@@ -16,6 +16,7 @@
 
     header("Content-type: text/html; charset=utf8");
 ?>
+<p>HOLAAAaaaaaaaa</p>
 <div class="dashboard-header" >
     <nav class="navbar navbar-expand-lg fixed-top" style="background-color: #477db3;">
         <a class="navbar-brand" href="index.php" style="color: #fff"><img src="assets/images/logo_nav.png" alt="" class="user-avatar-md rounded-circle">&nbsp;Simein</a>
@@ -63,7 +64,6 @@
                     
                     <?php    
                         $pdo = connect();
-                        printf($id_doctor);
                         $sql= "SELECT id_doctor, atencion, nombre FROM doctor where id_doctor=".$id_doctor;
                         $query = $pdo->prepare($sql);
                         $query->execute();
