@@ -1,10 +1,8 @@
 <!doctype html>
 <html lang="en">
-  
     <!-- head -->
     <?php include 'componentes/head.php'; ?>
     <!-- end head -->
-    
 <body>
 
     <!-- main wrapper -->

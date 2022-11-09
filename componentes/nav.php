@@ -9,7 +9,7 @@
         $id_doctor=$_SESSION['id_usuario'];
         $rol=$_SESSION['rol'];*/
     }else{
-        include 'conexion.php';
+        //include 'conexion.php';
         $id_doctor=$_SESSION['id_usuario'];
         $rol=$_SESSION['rol'];
     }
