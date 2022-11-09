@@ -9,11 +9,11 @@
         $id_doctor=$_SESSION['id_usuario'];
         $rol=$_SESSION['rol'];*/
     }else{
-        printf("Inicia Conexion");
         include 'conexion.php';
         $id_doctor=$_SESSION['id_usuario'];
         $rol=$_SESSION['rol'];
-        printf("Fin Conexion");
+        printf("ROL=", $rol);
+        printf("  USER=", $id_doctor);
     }
 
     header("Content-type: text/html; charset=utf8");
