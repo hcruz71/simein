@@ -61,9 +61,14 @@
                     <a class="nav-link nav-user-img" href="#" id="navbarDropdownMenuLink2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="color: #fff">
                     
                     <?php    
-                        include 'conexion.php';
                         
-                        $pdo = connect();
+                        
+                      try{
+                        include 'conexion.php';
+                        $pdo = connect(); //aqui truena
+                      } catch x;
+                      printf(x);
+                        
                       
                         
                         $sql= "SELECT id_doctor, atencion, nombre FROM doctor where id_doctor= :idDoctor";
