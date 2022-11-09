@@ -9,9 +9,6 @@
 
     <!-- main wrapper -->
     <div class="dashboard-main-wrapper">
-   
-    
-
         <!-- wrapper  -->
         <div class="dashboard-wrapper">
             <div class="dashboard-ecommerce">
@@ -40,18 +37,7 @@
                                 while($res = $resultado_doc->fetch_assoc()){
                                 
                                 */
-                                $query1 = "SELECT id_honorarios, atencion, nombre FROM doctor where id_doctor='" . $id_doctor. "'" ;
-                                $resultado_doc = $conexion->query($query1);
-                                while($res = $resultado_doc->fetch_assoc()){
-                                    $id_honorarios= $res['id_honorarios'];
-
-
-                                    ?>
-                        
-                                    <?php echo $res['atencion'].' '.$res['nombre']; ?> 
-
-                                <?php
-                                }
+                                
                                 ?></h2>
 
                                 <div class="page-breadcrumb">
