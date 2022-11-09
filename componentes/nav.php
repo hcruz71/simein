@@ -12,8 +12,8 @@
         include 'conexion.php';
         $id_doctor=$_SESSION['id_usuario'];
         $rol=$_SESSION['rol'];
-        printf("ROL=", $rol);
-        printf("  USER=", $id_doctor);
+        printf( $rol);
+        printf($id_doctor);
     }
 
     header("Content-type: text/html; charset=utf8");
