@@ -7,7 +7,26 @@
     
 <body>
 
-   <p>Hector cruz Zazueta</p>
+    <!-- main wrapper -->
+    <div class="dashboard-main-wrapper">
+        <!-- navbar -->
+        <?php include 'componentes/nav.php'; ?>
+        <!-- end navbar -->
+        <!-- left sidebar -->
+        <?php include 'componentes/nav-left.php'; ?>
+        <!-- end left sidebar -->
+
+        </div>
+
+        <!-- ============================================================== -->
+        <!-- end wrapper  -->
+        <!-- ============================================================== -->
+    </div>
+    <!-- ============================================================== -->
+    <!-- end main wrapper  -->
+    <!-- ============================================================== -->
+<?php include 'componentes/footer.php'; ?>
+<script src="admin/functions.js"></script>
 </body>
 <!--<script type="text/javascript">
 $(document).ready(function(){
