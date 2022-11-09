@@ -62,8 +62,24 @@
                     
                     <?php    
                         include 'conexion.php';
-                        $pdo = connect();
+                        try{
+                            $pdo = connect();
+                        }
+                        catch  (Exception $e)
                         
+                        $sql= "SELECT id_doctor, atencion, nombre FROM doctor where id_doctor= :idDoctor";
+                        $query = $pdo->prepare($sql);
+                        $query->bindParam(':idDoctor', $id_doctor, PDO::PARAM_STR);
+                        $query->execute();
+                        $list = $query->fetchAll();
+                        foreach ($list as $res) {
+                        //while($res=mysql_fetch_assoc($sql)){       
+                        ?>
+                        <img src="<?php echo $res['perfil']; ?>" alt="" class="user-avatar-md rounded-circle">&nbsp;&nbsp;
+                        <?php echo $res['atencion'].' '.$res['nombre']; ?> 
+
+                    <?php
+                    }
                     ?></a>
                     <div class="dropdown-menu dropdown-menu-right nav-user-dropdown" aria-labelledby="navbarDropdownMenuLink2">
 
