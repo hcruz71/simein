@@ -1,4 +1,5 @@
 <?php
+error_reporting(0);
  
 //debemos colocar esta línea para extender de REST_Controller
 require(APPPATH.'/libraries/REST_Controller.php');
