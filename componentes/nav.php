@@ -66,8 +66,9 @@
                       try{
                         include 'conexion.php';
                         $pdo = connect(); //aqui truena
-                      } catch x;
-                      printf(x);
+                      }  catch (Exception $e) {
+                        echo 'Excepción capturada: ',  $e->getMessage(), "\n";
+                    }
                         
                       
                         
