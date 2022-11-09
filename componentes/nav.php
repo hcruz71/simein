@@ -9,9 +9,11 @@
         $id_doctor=$_SESSION['id_usuario'];
         $rol=$_SESSION['rol'];*/
     }else{
+        printf("Inicia Conexion");
         include 'conexion.php';
         $id_doctor=$_SESSION['id_usuario'];
         $rol=$_SESSION['rol'];
+        printf("Fin Conexion");
     }
 
     header("Content-type: text/html; charset=utf8");
@@ -60,7 +62,7 @@
                         
                 <li class="nav-item dropdown nav-user">
                     <a class="nav-link nav-user-img" href="#" id="navbarDropdownMenuLink2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="color: #fff">
-                    <p>SI LLEGA</p>
+                    
                     <?php    
                         $pdo = connect();
                         $sql= "SELECT id_doctor, atencion, nombre FROM doctor where id_doctor=".$id_doctor;
