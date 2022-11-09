@@ -61,20 +61,7 @@
                     <a class="nav-link nav-user-img" href="#" id="navbarDropdownMenuLink2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="color: #fff">
                     
                     <?php    
-                        //include 'conexion.php';
-                        $pdo = connect();
-                        $sql= "SELECT id_doctor, atencion, nombre FROM doctor where id_doctor=".$id_doctor;
-                        $query = $pdo->prepare($sql);
-                        $query->execute();
-                        $list = $query->fetchAll();
-                        foreach ($list as $res) {
-                        //while($res=mysql_fetch_assoc($sql)){       
-                        ?>
-                        <img src="<?php echo $res['perfil']; ?>" alt="" class="user-avatar-md rounded-circle">&nbsp;&nbsp;
-                        <?php echo $res['atencion'].' '.$res['nombre']; ?> 
-
-                    <?php
-                    }
+                   
                     ?></a>
                     <div class="dropdown-menu dropdown-menu-right nav-user-dropdown" aria-labelledby="navbarDropdownMenuLink2">
 
