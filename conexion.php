@@ -22,7 +22,7 @@ function connect() {
       PDO::MYSQL_ATTR_SSL_VERIFY_SERVER_CERT => true,
      );
 
-
+     throw new \Exception("a thing happened!");
   return new PDO('mysql:host='.$host.';dbname='.$basededatos, $user, $password, $options , array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION, PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"));
 }
 
