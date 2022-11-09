@@ -27,13 +27,6 @@ if($resultAPI)
                      $_SESSION['rol']=$resultAPI['registros'][0]['rol'];
                      $_SESSION['id']=$resultAPI['registros'][0]['id'];
                      echo json_encode(array('resp' => 0));
-
-        
-                    echo $resultAPI['registros'][0]['id_usuario'];
-                     echo $resultAPI['registros'][0]['rol'];
-                     echo $resultAPI['registros'][0]['id'];
-
-                     echo $_SESSION['id_usuario'];
                 }
                 else
                 {
