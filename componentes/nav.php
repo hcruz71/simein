@@ -62,10 +62,9 @@
                     
                     <?php    
                         include 'conexion.php';
-                        try{
-                            $pdo = connect();
-                        }
-                        catch  (Exception $e)
+                        
+                        $pdo = connect();
+                      
                         
                         $sql= "SELECT id_doctor, atencion, nombre FROM doctor where id_doctor= :idDoctor";
                         $query = $pdo->prepare($sql);
