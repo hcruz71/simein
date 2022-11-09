@@ -1,5 +1,5 @@
 <?php
-error_reporting(0); 
+//error_reporting(0); 
   $sentencia_pac="SELECT nb_Paciente, nu_Telefono, nu_Celular, de_Email, id_Sexo, fh_Nacimiento, fh_Ingreso, nu_Edad, id_Sangre,de_Religion, de_Ocupacion, nb_Emergencia, fh_Ingreso, nu_Emergencia, de_Estado_civil, de_Otros_datos  from pacientes WHERE id_doctor=$id_doctor and id_paciente=$id_paciente";
 
 
