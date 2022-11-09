@@ -6,7 +6,8 @@
     <!-- end head -->
     
 <body>
-<p>Hector Cruz</p>
+
+   <p>Hector cruz Zazueta</p>
 </body>
 <!--<script type="text/javascript">
 $(document).ready(function(){
