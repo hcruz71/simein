@@ -62,6 +62,10 @@
                     
                     <?php    
                         include 'conexion.php';
+                        $pdo = connect();
+                        $sql= "SELECT id_doctor, atencion, nombre FROM doctor where id_doctor= :idDoctor";
+                        $query = $pdo->prepare($sql);
+                        $query->bindParam(':idDoctor', $id_doctor, PDO::PARAM_STR);
                         
                     ?></a>
                     <div class="dropdown-menu dropdown-menu-right nav-user-dropdown" aria-labelledby="navbarDropdownMenuLink2">
