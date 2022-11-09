@@ -87,7 +87,7 @@
                     	$('#alert').html("Los datos son correctos    ¡Bienvenido!");
                     	$('.alert').css("background-color", "#76cc96");
                     	$('.alert').css("color", "#fff");
-                    	//location.href='index.php';
+                    	location.href='index.php';
 
                                 	
 
