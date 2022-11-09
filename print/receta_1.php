@@ -93,7 +93,7 @@ session_start();
 
     <div id="div_rec" style="border: none;">
 <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
-<script type='text/javascript' src='../assets/vendor/jquery/jquery-3.3.1.min.js'></script>
+<script type='text/javascript' src='../assets/vendor/jquery/jquery-3.6.1.min.js'></script>
 <?php if ($formato==0): ?>
     <div class="row">
         <div class="col-md-1">
