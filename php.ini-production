@@ -4,6 +4,3 @@ expose_php = Off
 session.sid_length = 32
 short_open_tag =On
 user_ini.cache_ttl =86400
-variables_order = EGPCS
-xdebug.mode = debug
-xdebug.start_with_request = yes
