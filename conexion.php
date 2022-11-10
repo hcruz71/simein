@@ -21,9 +21,6 @@ function connect() {
       PDO::MYSQL_ATTR_SSL_CERT=>'isrgrootx1.pem',
       PDO::MYSQL_ATTR_SSL_VERIFY_SERVER_CERT => true
      );
-
-     var_dump($options);
   return new PDO('mysql:host='.$host.';dbname='.$basededatos, $user, $password, $options , array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION, PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"));
 }
-
 ?>
