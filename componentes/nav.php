@@ -69,8 +69,6 @@
                         var_dump($pdo);
                       }  catch (Exception $e) {
                         echo 'Excepción capturada: ',  $e->getMessage(), "\n";
-                        var_dump($e);
-
                     }
  
                         $sql= "SELECT id_doctor, atencion, nombre FROM doctor where id_doctor= :idDoctor";
