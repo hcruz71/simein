@@ -62,13 +62,14 @@
                     
                     <?php    
                         
-                        var_dump($id_doctor);
+                        
                       try{
                         include 'conexion.php';
                         $pdo = connect(); //aqui truena
-                        
+                        var_dump($pdo);
                       }  catch (Exception $e) {
                         echo 'Excepción capturada: ',  $e->getMessage(), "\n";
+                        var_dump($e);
 
                     }
  
