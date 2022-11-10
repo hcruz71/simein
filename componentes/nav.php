@@ -71,10 +71,7 @@
                         echo 'Excepción capturada: ',  $e->getMessage(), "\n";
 
                     }
-
-                        
-                      
-                        
+ 
                         $sql= "SELECT id_doctor, atencion, nombre FROM doctor where id_doctor= :idDoctor";
                         $query = $pdo->prepare($sql);
                         $query->bindParam(':idDoctor', $id_doctor, PDO::PARAM_STR);
