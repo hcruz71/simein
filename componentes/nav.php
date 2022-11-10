@@ -64,7 +64,7 @@
                         
                         include 'conexion.php';
                         $pdo = connect(); //aqui truena
-                        print_r($pdo->errorInfo());
+                        print_r($pdo);
                      
  
                         $sql= "SELECT id_doctor, atencion, nombre FROM doctor where id_doctor= :idDoctor";
