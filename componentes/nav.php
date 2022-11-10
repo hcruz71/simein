@@ -62,15 +62,10 @@
                     
                     <?php    
                         
-                        
-                      try{
                         include 'conexion.php';
                         $pdo = connect(); //aqui truena
-                        var_dump($pdo);
-                      }  catch (Exception $e) {
-                        var_dump($id_doctor);
-                        echo 'Excepción capturada: ',  $e->getMessage(), "\n";
-                    }
+                        print_r($pdo->errorInfo());
+                     
  
                         $sql= "SELECT id_doctor, atencion, nombre FROM doctor where id_doctor= :idDoctor";
                         $query = $pdo->prepare($sql);
