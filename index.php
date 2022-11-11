@@ -34,15 +34,8 @@
                             <div class="page-header">
                                 <h2 class="pageheader-title" style="font-size: 30px">Bienvenido 
                                 <?php
-                                echo "HOlaa";
-                                include 'conexion.php';
-                                try {
-                                    echo "HOlaa2";
-                                    $pdo = connect(); 
-                                    echo "HOlaa3";
-                                } catch (PDOException $e) {
-                                    echo 'Falló la conexión: ' . $e->getMessage();
-                                }
+                                
+                               
                                 $sql= "SELECT id_honorarios, atencion, nombre FROM doctor where id_doctor= :idDoctor";
                                 $query = $pdo->prepare($sql);
                                 $query->bindParam(':idDoctor', $id_doctor, PDO::PARAM_STR);
