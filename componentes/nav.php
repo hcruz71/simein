@@ -64,10 +64,11 @@
                         
                         include 'conexion.php';
                         try {
+                            echo("Before PDO");
                             $pdo = connect(); 
-                            print_r ($id_doctor);
+                            echo("After PDO");
                         } catch (PDOException $e) {
-                            print_r ($e);
+                            echo("Error PDO");
                             echo 'Falló la conexión: ' . $e->getMessage();
                         }
                      
