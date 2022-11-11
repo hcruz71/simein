@@ -32,11 +32,19 @@
                                             <?php 
                                             $fecha= date("y-m-d");
 
-                                            $sql="SELECT * FROM agenda AS A INNER JOIN pacientes AS P ON (A.id_doctor = P.id_doctor) AND (A.id_Paciente = P.id_Paciente) WHERE A.id_doctor=$id_doctor and A.START LIKE '%".$fecha."%' ORDER BY A.start ASC";
+                                            $sql= "SELECT * FROM agenda AS A INNER JOIN pacientes AS P ON (A.id_doctor = P.id_doctor) AND (A.id_Paciente = P.id_Paciente) WHERE A.id_doctor=:id_Doctor and A.START LIKE '%:fecha%' ORDER BY A.start ASC";
+                                            $query = $pdo->prepare($sql);
+                                            $query->bindParam(':idDoctor', $id_doctor, PDO::PARAM_STR);
+                                            $query->bindParam(':fecha', $fecha, PDO::PARAM_STR);
+                                            $query->execute();
+                                            $list = $query->fetchAll();
+                                            foreach ($list as $ver) {
+
+                                           /* $sql="SELECT * FROM agenda AS A INNER JOIN pacientes AS P ON (A.id_doctor = P.id_doctor) AND (A.id_Paciente = P.id_Paciente) WHERE A.id_doctor=$id_doctor and A.START LIKE '%".$fecha."%' ORDER BY A.start ASC";
                                          
 
                                           $result=mysql_query($sql);
-                                          while($ver=mysql_fetch_assoc($result)){
+                                          while($ver=mysql_fetch_assoc($result)){*/
                                          ?>
                                            
                                                         <tr>
