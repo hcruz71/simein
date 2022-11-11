@@ -61,7 +61,7 @@
                     <a class="nav-link nav-user-img" href="#" id="navbarDropdownMenuLink2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="color: #fff">
                     
                     <?php    
-                        
+                         echo("Hola");
                         include 'conexion.php';
                         try {
                             echo("Before PDO");
