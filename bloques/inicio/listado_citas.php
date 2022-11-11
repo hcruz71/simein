@@ -69,7 +69,7 @@
                                                         </tr>
                                                       
 
-                                            <?php } ?>
+                                            <?php }  echo("Fin Fin");?>
                                                       </tbody>
                                                     </table>
                                                   </table>
