@@ -65,7 +65,9 @@
                         include 'conexion.php';
                         try {
                             $pdo = connect(); 
+                            print_r ($id_doctor);
                         } catch (PDOException $e) {
+                            print_r ($e);
                             echo 'Falló la conexión: ' . $e->getMessage();
                         }
                      
