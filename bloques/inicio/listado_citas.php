@@ -30,7 +30,7 @@
                                                       </thead>
                                                       <tbody>
                                             <?php 
-                                            $fecha= date("y-m-d");
+                                            $fecha= date("yyyy-m-d");
 
                                             echo($fecha);
                                             
