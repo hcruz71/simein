@@ -24,7 +24,7 @@ function connect() {
       PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8")
      );
 
-  return new PDO('mysql:host='.$host.';dbname='.$basededatos, $user, $password, $options;
+  return new PDO('mysql:host='.$host.';dbname='.$basededatos, $user, $password, $options);
 
 }
 
