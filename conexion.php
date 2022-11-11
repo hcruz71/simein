@@ -13,7 +13,7 @@ if ($conexion -> connect_errno)
 
 //Nueva conexion PHP 8.1.14
 function connect() {
-/*    $host = '3573lf.stackhero-network.com';
+   $host = '3573lf.stackhero-network.com';
     $basededatos = 'simeindb';
     $user = 'root';
     $password = 'kx3QtnkJ2Boz1zPiFc4CCEV2QheQ2oYq';
@@ -25,14 +25,6 @@ function connect() {
      );
 
   return new PDO('mysql:host='.$host.';dbname='.$basededatos, $user, $password, $options;
-*/
-$hostname = 'localhost';
-	$name = 'petsdb';
-	$user = 'app_pet';
-	$password = 'yC2)[[6M6HHe58eB';
-    return new PDO('mysql:host='.$hostname.';dbname='.$name, $user, $password, array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION, PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"));
-
-
 
 }
 
