@@ -30,15 +30,15 @@
                                                       </thead>
                                                       <tbody>
                                             <?php 
-                                            $fecha= strtotime (date("y-m-d"));
+                                            $fecha= date("y-m-d");
 
                                             echo($fecha);
                                             
-                                            $sql= "SELECT * FROM agenda AS A INNER JOIN pacientes AS P ON (A.id_doctor = P.id_doctor) AND (A.id_Paciente = P.id_Paciente) WHERE A.id_doctor=:idDoctor and A.START LIKE '%:fechaActual%' ORDER BY A.start ASC";
+                                            $sql= "SELECT * FROM agenda AS A INNER JOIN pacientes AS P ON (A.id_doctor = P.id_doctor) AND (A.id_Paciente = P.id_Paciente) WHERE A.id_doctor=:idDoctor and A.START LIKE '%:2019-01-09%' ORDER BY A.start ASC";
 
                                             $query = $pdo->prepare($sql);
                                             $query->bindParam(':idDoctor', $id_doctor, PDO::PARAM_INT);
-                                            $query->bindParam(':fechaActual', strtotime (date ("Y-m-d H:i:s")), PDO::PARAM_STR);
+                                            //$query->bindParam(':fechaActual', strtotime (date ("Y-m-d H:i:s")), PDO::PARAM_STR);
                                             try{
                                               $query->execute();
                                             }catch (PDOException $e) {
