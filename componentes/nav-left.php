@@ -1,5 +1,4 @@
         <div class="nav-left-sidebar" style="width: 20%">
-        <p>HECTOR CRUZ</p>
             <div class="menu-list">
                 <nav class="navbar navbar-expand-lg" style="position: fixed; z-index: 1000; background-color: #fff; width: 20%">
                     <div class="collapse navbar-collapse" id="navbarNav" style="background-color: #fff">
@@ -42,9 +41,6 @@
                                 <iframe src="inicio/carrussel.php" frameborder="0" width="100%" height="400px"></iframe>
                             </li>
                         <?php endif ?>
-                        
-                 
-
                         </ul>
                     </div>
                 </nav>

@@ -61,18 +61,13 @@
                     <a class="nav-link nav-user-img" href="#" id="navbarDropdownMenuLink2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="color: #fff">
                     
                     <?php    
-                         echo("Hola");
                         include 'conexion.php';
                         try {
-                            echo("Before PDO");
                             $pdo = connect(); 
-                            echo("After PDO");
                         } catch (PDOException $e) {
-                            echo("Error PDO");
                             echo 'Falló la conexión: ' . $e->getMessage();
                         }
-                     
- 
+                    
                         $sql= "SELECT id_doctor, atencion, nombre FROM doctor where id_doctor= :idDoctor";
                         $query = $pdo->prepare($sql);
                         $query->bindParam(':idDoctor', $id_doctor, PDO::PARAM_STR);

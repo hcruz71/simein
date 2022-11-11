@@ -35,19 +35,23 @@
                                 <h2 class="pageheader-title" style="font-size: 30px">Bienvenido 
                                 <?php
 
-                                /*
-                                ANTES
-                                $sql=mysql_query("SELECT id_honorarios, atencion, nombre FROM doctor where id_doctor='".$id_doctor."'");
-                                    while($res=mysql_fetch_assoc($sql)){ 
-                                AHORA        
-                                $query1 = "SELECT id_honorarios, atencion, nombre FROM doctor where id_doctor='".$id_doctor."'";
-                                $resultado_doc = $conexion->query($query1);
-                                while($res = $resultado_doc->fetch_assoc()){
-                                
-                                */
+                                include 'conexion.php';
+                                try {
+                                    $pdo = connect(); 
+                                } catch (PDOException $e) {
+                                    echo 'Falló la conexión: ' . $e->getMessage();
+                                }
+                                $sql= "SELECT id_honorarios, atencion, nombre FROM doctor where id_doctor= :idDoctor";
+                                $query = $pdo->prepare($sql);
+                                $query->bindParam(':idDoctor', $id_doctor, PDO::PARAM_STR);
+                                $query->execute();
+                                $list = $query->fetchAll();
+                                foreach ($list as $res) {
+
+/*
                                 $query1 = "SELECT id_honorarios, atencion, nombre FROM doctor where id_doctor='" . $id_doctor. "'" ;
                                 $resultado_doc = $conexion->query($query1);
-                                while($res = $resultado_doc->fetch_assoc()){
+                                while($res = $resultado_doc->fetch_assoc()){*/
                                     $id_honorarios= $res['id_honorarios'];
 
 
