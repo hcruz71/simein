@@ -44,7 +44,6 @@
                                             $query->bindParam(':fecha', $fecha, PDO::PARAM_STR);
                                             $query->execute();
                                             $list = $query->fetchAll();
-                                            print_f($list);
                                             foreach ($list as $ver) {
 
                                            /* $sql="SELECT * FROM agenda AS A INNER JOIN pacientes AS P ON (A.id_doctor = P.id_doctor) AND (A.id_Paciente = P.id_Paciente) WHERE A.id_doctor=$id_doctor and A.START LIKE '%".$fecha."%' ORDER BY A.start ASC";

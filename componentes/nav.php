@@ -11,6 +11,7 @@
     }else{
         $id_doctor=$_SESSION['id_usuario'];
         $rol=$_SESSION['rol'];
+        error_reporting(E_ALL);
     }
 
     header("Content-type: text/html; charset=utf8");
