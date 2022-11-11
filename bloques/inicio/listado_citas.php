@@ -32,6 +32,14 @@
                                             <?php 
                                             $fecha= date("y-m-d");
 
+                                            echo("INicio");
+                                            include 'conexion.php';
+                                            try {
+                                                $pdo = connect(); 
+                                            } catch (PDOException $e) {
+                                                echo 'Falló la conexión: ' . $e->getMessage();
+                                            }
+
                                             $sql= "SELECT * FROM agenda AS A INNER JOIN pacientes AS P ON (A.id_doctor = P.id_doctor) AND (A.id_Paciente = P.id_Paciente) WHERE A.id_doctor=:id_Doctor and A.START LIKE '%:fecha%' ORDER BY A.start ASC";
                                             $query = $pdo->prepare($sql);
                                             $query->bindParam(':idDoctor', $id_doctor, PDO::PARAM_STR);
