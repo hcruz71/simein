@@ -35,11 +35,11 @@
                                             echo ($fecha)."<br>";
                                             echo gettype($fecha);
                             
-                                            $sql= "SELECT * FROM agenda AS A INNER JOIN pacientes AS P ON (A.id_doctor = P.id_doctor) AND (A.id_Paciente = P.id_Paciente) WHERE A.id_doctor=:idDoctor and A.START LIKE '%2022-11-11%' ORDER BY A.start ASC";
+                                            $sql= "SELECT * FROM agenda AS A INNER JOIN pacientes AS P ON (A.id_doctor = P.id_doctor) AND (A.id_Paciente = P.id_Paciente) WHERE A.id_doctor=:idDoctor and A.START LIKE '%:fechaActual%' ORDER BY A.start ASC";
 
                                             $query = $pdo->prepare($sql);
                                             $query->bindParam(':idDoctor', $id_doctor, PDO::PARAM_STR);
-                                            //$query->bindParam(':fechaActual', $fecha, PDO::PARAM_STR);
+                                            $query->bindParam(':fechaActual', $fecha, PDO::PARAM_STR);
                                             try{
                                               $query->execute();
                                             }catch (PDOException $e) {
