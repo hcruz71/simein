@@ -66,6 +66,7 @@
                             $pdo = connect(); 
                         } catch (PDOException $e) {
                             echo 'Falló la conexión: ' . $e->getMessage();
+                            die();
                         }
                     
                         $sql= "SELECT id_doctor, atencion, nombre FROM doctor where id_doctor= :idDoctor";
@@ -81,6 +82,8 @@
 
                     <?php
                     }
+                    //Kill the connection with a KILL Statement.
+                    $pdo->query('KILL CONNECTION_ID()');
                     ?></a>
                     <div class="dropdown-menu dropdown-menu-right nav-user-dropdown" aria-labelledby="navbarDropdownMenuLink2">
 
