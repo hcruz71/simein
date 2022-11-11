@@ -28,11 +28,22 @@
 												</thead>
 												<tbody style="width: 100%;">
 		                                            <?php 
-		                                            $fecha= date("y-m-d");
+		                                            $fecha= date("Y-m-d");
+                                                    $sql= "SELECT * FROM honorarios AS A INNER JOIN pacientes AS P ON (A.id_doctor = P.id_doctor) AND (A.id_Paciente = P.id_Paciente) WHERE A.id_doctor=$id_doctor and A.activo=1 and A.fecha LIKE '%".$fecha."%' ORDER BY A.fecha ASC";
+                                                    $query = $pdo->prepare($sql);
+                                                    try {
+                                                        $query->execute();
+                                                      }catch (PDOException $e) {
+                                                        echo 'Falló la conexión: ' . $e->getMessage();
+                                                        die();
+                                                    }
+                                                      
+                                                      $list = $query->fetchAll();
+                                                      foreach ($list as $ver) {
 
-		                                            $sql="SELECT * FROM honorarios AS A INNER JOIN pacientes AS P ON (A.id_doctor = P.id_doctor) AND (A.id_Paciente = P.id_Paciente) WHERE A.id_doctor=$id_doctor and A.activo=1 and A.fecha LIKE '%".$fecha."%' ORDER BY A.fecha ASC";
-			                                          $result=mysql_query($sql);
-			                                          while($ver=mysql_fetch_assoc($result)){
+		                                            //$sql="SELECT * FROM honorarios AS A INNER JOIN pacientes AS P ON (A.id_doctor = P.id_doctor) AND (A.id_Paciente = P.id_Paciente) WHERE A.id_doctor=$id_doctor and A.activo=1 and A.fecha LIKE '%".$fecha."%' ORDER BY A.fecha ASC";
+			                                        //$result=mysql_query($sql);
+			                                        //  while($ver=mysql_fetch_assoc($result)){
 			                                         ?>
                                                      <?php if (isset($ver['concepto'])): ?>
                                                          <tr class="btn-gris">

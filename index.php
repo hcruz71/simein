@@ -75,14 +75,10 @@
                     <!-- ============================================================== -->
                     <!-- end pageheader  -->
                     <!--Create a form -->
-                    <p>Incia Listado citas</p>
                     <?php include 'bloques/inicio/listado_citas.php'; ?>
-                    <p>Fin Listado citas</p>
 
                     <?php if ($id_honorarios==1): ?>
-                        <p>Incia Listado honorarios</p>
                         <?php include 'bloques/inicio/listado_honorarios.php'; ?>
-                        <p>fin Listado honorarios</p>
                     <?php endif ?>  
     
 <?php endif ?>     
@@ -113,7 +109,14 @@ $(document).ready(function(){
                 data: {
                     columns: [
                     <?php 
-                        $id_paciente=$ver['id_Paciente'];
+                          $id_paciente=$ver['id_Paciente'];
+                          $sql= "SELECT * FROM agenda AS A INNER JOIN pacientes AS P ON (A.id_doctor = P.id_doctor) AND (A.id_Paciente = P.id_Paciente) WHERE A.id_doctor=:idDoctor and A.START LIKE '%". $fecha ."%' ORDER BY A.start ASC";
+
+                          $query = $pdo->prepare($sql);
+                          $query->bindParam(':idDoctor', $id_doctor, PDO::PARAM_STR);
+
+
+                          $id_paciente=$ver['id_Paciente'];
                           $sentencia="SELECT count(id_doctor) AS total from historial_clinico WHERE id_doctor=1";
                           $resultado=mysql_query($sentencia);
                           while($filas=mysql_fetch_assoc($resultado))
