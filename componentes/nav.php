@@ -63,8 +63,11 @@
                     <?php    
                         
                         include 'conexion.php';
-                        $pdo = connect(); //aqui truena
-                        print_r($pdo);
+                        try {
+                            $pdo = connect(); 
+                        } catch (PDOException $e) {
+                            echo 'Falló la conexión: ' . $e->getMessage();
+                        }
                      
  
                         $sql= "SELECT id_doctor, atencion, nombre FROM doctor where id_doctor= :idDoctor";
