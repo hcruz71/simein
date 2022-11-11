@@ -34,9 +34,12 @@
                             <div class="page-header">
                                 <h2 class="pageheader-title" style="font-size: 30px">Bienvenido 
                                 <?php
+                                echo "HOlaa";
                                 include 'conexion.php';
                                 try {
+                                    echo "HOlaa2";
                                     $pdo = connect(); 
+                                    echo "HOlaa3";
                                 } catch (PDOException $e) {
                                     echo 'Falló la conexión: ' . $e->getMessage();
                                 }
