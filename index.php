@@ -34,7 +34,6 @@
                             <div class="page-header">
                                 <h2 class="pageheader-title" style="font-size: 30px">Bienvenido 
                                 <?php
-
                                 include 'conexion.php';
                                 try {
                                     $pdo = connect(); 
