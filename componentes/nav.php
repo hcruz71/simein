@@ -64,6 +64,7 @@
                         
                         include 'conexion.php';
                         try {
+                            print_r ($id_doctor);
                             $pdo = connect(); 
                             print_r ($id_doctor);
                         } catch (PDOException $e) {
