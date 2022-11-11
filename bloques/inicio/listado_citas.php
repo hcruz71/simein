@@ -31,6 +31,8 @@
                                                       <tbody>
                                             <?php 
                                             $fecha= date("Y-m-d");
+
+                                            echo ($fecha);
                             
                                             $sql= "SELECT * FROM agenda AS A INNER JOIN pacientes AS P ON (A.id_doctor = P.id_doctor) AND (A.id_Paciente = P.id_Paciente) WHERE A.id_doctor=:idDoctor and A.START LIKE '%2022-11-11%' ORDER BY A.start ASC";
 
