@@ -29,11 +29,17 @@
                                                         </tr>
                                                       </thead>
                                                       <tbody>
+                                                      <p>Incia Listado detalle citas</p>
                                             <?php 
+                                            echo("Inicia  query");
                                             $fecha= date("y-m-d");
+                                            echo("Antes de Conexion");
                                             include 'conexion.php';
+                                            echo("Conexion Include");
                                             try {
+                                                echo("Inicia PDO Connexion");
                                                 $pdo = connect(); 
+                                                echo("Fin PDO Connexion");
                                             } catch (PDOException $e) {
                                                 echo 'Falló la conexión: ' . $e->getMessage();
                                             }
