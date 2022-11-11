@@ -17,10 +17,7 @@ function connect() {
     $basededatos = 'simeindb';
     $user = 'root';
     $password = 'kx3QtnkJ2Boz1zPiFc4CCEV2QheQ2oYq';
-    $options = array(
-      PDO::MYSQL_ATTR_SSL_CERT=>'isrgrootx1.pem',
-      PDO::MYSQL_ATTR_SSL_VERIFY_SERVER_CERT => true
-     );
-  return new PDO('mysql:host='.$host.';dbname='.$basededatos, $user, $password, $options , array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION, PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"));
+
+  return new PDO('mysql:host='.$host.';dbname='.$basededatos, $user, $password, array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION, PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"));
 }
 ?>
