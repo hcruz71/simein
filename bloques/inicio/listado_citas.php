@@ -40,6 +40,8 @@
                                             $query = $pdo->prepare($sql);
                                             $query->bindParam(':idDoctor', $id_doctor, PDO::PARAM_STR);
                                             $query->bindParam(':fechaActual', $fecha, PDO::PARAM_STR);
+
+                                            print_r ($query);
                                             try{
                                               $query->execute();
                                             }catch (PDOException $e) {
