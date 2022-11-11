@@ -31,17 +31,13 @@
                                                       <tbody>
                                             <?php 
                                             $fecha= date("Y-m-d");
-
-                                            echo ($fecha)."<br>";
-                                            echo gettype($fecha);
                             
                                             $sql= "SELECT * FROM agenda AS A INNER JOIN pacientes AS P ON (A.id_doctor = P.id_doctor) AND (A.id_Paciente = P.id_Paciente) WHERE A.id_doctor=:idDoctor and A.START LIKE '%:fechaActual%' ORDER BY A.start ASC";
 
                                             $query = $pdo->prepare($sql);
                                             $query->bindParam(':idDoctor', $id_doctor, PDO::PARAM_STR);
-                                            $query->bindParam(':fechaActual', $fecha, PDO::PARAM_STR);
+                                            $query->bindParam(':fechaActual','2022-11-11', PDO::PARAM_STR);
 
-                                            print_r ($query);
                                             try{
                                               $query->execute();
                                             }catch (PDOException $e) {
