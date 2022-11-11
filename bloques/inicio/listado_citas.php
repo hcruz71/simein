@@ -29,29 +29,20 @@
                                                         </tr>
                                                       </thead>
                                                       <tbody>
-                                                      <p>Incia Listado detalle citas</p>
                                             <?php 
                                             $fecha= date("y-m-d");
-                                            echo("Antes de Conexion");
-                                            //include 'conexion.php';
-                                            echo("Conexion Include");
-                                           // try {
-                                                echo("Inicia PDO Connexion");
-                                           //     $pdo = connect(); 
-                                                echo("Fin PDO Connexion");
-                                           // } catch (PDOException $e) {
-                                           //     echo 'Falló la conexión: ' . $e->getMessage();
-                                           // }
-                                           echo("Inicia Select");
-                                            $sql= "SELECT * FROM agenda AS A INNER JOIN pacientes AS P ON (A.id_doctor = P.id_doctor) AND (A.id_Paciente = P.id_Paciente) WHERE A.id_doctor=:id_Doctor and A.START LIKE '%:fecha%' ORDER BY A.start ASC";
+                                            $sql= "SELECT * FROM agenda AS A INNER JOIN pacientes AS P ON (A.id_doctor = P.id_doctor) AND (A.id_Paciente = P.id_Paciente) WHERE A.id_doctor=:id_Doctor and A.START LIKE '%:fechaActual%' ORDER BY A.start ASC";
                                             $query = $pdo->prepare($sql);
                                             $query->bindParam(':idDoctor', $id_doctor, PDO::PARAM_STR);
-                                            $query->bindParam(':fecha', $fecha, PDO::PARAM_STR);
-                                            echo("Antes execute Select");
-                                            $query->execute();
-                                            echo("Fin execute Select");
+                                            $query->bindParam(':fechaActual', $fecha, PDO::PARAM_STR);
+                                            try{
+                                              $query->execute();
+                                            }catch (PDOException $e) {
+                                              echo 'Falló la conexión: ' . $e->getMessage();
+                                              die();
+                                          }
+                                            
                                             $list = $query->fetchAll();
-                                            echo("Lista execute Select");
                                             foreach ($list as $ver) {
 
                                            /* $sql="SELECT * FROM agenda AS A INNER JOIN pacientes AS P ON (A.id_doctor = P.id_doctor) AND (A.id_Paciente = P.id_Paciente) WHERE A.id_doctor=$id_doctor and A.START LIKE '%".$fecha."%' ORDER BY A.start ASC";
