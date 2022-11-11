@@ -18,7 +18,7 @@ function connect() {
     $user = 'root';
     $password = 'kx3QtnkJ2Boz1zPiFc4CCEV2QheQ2oYq';
     $options = array(
-      PDO::MYSQL_ATTR_SSL_CA=>'isrgrootx1.pem',
+      PDO::MYSQL_ATTR_SSL_CA=>'Xisrgrootx1.pem',
       PDO::MYSQL_ATTR_SSL_VERIFY_SERVER_CERT => false
      );
 
