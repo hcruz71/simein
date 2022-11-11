@@ -75,10 +75,14 @@
                     <!-- ============================================================== -->
                     <!-- end pageheader  -->
                     <!--Create a form -->
+                    <p>Incia Listado citas</p>
                     <?php include 'bloques/inicio/listado_citas.php'; ?>
+                    <p>Fin Listado citas</p>
 
                     <?php if ($id_honorarios==1): ?>
+                        <p>Incia Listado honorarios</p>
                         <?php include 'bloques/inicio/listado_honorarios.php'; ?>
+                        <p>fin Listado honorarios</p>
                     <?php endif ?>  
     
 <?php endif ?>     
