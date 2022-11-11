@@ -74,7 +74,6 @@
                         $query->bindParam(':idDoctor', $id_doctor, PDO::PARAM_STR);
                         $query->execute();
                         $list = $query->fetchAll();
-                        $pdo->query('KILL CONNECTION_ID()');
                         foreach ($list as $res) {
                         //while($res=mysql_fetch_assoc($sql)){       
                         ?>
