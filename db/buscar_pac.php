@@ -81,6 +81,9 @@ header("Content-type: text/html; charset=utf8");
 				nb_Paciente LIKE '%".$q."%' ORDER BY nb_Paciente ASC ";
 		}
 
+		$query = $pdo->prepare($sql);
+        $query->execute();
+
 		$buscar= $query->rowCount();
 		if ($buscar > 0)
 		{
