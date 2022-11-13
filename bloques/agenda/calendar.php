@@ -47,8 +47,13 @@
                 
                 $sql="SELECT * FROM agenda AS A INNER JOIN pacientes AS P ON (A.id_doctor = P.id_doctor) AND (A.id_Paciente = P.id_Paciente) WHERE A.id_doctor=$id_doctor ORDER BY A.start ASC";
                 $query = $pdo->prepare($sql);
-                //$query->bindParam(':idDoctor', $id_doctor, PDO::PARAM_STR);
-                $query->execute();
+                try {
+                    $query->execute();
+                  }catch (PDOException $e) {
+                    echo 'Falló la conexión: ' . $e->getMessage();
+                    die();
+                }
+
                 $list = $query->fetchAll();
                 foreach ($list as $fila) {                         
 
