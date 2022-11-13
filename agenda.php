@@ -15,7 +15,8 @@
     <link rel="stylesheet" href="assets/vendor/bootstrap/css/bootstrap.min.css">
     <link href="assets/vendor/fonts/circular-std/style.css" rel="stylesheet">
     <link rel="stylesheet" href="assets/libs/css/style.css">
-     <link href='assets/vendor/full-calendar/css/fullcalendar.css' rel='stylesheet' />
+    <link rel="stylesheet" href="assets/vendor/fonts/fontawesome/css/fontawesome-all.css">
+    <link href='assets/vendor/full-calendar/css/fullcalendar.css' rel='stylesheet' />
     <link href='assets/vendor/full-calendar/css/fullcalendar.print.css' rel='stylesheet' media='print' />
 </head>
 
