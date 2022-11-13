@@ -4,7 +4,7 @@
     <?php include 'componentes/head.php'; ?>
     <!-- end head -->
 <body>
-
+    
     <!-- main wrapper -->
     <div class="dashboard-main-wrapper">
 
@@ -34,13 +34,6 @@
                             <div class="page-header">
                                 <h2 class="pageheader-title" style="font-size: 30px">Bienvenido 
                                 <?php
-                                
-                                /*include 'conexion.php';
-                                try {
-                                    $pdo = connect(); 
-                                } catch (PDOException $e) {
-                                    echo 'Falló la conexión: ' . $e->getMessage();
-                                }*/
                                 $sql= "SELECT id_honorarios, atencion, nombre FROM doctor where id_doctor= :idDoctor";
                                 $query = $pdo->prepare($sql);
                                 $query->bindParam(':idDoctor', $id_doctor, PDO::PARAM_STR);
@@ -110,17 +103,21 @@ $(document).ready(function(){
                     columns: [
                     <?php 
                           $id_paciente=$ver['id_Paciente'];
-                          $sql= "SELECT * FROM agenda AS A INNER JOIN pacientes AS P ON (A.id_doctor = P.id_doctor) AND (A.id_Paciente = P.id_Paciente) WHERE A.id_doctor=:idDoctor and A.START LIKE '%". $fecha ."%' ORDER BY A.start ASC";
-
+                          $sql="SELECT count(id_doctor) AS total from historial_clinico WHERE id_doctor=1";
+                          
                           $query = $pdo->prepare($sql);
                           $query->bindParam(':idDoctor', $id_doctor, PDO::PARAM_STR);
 
+                          $query->execute();
+                          $list = $query->fetchAll();
+                          foreach ($list as $resultado) {
 
-                          $id_paciente=$ver['id_Paciente'];
+                         /* $id_paciente=$ver['id_Paciente'];
+
                           $sentencia="SELECT count(id_doctor) AS total from historial_clinico WHERE id_doctor=1";
                           $resultado=mysql_query($sentencia);
                           while($filas=mysql_fetch_assoc($resultado))
-                          {
+                          {*/
                         ?>
 
                         [<?php echo $filas['total']; ?>, <?php echo $filas['total']; ?>],

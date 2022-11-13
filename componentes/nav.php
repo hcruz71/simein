@@ -8,6 +8,13 @@
        /* include 'conexion.php';
         $id_doctor=$_SESSION['id_usuario'];
         $rol=$_SESSION['rol'];*/
+        include 'conexion.php';
+        try {
+          $pdo = connect(); 
+        } catch (PDOException $e) {
+            echo 'Falló la conexión: ' . $e->getMessage();
+            die();
+        }
     }else{
         $id_doctor=$_SESSION['id_usuario'];
         $rol=$_SESSION['rol'];
@@ -62,13 +69,7 @@
                     <a class="nav-link nav-user-img" href="#" id="navbarDropdownMenuLink2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="color: #fff">
                     
                     <?php    
-                        include 'conexion.php';
-                        try {
-                            $pdo = connect(); 
-                        } catch (PDOException $e) {
-                            echo 'Falló la conexión: ' . $e->getMessage();
-                            die();
-                        }
+                        
                     
                         $sql= "SELECT id_doctor, atencion, nombre FROM doctor where id_doctor= :idDoctor";
                         $query = $pdo->prepare($sql);
