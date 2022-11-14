@@ -7,8 +7,7 @@
                     <div class="accrodion-regular">
                         <div id="accordion2">
                             <div class="card">
-                                <div class="card-header" id="headingOne">
-                                    
+                                <div class="card-header" id="headingOne">    
                                        <button class="btn btn-link" data-toggle="collapse" data-target="#collapseHonorarios" aria-expanded="true" aria-controls="collapseHonorarios">
                                        <h3 class="mb-0"><i class="fa fa-dollar-sign"></i>&nbsp;&nbsp;Honorarios</h3>
                                        </button>
@@ -55,7 +54,7 @@
 
                                                 <td ><label><?php echo $ver['concepto'] ?></label></</td>
 
-                                                <td "><label><?php echo $ver['total'] ?></label></</td>
+                                                <td ><label><?php echo $ver['total'] ?></label></</td>
 
                                                 
                                             </tr>
@@ -66,11 +65,13 @@
                                 		</tbody>
 									</table>
                                     <?php 
-                                                    $fecha= date("y-m-d");
+                                                    $fecha= date("Y-m-d");
 
-                                                    $sql2="SELECT SUM(total) AS total FROM honorarios WHERE id_doctor=$id_doctor and activo=1 and fecha LIKE '%".$fecha."%'";
-                                                      $result2=mysql_query($sql2);
-                                                      while($ver2=mysql_fetch_assoc($result2)){
+                                                    $sql="SELECT SUM(total) AS total FROM honorarios WHERE id_doctor=$id_doctor and activo=1 and fecha LIKE '%".$fecha."%'";
+                                                    $query = $pdo->prepare($sql);
+                                                    $query->execute();
+                                                    $list = $query->fetchAll();
+                                                    foreach ($list as $ver2) {
                                                         ?>
                                                         <br>
                                                         <h1><label>Total de honorarios recibidos el dia de hoy:</label>&nbsp;&nbsp;<i class="fa fa-dollar-sign"></i><?php echo($ver2['total']); ?><label>.oo</label></h1>

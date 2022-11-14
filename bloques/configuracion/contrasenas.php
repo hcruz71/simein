@@ -3,13 +3,15 @@
 $id=$_SESSION['id'];
 $id_doctor=$_SESSION['id_usuario'];
 
-    require 'conexion_i.php';
+    require 'conexion.php';
 
 
-    $query_doc = "SELECT * FROM usuarios where id_usuario=$id_doctor";
-    $resultado_doc = $conexion->query($query_doc);
-    while($row_doc = $resultado_doc->fetch_assoc())
-    {   
+    $sql = "SELECT * FROM usuarios where id_usuario=$id_doctor";
+    $query = $pdo->prepare($sql);
+    $query->execute();
+    $list = $query->fetchAll();
+    foreach ($list as $row_doc) 
+    {  
         $id_pass=$row_doc['id'];
     }
 ?>

@@ -3,7 +3,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/locale/es.js"></script>
 <?php 
         
-    include 'conexion.php';
+    //include 'conexion.php';
     $id_doctor=$_SESSION['id_usuario'];
 
  ?>

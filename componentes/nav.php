@@ -25,7 +25,8 @@
         </button>
         <div class="collapse navbar-collapse " id="navbarSupportedContent" >
             <ul class="navbar-nav ml-auto navbar-right-top">
-                    <?php if ($_SESSION['rol']==1): ?>
+                    <?php
+                    if ($_SESSION['rol']==1): ?>
                         <li class="nav-item dropdown notification">
                             <a class="nav-link nav-icons" href="#" id="navbarDropdownMenuLink1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="color: #fff"><i class="fas fa-fw fa-bell"></i> <span class="indicator"></span></a>
                             <ul class="dropdown-menu dropdown-menu-right notification-dropdown">
@@ -65,12 +66,14 @@
                     <?php    
                         include 'conexion.php';
                         try {
-                          $pdo = connect(); 
+                            if ( !isset($pdo) ) {
+                                $pdo = connect(); 
+                            }
+                          
                         } catch (PDOException $e) {
                             echo 'Falló la conexión: ' . $e->getMessage();
                             die();
                         }
-                    
                         $sql= "SELECT id_doctor, atencion, nombre FROM doctor where id_doctor= :idDoctor";
                         $query = $pdo->prepare($sql);
                         $query->bindParam(':idDoctor', $id_doctor, PDO::PARAM_STR);

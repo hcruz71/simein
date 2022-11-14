@@ -69,11 +69,12 @@
                     <!-- end pageheader  -->
                     <!--Create a form -->
                     <?php include 'bloques/inicio/listado_citas.php'; ?>
-
-                    <?php if ($id_honorarios==1): ?>
+                    <?php 
+                    echo $id_honorarios;
+                    if ($id_honorarios==1): ?>
                         <?php include 'bloques/inicio/listado_honorarios.php'; ?>
                     <?php endif ?>  
-    
+
 <?php endif ?>     
 
 <?php if ($rol==3): ?>

@@ -108,6 +108,9 @@
 
     <?php
             include 'conexion.php';
+            if ( !isset($pdo) ) {
+                $pdo = connect(); 
+            }
                 if(isset($_POST['agregar_cita']))
                 {
                     
@@ -126,17 +129,32 @@
                     $foto_pac=$_POST['foto_pac'];
 
                     
-                    $resent_max="SELECT id_Paciente FROM pacientes WHERE id_doctor=$doc and id_Paciente=(SELECT MAX(id_Paciente) FROM pacientes WHERE id_doctor=$doc)";
-                    $resent=mysqli_query($conexion,$resent_max);
-                    while ($row=mysqli_fetch_row ($resent)){
+                    $sql="SELECT id_Paciente FROM pacientes WHERE id_doctor=$doc and id_Paciente=(SELECT MAX(id_Paciente) FROM pacientes WHERE id_doctor=$doc)";
+                    $query = $pdo->prepare($sql);
+                    $query->execute();
+                    $list = $query->fetchAll();
+                    foreach ($list as $row) {
+                    /*$resent=mysqli_query($conexion,$resent_max);
+                    while ($row=mysqli_fetch_row ($resent)){*/
                         $row1=$row[0]+1;
                     }
 
-                    $conexion->query("INSERT INTO agenda(descripcion, color, txtColor, start, id_doctor, id_paciente, status) VALUES ('$descripcion','#3ca3d6','#ffffff','$agendar_start','$doc', '$row1', 'Por Definir')");
-
+                    /*$conexion->query("INSERT INTO agenda(descripcion, color, txtColor, start, id_doctor, id_paciente, status) VALUES ('$descripcion','#3ca3d6','#ffffff','$agendar_start','$doc', '$row1', 'Por Definir')");
                     $conexion->query("INSERT INTO pacientes (id_doctor, id_Paciente, nb_Paciente, nu_Celular, sn_Activo, fh_Nacimiento, nu_Edad, id_Sexo, de_Ocupacion, de_Email, fl_File) VALUES ('$doc','$row1','$busqueda','$cel', '1','$fh_Nacimiento','$nu_Edad','$id_Sexo','$de_Ocupacion','$de_Email','$foto_pac')");
+                    $conexion->query("INSERT INTO antecedentes (id_doctor, id_paciente) VALUES ('$doc','$row1')");*/
+                    
+                    $sql="INSERT INTO agenda(descripcion, color, txtColor, start, id_doctor, id_paciente, status) VALUES ('$descripcion','#3ca3d6','#ffffff','$agendar_start','$doc', '$row1', 'Por Definir')";
+                    $query = $pdo->prepare($sql);
+                    $query->execute();
 
-                    $conexion->query("INSERT INTO antecedentes (id_doctor, id_paciente) VALUES ('$doc','$row1')");
+                    $sql ="INSERT INTO pacientes (id_doctor, id_Paciente, nb_Paciente, nu_Celular, sn_Activo, fh_Nacimiento, nu_Edad, id_Sexo, de_Ocupacion, de_Email, fl_File) VALUES ('$doc','$row1','$busqueda','$cel', '1','$fh_Nacimiento','$nu_Edad','$id_Sexo','$de_Ocupacion','$de_Email','$foto_pac')";
+                    $query = $pdo->prepare($sql);
+                    $query->execute();
+
+                    $sql = "INSERT INTO antecedentes (id_doctor, id_paciente) VALUES ('$doc','$row1')";
+                    $query = $pdo->prepare($sql);
+                    $query->execute();
+
 
                      echo "<script> location.href='agenda.php'; </script>";
 
@@ -155,9 +173,17 @@
                     $cel=$_POST['nu_Celular'];
                     $foto_pac=$_POST['foto_pac'];
 
-                    $conexion->query("INSERT INTO agenda (descripcion, start, id_doctor, id_paciente, status) VALUES ('$descripcion','$agendar_start','$doc', '$id_pac', 'Por Definir')");
+                    /*$conexion->query("INSERT INTO agenda (descripcion, start, id_doctor, id_paciente, status) VALUES ('$descripcion','$agendar_start','$doc', '$id_pac', 'Por Definir')");
                     $conexion->query("update pacientes set nb_Paciente='$busqueda', nu_Celular='$cel', fh_Nacimiento='$fh_Nacimiento', nu_Edad='$nu_Edad', id_Sexo='$id_Sexo', de_Ocupacion='$de_Ocupacion', de_Email='$de_Email', fl_File='$foto_pac' WHERE id_doctor=$doc and id_Paciente=$id_pac");
-                     echo "<script> location.href='agenda.php'; </script>";
+                     echo "<script> location.href='agenda.php'; </script>";*/
+                    
+                    $sql="INSERT INTO agenda (descripcion, start, id_doctor, id_paciente, status) VALUES ('$descripcion','$agendar_start','$doc', '$id_pac', 'Por Definir')";
+                    $query = $pdo->prepare($sql);
+                    $query->execute();
+                    
+                    $sql="update pacientes set nb_Paciente='$busqueda', nu_Celular='$cel', fh_Nacimiento='$fh_Nacimiento', nu_Edad='$nu_Edad', id_Sexo='$id_Sexo', de_Ocupacion='$de_Ocupacion', de_Email='$de_Email', fl_File='$foto_pac' WHERE id_doctor=$doc and id_Paciente=$id_pac";
+                    $query = $pdo->prepare($sql);
+                    $query->execute();
 
                     }
 
@@ -195,24 +221,34 @@
                         $color='#d48bff';
                     }
 
-                    $conexion->query("update pacientes set nb_Paciente='$busquedaU', nu_Celular='$nu_CelularU', fl_File='$foto_pacU' WHERE id_doctor=$doc and id_Paciente=$id_pacU");
-
+                    /*$conexion->query("update pacientes set nb_Paciente='$busquedaU', nu_Celular='$nu_CelularU', fl_File='$foto_pacU' WHERE id_doctor=$doc and id_Paciente=$id_pacU");
                     $conexion->query("update agenda set start='$startU', descripcion='$descripcionU', color='$color', status='$status_detalles' WHERE id=$id_cita");
+                    echo "<script> location.href='agenda.php'; </script>";*/
 
-                    echo "<script> location.href='agenda.php'; </script>";
+                    $sql="update pacientes set nb_Paciente='$busquedaU', nu_Celular='$nu_CelularU', fl_File='$foto_pacU' WHERE id_doctor=$doc and id_Paciente=$id_pacU";
+                    $query = $pdo->prepare($sql);
+                    $query->execute();
+
+                    $sql="update agenda set start='$startU', descripcion='$descripcionU', color='$color', status='$status_detalles' WHERE id=$id_cita";
+                    $query = $pdo->prepare($sql);
+                    $query->execute();
+
                 }
 
                 if(isset($_POST['btn_eliminar']))
                 {
                     
-                    include("db/abrir_conexion.php");
+                    //include("db/abrir_conexion.php");
                     $id=$_POST['id_cita'];
 
-                    $conexion->query("DELETE FROM agenda WHERE id=$id");
+                    /*$conexion->query("DELETE FROM agenda WHERE id=$id");
+                    echo "<script> location.href='agenda.php'; </script>";*/
 
-                    echo "<script> location.href='agenda.php'; </script>";
+                    $sql="DELETE FROM agenda WHERE id=$id";
+                    $query = $pdo->prepare($sql);
+                    $query->execute();
 
-                    include("db/cerrar_conexion.php");
+                    //include("db/cerrar_conexion.php");
                 }
             ?>
 </body>

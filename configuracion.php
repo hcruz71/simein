@@ -21,13 +21,15 @@ session_start();
 //utf8_decode($row['municipio'];
 $id_doctor=$_SESSION['id_usuario'];
 
-    require 'conexion_i.php';
+    require 'conexion.php';
 
 
-    $query_doc = "SELECT * FROM doctor where id_doctor=$id_doctor";
-    $resultado_doc = $conexion->query($query_doc);
-    while($row_doc = $resultado_doc->fetch_assoc())
-    {
+    $sql = "SELECT * FROM doctor where id_doctor=$id_doctor";
+    $query = $pdo->prepare($sql);
+    $query->execute();
+    $list = $query->fetchAll();
+    foreach ($list as $row_doc) {
+   
         $a=$row_doc['atencion'];
         $id=$row_doc['id_doctor'];
         $n=$row_doc['nombre'];

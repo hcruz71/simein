@@ -20,6 +20,13 @@ $contraseña = 'Hacz572771.';*/
 
 $conexion = new mysqli($host, $usuario,$contraseña, $basededatos);
 
+$conexion = mysqli_init();
+$conexion->options(MYSQLI_OPT_SSL_VERIFY_SERVER_CERT, true);
+$conexion->ssl_set(NULL, NULL, "isrgrootx1.pem", NULL, NULL);
+$conexion->real_connect('hostname', 'user', 'password', 'database');
+
+
+
 mysqli_set_charset($conexion,"utf8");
 
 if ($conexion -> connect_errno)
