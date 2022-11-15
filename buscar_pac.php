@@ -19,6 +19,7 @@ header("Content-type: text/html; charset=utf8");
 				nb_Paciente LIKE '%".$q."%' ORDER BY nb_Paciente ASC ";
 		}
 
+		
 		$buscar=$conexion->query($query);
 		if ($buscar->num_rows > 0)
 		{

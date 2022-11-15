@@ -15,7 +15,7 @@ if ($conexion -> connect_errno)
 function connect() {
    $host = '3573lf.stackhero-network.com';
     $basededatos = 'simeindb';
-    $user = 'root';
+    $userr = 'root';
     $password = 'kx3QtnkJ2Boz1zPiFc4CCEV2QheQ2oYq';
     $options = array(
       PDO::MYSQL_ATTR_SSL_CA=>'isrgrootx1.pem',
@@ -24,8 +24,7 @@ function connect() {
       PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"
      );
 
-  return new PDO('mysql:host='.$host.';dbname='.$basededatos, $user, $password, $options);
+  return new PDO('mysql:host='.$host.';dbname='.$basededatos, $userr, $password, $options);
 
 }
-
 ?>

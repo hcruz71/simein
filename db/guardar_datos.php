@@ -10,6 +10,9 @@
         $ant_go=$_POST['ant_go'];
         $ant_alergicos=$_POST['ant_alergicos'];
         include '../conexion.php';
+        if ( !isset($pdo) ) {
+            $pdo = connect(); 
+        }
         $sql="update antecedentes set ant_hf='$ant_hf', ant_pp='$ant_pp', ant_np='$ant_np', ant_go='$ant_go', alergicos='$ant_alergicos' WHERE id='$id'";
         $query = $pdo->prepare($sql);
         $query->execute(); 
@@ -54,6 +57,9 @@
         $oi7=$_POST['oi7'];
         $oi8=$_POST['oi8'];
         include '../conexion.php';
+        if ( !isset($pdo) ) {
+            $pdo = connect(); 
+        }
 
         if($_POST['id_historial']==""){
 
@@ -88,7 +94,10 @@
         $id_doctor=$_SESSION['id_usuario'];
 
 
-        include '../conexion_i.php';
+        include '../conexion.php';
+        if ( !isset($pdo) ) {
+            $pdo = connect(); 
+        }
         $sql="update doctor set id_alergicos='$id_alergicos', id_hf='$id_hf', id_pp='$id_pp', id_np='$id_np', id_go='$id_go', id_exploracion='$id_exploracion', id_signos_vitales='$id_signos_vitales', id_diagnosticos='$id_diagnosticos', id_gabinete='$id_gabinete', id_honorarios='$id_honorarios' WHERE id_doctor='$id_doctor'";
         $query = $pdo->prepare($sql);
         $resent = $query->execute(); 
@@ -99,6 +108,10 @@
 
     if (isset($_POST['id_asistente'])) {
         include '../conexion.php';
+        if ( !isset($pdo) ) {
+            $pdo = connect(); 
+        }
+
         $id_doctor=$_SESSION['id_usuario'];
         $id=$_POST['id_asistente'];
         $nombre_asistente=$_POST['nombre_asistente'];
@@ -131,6 +144,9 @@
         $pass=$_POST['pass'];
         $re_pass=$_POST['re_pass'];
         include '../conexion.php';
+        if ( !isset($pdo) ) {
+            $pdo = connect(); 
+        }
 
         $sql="SELECT pw_usuario from usuarios where pw_usuario='$pass_actual' and id=$id_pass";
         $query = $pdo->prepare($sql);
@@ -158,7 +174,10 @@
         
     }
     if (isset($_POST['id_concepto'])) {
-        include '../conexion_i.php';
+        include '../conexion.php';
+        if ( !isset($pdo) ) {
+            $pdo = connect(); 
+        }
         $id_doctor=$_SESSION['id_usuario'];
         $id=$_POST['id_concepto'];
         $concepto=$_POST['concepto'];
@@ -182,6 +201,9 @@
 
     if (isset($_POST['concept'])) {
         include '../conexion.php';
+        if ( !isset($pdo) ) {
+            $pdo = connect(); 
+        }
         $id_doctor=$_SESSION['id_usuario'];
         $concepto=$_POST['concept'];
         $total=$_POST['total_concept'];
@@ -196,6 +218,9 @@
 
     if (isset($_POST['prefijo'])) {
         include '../conexion.php';
+        if ( !isset($pdo) ) {
+            $pdo = connect(); 
+        }
         $id_doctor=$_SESSION['id_usuario'];
         $prefijo=$_POST['prefijo'];
         $nombre=$_POST['nombre'];
@@ -214,6 +239,9 @@
 
     if (isset($_POST['load_receta'])) {
         include '../conexion.php';
+        if ( !isset($pdo) ) {
+            $pdo = connect(); 
+        }
         $img_rec=$_POST['load_receta'];
         $id=$_POST['id'];
         $sql="update templates_recetas set img_rec='". $img_rec. "' where id_template=13";
@@ -225,6 +253,9 @@
 
     if (isset($_POST['id_template_modal'])) {
         include '../conexion.php';
+        if ( !isset($pdo) ) {
+            $pdo = connect(); 
+        }
         $img_rec=$_POST['file_update_receta_text'];
         $id=$_POST['id_template_modal'];
         $nom_top=$_POST['nom_top'];

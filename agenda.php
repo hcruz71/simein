@@ -107,7 +107,7 @@
     <?php include 'bloques/agenda/calendar.php'; ?>
 
     <?php
-            include 'conexion.php';
+            //include 'conexion.php';
             if ( !isset($pdo) ) {
                 $pdo = connect(); 
             }
