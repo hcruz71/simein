@@ -5,9 +5,6 @@
 
     if (@!$_SESSION['id_usuario']) {
         header("Location:inicio/");
-       /* include 'conexion.php';
-        $id_doctor=$_SESSION['id_usuario'];
-        $rol=$_SESSION['rol'];*/
         
     }else{
         $id_doctor=$_SESSION['id_usuario'];

@@ -9,26 +9,19 @@ $id_doctor=$_SESSION['id_usuario'];
 $id_pac_get=$_SESSION['id_pac_get'];
 
 	# conectare la base de datos
-include '../../conexion_i.php';
+include '../../conexion.php';
 
 $id_doctor=$_SESSION['id_usuario'];
 
-           /*
-ANTES
-   $query_doc = "SELECT * FROM doctor where id_doctor=$id_doctor";
-    $resultado_doc = $conexion->query($query_doc);
-    while($row_doc = $resultado_doc->fetch_assoc())
-CAMBIO
-    $query1 = "SELECT * FROM doctor where id_doctor=$id_doctor";
-    $resultado_doc = $conexion->query($query1);
-    while($row_doc = $resultado_doc->fetch_assoc())
- 
-*/
 
-    $query1 = "SELECT * FROM doctor where id_doctor=$id_doctor";
-    $resultado_doc = $conexion->query($query1);
-    while($row_doc = $resultado_doc->fetch_assoc())
+    $sql = "SELECT * FROM doctor where id_doctor=$id_doctor";
+    $query = $pdo->prepare($sql);
+    $query->execute();
+    $list = $query->fetchAll();
+	foreach ($list as $row_doc) 
     {
+    //while($row_doc = $resultado_doc->fetch_assoc())
+
         $a=$row_doc['atencion'];
         $id=$row_doc['id_doctor'];
         $n=$row_doc['nombre'];
@@ -56,22 +49,15 @@ CAMBIO
 
     }
 
-           /*
-ANTES
-     $query_esp = "SELECT * FROM especialidades where id_especialidad=$id_especialidad";
-    $resultado_esp = $conexion->query($query_esp);
-    while($row_esp = $resultado_esp->fetch_assoc())
-CAMBIO
-    $query1 = "SELECT * FROM especialidades where id_especialidad=$id_especialidad";
-    $resultado_doc = $conexion->query($query1);
-    while($row_esp= $resultado_doc->fetch_assoc())
- 
-*/
+  
 
-        $query1 = "SELECT * FROM especialidades where id_especialidad=$id_especialidad";
-        $resultado_doc = $conexion->query($query1);
-        while($row_esp= $resultado_doc->fetch_assoc())
-    {
+        $sql = "SELECT * FROM especialidades where id_especialidad=$id_especialidad";
+        $query = $pdo->prepare($sql);
+        $query->execute();
+        $list = $query->fetchAll();
+	    foreach ($list as $row_esp) 
+        {
+        //while($row_esp= $resultado_doc->fetch_assoc())
         $id_esp=$row_esp['de_especialidad'];
 
     }
@@ -90,18 +76,7 @@ CAMBIO
 		$total_pages = ceil($numrows/$per_page);
 		$reload = 'index.php';
         //consulta principal para recuperar los datos
-                /* 
-        ANTES
-       $query = mysqli_query($conexion,"SELECT * FROM historial_clinico where id_doctor=$id_doctor and id_paciente=$id_pac_get and activo=1 ORDER BY id DESC LIMIT $offset,$per_page ");
-		. .
-        while($row = mysqli_fetch_array($query)){
-
-        AHORA
-        $q2 = "SELECT * FROM historial_clinico where id_doctor=$id_doctor and id_paciente=$id_pac_get and activo=1 ORDER BY id DESC LIMIT $offset,$per_page ");
-        $query = $conexion->query($q2);
-        ... 
-        while($row = $query->fetch_assoc())
-        */
+      
 
 		$q2 = "SELECT * FROM historial_clinico where id_doctor=$id_doctor and id_paciente=$id_pac_get and activo=1 ORDER BY id DESC LIMIT $offset,$per_page ";
         $query = $conexion->query($q2);
@@ -395,17 +370,7 @@ CAMBIO
                         $id_paciente=$_SESSION['id_pac_get'];
                             $id_doctor=$_SESSION['id_usuario'];
                         
-                                                  /* 
-        ANTES
-         $sql_fecha=mysql_query("SELECT * FROM historial_clinico where id_doctor=$id_doctor and id_paciente=$id_paciente and activo=1");
-                        while($res_fecha=mysql_fetch_assoc($sql_fecha)){
-
-        AHORA
-        $q2 = "SELECT * FROM historial_clinico where id_doctor=$id_doctor and id_paciente=$id_paciente and activo=1"
-        $query = $conexion->query($q2);
-        ... 
-        while($res_fecha = $rquery->fetch_assoc())
-        */      
+              
                         $q2 = "SELECT * FROM historial_clinico where id_doctor=$id_doctor and id_paciente=$id_paciente and activo=1";
                         $query = $conexion->query($q2);
                         

@@ -1,18 +1,8 @@
 <?php 
  //error_reporting(0);
 
- /*
-ANTES
- $sentencia_pac="SELECT fl_File, nb_Paciente, nu_Telefono, nu_Celular, de_Email, id_Sexo, fh_Nacimiento, fh_Ingreso, nu_Edad, id_Sangre, de_Religion,  de_Ocupacion, nb_Emergencia, fh_Ingreso, nu_Emergencia, de_Estado_civil, de_Otros_datos   from pacientes WHERE id_doctor=$id_doctor and id_paciente=$id_paciente";
-  $resultado_pac=mysql_query($sentencia_pac);
-  while($filas_pac=mysql_fetch_assoc($resultado_pac))
 
-CAMBIO
-    $query1 = "SELECT fl_File, nb_Paciente, nu_Telefono, nu_Celular, de_Email, id_Sexo, fh_Nacimiento, fh_Ingreso, nu_Edad, id_Sangre, de_Religion,  de_Ocupacion, nb_Emergencia, fh_Ingreso, nu_Emergencia, de_Estado_civil, de_Otros_datos   from pacientes WHERE id_doctor=$id_doctor and id_paciente=$id_paciente";
-    $resultado_doc = $conexion->query($query1);
-    while($filas_pac = $resultado_doc->fetch_assoc()){
- 
-*/
+
 
 function calcular_edad($fecha){
   $fecha_nac = new DateTime(date('Y/m/d',strtotime($fecha)));
@@ -21,10 +11,17 @@ function calcular_edad($fecha){
   return $edad;
 }
 
-  $query1 = "SELECT fl_File, nb_Paciente, nu_Telefono, nu_Celular, de_Email, id_Sexo, fh_Nacimiento, fh_Ingreso, nu_Edad, id_Sangre, de_Religion,  de_Ocupacion, nb_Emergencia, fh_Ingreso, nu_Emergencia, de_Estado_civil, de_Otros_datos   from pacientes WHERE id_doctor=$id_doctor and id_paciente=$id_paciente";
-    $resultado_doc = $conexion->query($query1);
-    while($filas_pac = $resultado_doc->fetch_assoc())
+  $sql = "SELECT fl_File, nb_Paciente, nu_Telefono, nu_Celular, de_Email, id_Sexo, fh_Nacimiento, fh_Ingreso, nu_Edad, id_Sangre, de_Religion,  de_Ocupacion, nb_Emergencia, fh_Ingreso, nu_Emergencia, de_Estado_civil, de_Otros_datos   from pacientes WHERE id_doctor=$id_doctor and id_paciente=$id_paciente";
+
+  $query = $pdo->prepare($sql);
+  $query->execute();
+  $list = $query->fetchAll();
+	foreach ($list as $filas_pac) 
   {
+
+  /*  $resultado_doc = $conexion->query($query1);
+    while($filas_pac = $resultado_doc->fetch_assoc())
+  {*/
     $file=$filas_pac['fl_File'];
     $nombre=$filas_pac['nb_Paciente'];
     $nu_Telefono=$filas_pac['nu_Telefono'];
@@ -46,10 +43,21 @@ function calcular_edad($fecha){
 
 
     
-    $query2 = mysqli_query($conexion,"SELECT id_especialidad FROM doctor where id_doctor = $id_doctor");
-    if ($rowAntecedente = mysqli_fetch_array($query2))
-    {
+    $sql = "SELECT id_especialidad FROM doctor where id_doctor = $id_doctor";
+
+    $query = $pdo->prepare($sql);
+    $query->execute();
+
+    $buscar= $query->rowCount();
+		if ($buscar > 0)
+		{
+
+    //if ($rowAntecedente = mysqli_fetch_array($query2))
+    //{
+        $list = $query->fetchAll();
+				foreach ($list as $rowAntecedente) {
         $esp =  $rowAntecedente['id_especialidad'] ;
+        }
     } else{
         
         echo $rowAntecedente;

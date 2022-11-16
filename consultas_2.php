@@ -33,23 +33,24 @@ if(!isset($_SESSION)) {
 $id_doctor=$_SESSION['id_usuario'];
 $id_usu=$_SESSION['id'];
 
-    require 'conexion_i.php';
-/*
-    ANTES
-    $query_doc = "SELECT atencion, id_doctor, nombre, especialidad, de_cEsp, de_cProf, direccion, telefono, celular, correo, id_especialidad, id_alergicos, id_hf, id_pp, id_np, id_go, id_padecimiento, id_exploracion, id_signos_vitales, id_diagnosticos, id_gabinete, id_honorarios, id_receta FROM doctor where id_doctor=$id_doctor";
-    $resultado_doc = $conexion->query($query_doc);
-    while($row_doc = $resultado_doc->fetch_assoc())
-
-    CAMBIO
-        $query1 = "SELECT atencion, id_doctor, nombre, especialidad, de_cEsp, de_cProf, direccion, telefono, celular, correo, id_especialidad, id_alergicos, id_hf, id_pp, id_np, id_go, id_padecimiento, id_exploracion, id_signos_vitales, id_diagnosticos, id_gabinete, id_honorarios, id_receta FROM doctor where id_doctor=$id_doctor";
-        $resultado_doc = $conexion->query($query1);
-        while($row_doc = $resultado_doc->fetch_assoc()){
-     
-    */
+  
+    //include 'conexion.php';
+    try {
+        if ( !isset($pdo) ) {
+            $pdo = connect(); 
+        }                       
+    } catch (PDOException $e) {
+        echo 'Falló la conexión: ' . $e->getMessage();
+        die();
+    }
     
-    $query_doc = "SELECT atencion, id_doctor, nombre, especialidad, de_cEsp, de_cProf, direccion, telefono, celular, correo, id_especialidad, id_alergicos, id_hf, id_pp, id_np, id_go, id_padecimiento, id_exploracion, id_signos_vitales, id_diagnosticos, id_gabinete, id_honorarios, id_receta FROM doctor where id_doctor=$id_doctor";
-    $resultado_doc = $conexion->query($query_doc);
-    while($row_doc = $resultado_doc->fetch_assoc()){
+    $sql = "SELECT atencion, id_doctor, nombre, especialidad, de_cEsp, de_cProf, direccion, telefono, celular, correo, id_especialidad, id_alergicos, id_hf, id_pp, id_np, id_go, id_padecimiento, id_exploracion, id_signos_vitales, id_diagnosticos, id_gabinete, id_honorarios, id_receta FROM doctor where id_doctor=$id_doctor";
+    $query = $pdo->prepare($sql);
+    $query->execute();
+    $list = $query->fetchAll();
+    foreach ($list as $row_doc) {
+
+    //while($row_doc = $resultado_doc->fetch_assoc()){
 
         $a=$row_doc['atencion'];
         $id=$row_doc['id_doctor'];
@@ -76,22 +77,15 @@ $id_usu=$_SESSION['id'];
         $id_receta=$row_doc['id_receta'];
 
     }
-/*
-    ANTES
-    $query_esp = "SELECT de_especialidad FROM especialidades where id_especialidad=$id_especialidad";
-    $resultado_esp = $conexion->query($query_esp);
-    while($row_esp = $resultado_esp->fetch_assoc())
 
-    CAMBIO
-        $query_esp = "SELECT de_especialidad FROM especialidades where id_especialidad=$id_especialidad";
-    $resultado_esp = $conexion->query($query_esp);
-    while($row_esp = $resultado_esp->fetch_assoc()){
-     
-    */
-    $query1 = "SELECT de_especialidad FROM especialidades where id_especialidad=$id_especialidad";
-    $resultado_doc = $conexion->query($query1);
-    while($row_esp = $resultado_doc->fetch_assoc())
-    {
+    $sql = "SELECT de_especialidad FROM especialidades where id_especialidad=$id_especialidad";
+    $query = $pdo->prepare($sql);
+    $query->execute();
+    $list = $query->fetchAll();
+    foreach ($list as $row_esp) {
+
+    //while($row_esp = $resultado_doc->fetch_assoc())
+    
         $id_esp=$row_esp['de_especialidad'];
 
     }
@@ -99,22 +93,13 @@ $id_usu=$_SESSION['id'];
     $id=$_SESSION['id'];
     $id_doctor=$_SESSION['id_usuario'];
 
-/*
-    ANTES
-   $query_doc = "SELECT id_antecedentes, id_historial  FROM usuarios where id=$id_usu";
-    $resultado_doc = $conexion->query($query_doc);
-    while($row_doc = $resultado_doc->fetch_assoc())
-
-    CAMBIO
-        $query1 = "SELECT id_antecedentes, id_historial  FROM usuarios where id=$id_usu";
-        $resultado_doc = $conexion->query($query1);
-        while($row_doc = $resultado_doc->fetch_assoc()){
-     
-    */
-    $query_doc = "SELECT id_antecedentes, id_historial  FROM usuarios where id=$id_usu";
-    $resultado_doc = $conexion->query($query_doc);
-    while($row_doc = $resultado_doc->fetch_assoc())
-    {   
+    $sql = "SELECT id_antecedentes, id_historial  FROM usuarios where id=$id_usu";
+    $query = $pdo->prepare($sql);
+    $query->execute();
+    $list = $query->fetchAll();
+    foreach ($list as $row_doc) 
+    {
+  
         $id_antecedentes=$row_doc['id_antecedentes'];
         $id_historial=$row_doc['id_historial'];
     }

@@ -41,10 +41,6 @@
                                 $list = $query->fetchAll();
                                 foreach ($list as $res) {
 
-/*
-                                $query1 = "SELECT id_honorarios, atencion, nombre FROM doctor where id_doctor='" . $id_doctor. "'" ;
-                                $resultado_doc = $conexion->query($query1);
-                                while($res = $resultado_doc->fetch_assoc()){*/
                                     $id_honorarios= $res['id_honorarios'];
 
 

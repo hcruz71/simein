@@ -7,10 +7,11 @@
         header("Location:inicio/");
   
     }else{
-        include 'conexion_i.php';
+        //include 'conexion_i.php';
         $id_doctor=$_SESSION['id_usuario'];
         $rol=$_SESSION['rol'];
     }
+
 
 
     header("Content-type: text/html; charset=utf8");

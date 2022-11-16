@@ -5,6 +5,9 @@
   extract($_GET); 
               
  include '../conexion.php';
+ if ( !isset($pdo) ) {
+	$pdo = connect(); 
+}
 
  if(isset($_POST["id"]))  
  {  

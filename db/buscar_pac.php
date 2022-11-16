@@ -1,20 +1,21 @@
 <?php 
-error_reporting(0);
+//error_reporting(0);
+session_start();
 
-if(!isset($_SESSION)) {
-	session_start();
-}
 $id_doctor=$_SESSION['id_usuario'];
 include '../conexion.php';
+$pdo = connect();
 header("Content-type: text/html; charset=utf8");
  //BUSCAR PACIENTES
-	if($_POST['buscar_pac']=="")
+	//if($_POST['buscar_pac']=="")
+	if(!isset($_POST['buscar_pac']))
 	{
 		$tabla="";
 		$sql="SELECT nb_Paciente, id_doctor, nu_Celular, nu_Edad, id_Paciente FROM pacientes WHERE id_doctor=$id_doctor and sn_Activo=1 ORDER BY id_Paciente desc ";
 		if(isset($_POST['buscar_pac']))
 		{
-			$q=$conexion->real_escape_string($_POST['buscar_pac']);
+			//$q=$conexion->real_escape_string($_POST['buscar_pac']);
+			$q=$_POST['buscar_pac'];
 			$sql="SELECT nb_Paciente, id_doctor, nu_Celular, nu_Edad, id_Paciente FROM pacientes WHERE id_doctor=$id_doctor and
 				nb_Paciente LIKE '%".$q."%' ORDER BY nb_Paciente ASC ";
 		}
@@ -76,7 +77,8 @@ header("Content-type: text/html; charset=utf8");
 		$sql="SELECT nb_Paciente, id_doctor, nu_Celular, nu_Edad, id_Paciente FROM pacientes WHERE id_doctor=$id_doctor and sn_Activo=1 ORDER BY id_Paciente desc ";
 		if(isset($_POST['buscar_pac']))
 		{
-			$q=$conexion->real_escape_string($_POST['buscar_pac']);
+			//$q=$conexion->real_escape_string($_POST['buscar_pac']);
+			$q=$_POST['buscar_pac'];
 			$sql="SELECT nb_Paciente, id_doctor, nu_Celular, nu_Edad, id_Paciente FROM pacientes WHERE id_doctor=$id_doctor and sn_Activo=1 and
 				nb_Paciente LIKE '%".$q."%' ORDER BY nb_Paciente ASC ";
 		}

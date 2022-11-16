@@ -1,5 +1,5 @@
  <?php 
-    session_start();
+    //session_start();
 
     if (isset($_POST['id_ant'])) {
 
@@ -271,8 +271,8 @@
 
             $sql="INSERT INTO templates_recetas(id_doctor, descripcion, nom_left, nom_top, fecha_right, fecha_top, rec_left, rec_top, img_rec, font_size, activo) values ('$id_doctor', '$descripcion', '$nom_left', '$nom_top', '$fecha_right', '$fecha_top', '$rec_left', '$rec_top', '$img_rec', '$font_size', '1')";
             $query = $pdo->prepare($sql);
-            resent = $query->execute();
-            echo $resent;
+            $query->execute();
+            //echo $resent;
 
         }else{
 

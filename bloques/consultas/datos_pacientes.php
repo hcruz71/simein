@@ -1,11 +1,13 @@
 <?php
 //error_reporting(0); 
-  $sentencia_pac="SELECT nb_Paciente, nu_Telefono, nu_Celular, de_Email, id_Sexo, fh_Nacimiento, fh_Ingreso, nu_Edad, id_Sangre,de_Religion, de_Ocupacion, nb_Emergencia, fh_Ingreso, nu_Emergencia, de_Estado_civil, de_Otros_datos  from pacientes WHERE id_doctor=$id_doctor and id_paciente=$id_paciente";
-
-
-  $resultado_pac=mysql_query($sentencia_pac);
-  while($filas_pac=mysql_fetch_assoc($resultado_pac))
+  $sql="SELECT nb_Paciente, nu_Telefono, nu_Celular, de_Email, id_Sexo, fh_Nacimiento, fh_Ingreso, nu_Edad, id_Sangre,de_Religion, de_Ocupacion, nb_Emergencia, fh_Ingreso, nu_Emergencia, de_Estado_civil, de_Otros_datos  from pacientes WHERE id_doctor=$id_doctor and id_paciente=$id_paciente";
+  $query = $pdo->prepare($sql);
+  $query->execute();
+  $list = $query->fetchAll();
+	foreach ($list as $filas_pac) 
   {
+  //while($filas_pac=mysql_fetch_assoc($resultado_pac))
+  
     $nombre=$filas_pac['nb_Paciente'];
     $nu_Telefono=$filas_pac['nu_Telefono'];
     $nu_Celular=$filas_pac['nu_Celular'];
@@ -37,10 +39,14 @@
                         
                         <label>Fotografía</label>
                         <?php 
-                          $sentencia_file="SELECT * from pacientes WHERE id_doctor=$id_doctor and id_paciente=$id_paciente";
-                          $resultado_file=mysql_query($sentencia_file);
-                          while($filas_file=mysql_fetch_assoc($resultado_file))
+                          $sql="SELECT * from pacientes WHERE id_doctor=$id_doctor and id_paciente=$id_paciente";
+                          $query = $pdo->prepare($sql);
+                          $query->execute();
+                          $list = $query->fetchAll();
+                          foreach ($list as $filas_file) 
                           {
+                         //while($filas_file=mysql_fetch_assoc($resultado_file))
+                         
                             $foto=$filas_file['fl_File'];
                             ?>
                             <?php if ($foto==""): ?>
