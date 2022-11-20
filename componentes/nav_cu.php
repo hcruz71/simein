@@ -7,7 +7,6 @@
         header("Location:inicio/");
   
     }else{
-        //include 'conexion_i.php';
         $id_doctor=$_SESSION['id_usuario'];
         $rol=$_SESSION['rol'];
     }

@@ -1,7 +1,16 @@
   <?php  
- //fetch.php  
-  session_start();
-		include '../../conexion.php';	        
+ 
+ session_start();
+  include '../../conexion.php';	
+  
+      try {
+         if ( !isset($pdo) ) {
+             $pdo = connect(); 
+         }                       
+     } catch (PDOException $e) {
+         echo 'Falló la conexión: ' . $e->getMessage();
+         die();
+     }   
 
 		$id_doctor=$_SESSION['id_usuario'];
 		$id_paciente=$_SESSION['id_pac_get'];
@@ -64,6 +73,6 @@
     $sql = "INSERT INTO listado(id_doctor, listado, id_listado) values ('$id_doctor', '$listado', '5')";  
     $query = $pdo->prepare($sql);
     $query->execute();  
-      echo $listado;  
+     
  } 
  ?>

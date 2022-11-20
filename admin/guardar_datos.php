@@ -1,9 +1,12 @@
   <?php  
  //fetch.php  
   session_start();
-		include '../../conexion_i.php';	        
+  require '../../conexion.php'; 
+    if ( !isset($pdo) ) {
+      $pdo = connect(); 
+    }         
 
-			        $id_doctor=$_SESSION['id_usuario'];
+	$id_doctor=$_SESSION['id_usuario'];
 
  if(isset($_POST["nombre_repre"]))  
  {  
@@ -14,24 +17,27 @@
   $celular_repre=$_POST['celular_repre'];
   $correo_repre=$_POST['correo_repre'];
   $domicilio_repre=$_POST['domicilio_repre'];
-  $fecha=date('y-m-d');
+  $fecha=date('Y-m-d');
 
   
-  $resent_max="SELECT MAX(id_usuario) FROM usuarios";
-  $resent=mysqli_query($conexion,$resent_max);
-  while ($row=mysqli_fetch_row ($resent)){
+  $sql="SELECT MAX(id_usuario) FROM usuarios";
+  $query = $pdo->prepare($sql);
+  $query->execute();
+  $list = $query->fetchAll();
+  foreach ($list as $row) 
+  {
       $row1=$row[0]+1;
   }
-  $sentencia="INSERT INTO usuarios(id_usuario, usuario, nb_usuario, pw_usuario, rol, fecha_ing, id_asesor, sn_activo) VALUES ('$row1', '$nombre_repre', '$correo_repre', '123', '4', '$fecha', '$id_coordinador', '1')";
+  $sql="INSERT INTO usuarios(id_usuario, usuario, nb_usuario, pw_usuario, rol, fecha_ing, id_asesor, sn_activo) VALUES ('$row1', '$nombre_repre', '$correo_repre', '123', '4', '$fecha', '$id_coordinador', '1')";
+  $query = $pdo->prepare($sql);
+  $query->execute();
 
-  //$sentencia="INSERT INTO usuarios(id_usuario, usuario, nb_usuario, pw_usuario, id_asesor, fecha_ing, id_asesor, sn_activo) VALUES ('$row1', '$nombre_repre', '$correo_repre', '123', '4', '$fecha', '$id_coordinador', '1')";
-  $resent22=mysqli_query($conexion,$sentencia); 
-
-  $sentencia_doc="INSERT INTO doctor(id_doctor, nombre, id_asesor, correo, celular, direccion, rol, id_especialidad) VALUES ('$row1', '$nombre_repre', '$id_coordinador', '$correo_repre', '$celular_repre', '$domicilio_repre', '4', '1')";
-  $resent_doc=mysqli_query($conexion,$sentencia_doc); 
+  $sql="INSERT INTO doctor(id_doctor, nombre, id_asesor, correo, celular, direccion, rol, id_especialidad) VALUES ('$row1', '$nombre_repre', '$id_coordinador', '$correo_repre', '$celular_repre', '$domicilio_repre', '4', '1')";
+  $query = $pdo->prepare($sql);
+  $query->execute();
 
    
-      echo $resent22;  
+    //  echo $resent22;  
  } 
 
 
@@ -92,22 +98,26 @@
   $unidad=$_POST['unidad'];
   if ($id_med=="") {
 
-  $resent_max="SELECT MAX(id) FROM cat_med";
-  $resent=mysqli_query($conexion,$resent_max);
-  while ($row=mysqli_fetch_row ($resent)){
+  $sql="SELECT MAX(id) FROM cat_med";
+  $query = $pdo->prepare($sql);
+  $query->execute();
+  $list = $query->fetchAll();
+  foreach ($list as $row) 
+  {
       $row1=$row[0]+1;
   }
 
-    $sentencia="INSERT INTO cat_med(id, nombrecomercial, presentacion, envoltura, ingrediente, concentracion, unidad) VALUES ('$row1', '$nombre_med', '$presentacion_med', '$envoltura', '$ingrediente','$concentracion', '$unidad')";
-    $resent=mysqli_query($conexion,$sentencia);
+    $sql="INSERT INTO cat_med(id, nombrecomercial, presentacion, envoltura, ingrediente, concentracion, unidad) VALUES ('$row1', '$nombre_med', '$presentacion_med', '$envoltura', '$ingrediente','$concentracion', '$unidad')";
+    $query = $pdo->prepare($sql);
+    $query->execute();
      
-        echo $resent;
+    //    echo $resent;
   }else{
 
-    $sentencia="UPDATE cat_med set nombrecomercial='$nombre_med', presentacion='$presentacion_med', envoltura='$envoltura', ingrediente='$ingrediente', concentracion='$concentracion', unidad='$unidad' WHERE id='$id_med'";
-    $resent=mysqli_query($conexion,$sentencia);
-     
-        echo $resent;
+    $sql="UPDATE cat_med set nombrecomercial='$nombre_med', presentacion='$presentacion_med', envoltura='$envoltura', ingrediente='$ingrediente', concentracion='$concentracion', unidad='$unidad' WHERE id='$id_med'";
+    $query = $pdo->prepare($sql);
+    $query->execute();     
+    //    echo $resent;
   }
  
  }

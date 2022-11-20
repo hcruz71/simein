@@ -71,21 +71,34 @@ $id_doctor=$_SESSION['id_usuario'];
 		$adjacents  = 4; //brecha entre páginas después de varios adyacentes
 		$offset = ($page - 1) * $per_page;
 		//Cuenta el número total de filas de la tabla*/
-		$count_query   = mysqli_query($conexion,"SELECT count(*) AS numrows FROM historial_clinico where id_doctor=$id_doctor and id_paciente=$id_pac_get and activo=1 ORDER BY id DESC");
-		if ($row= mysqli_fetch_array($count_query)){$numrows = $row['numrows'];}
+		$sql   = "SELECT count(*) AS numrows FROM historial_clinico where id_doctor=$id_doctor and id_paciente=$id_pac_get and activo=1 ORDER BY id DESC";
+        $query = $pdo->prepare($sql);
+        $query->execute();
+        $row= $query->rowCount();
+		if ($row > 0)
+        {
+            $numrows = $row['numrows'];
+        }
+		
 		$total_pages = ceil($numrows/$per_page);
 		$reload = 'index.php';
         //consulta principal para recuperar los datos
       
 
-		$q2 = "SELECT * FROM historial_clinico where id_doctor=$id_doctor and id_paciente=$id_pac_get and activo=1 ORDER BY id DESC LIMIT $offset,$per_page ";
-        $query = $conexion->query($q2);
-
-		if ($numrows>0){
+		$sql = "SELECT * FROM historial_clinico where id_doctor=$id_doctor and id_paciente=$id_pac_get and activo=1 ORDER BY id DESC LIMIT $offset,$per_page ";
+        $query = $pdo->prepare($sql);
+        $query->execute();
+        $numrows= $query->rowCount();
+		if ($buscar > 0)
+        {
+        
 			?>
 <div class="">
 	<?php
-	 while($row = $query->fetch_assoc()){
+    $list = $query->fetchAll();
+    foreach ($list as $row) 
+    {
+	 //while($row = $query->fetch_assoc()){
 		?>
 	
     <div class="row">
@@ -366,15 +379,17 @@ $id_doctor=$_SESSION['id_usuario'];
                         </tr>
 
                         <?php 
-                        include '../../conexion_i.php';
                         $id_paciente=$_SESSION['id_pac_get'];
-                            $id_doctor=$_SESSION['id_usuario'];
+                        $id_doctor=$_SESSION['id_usuario'];
                         
-              
-                        $q2 = "SELECT * FROM historial_clinico where id_doctor=$id_doctor and id_paciente=$id_paciente and activo=1";
-                        $query = $conexion->query($q2);
-                        
-                        while($res_fecha = $query->fetch_assoc()){
+                        $sql = "SELECT * FROM historial_clinico where id_doctor=$id_doctor and id_paciente=$id_paciente and activo=1";
+                        $query = $pdo->prepare($sql);
+                        $query->execute();
+                        $list = $query->fetchAll();
+	                    foreach ($list as $filas_pac) 
+                        {
+                       
+                        //while($res_fecha = $query->fetch_assoc()){
                         ?>
 
                         <tr>

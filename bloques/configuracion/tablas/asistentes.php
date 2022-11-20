@@ -1,9 +1,12 @@
 <?php 
 session_start();
-        extract($_POST);
-        extract($_GET);
-        $id_doctor=$_SESSION['id_usuario'];
-        require_once "../../../conexion_i.php";
+extract($_POST);
+extract($_GET);
+$id_doctor=$_SESSION['id_usuario'];
+require '../../../conexion.php'; 
+if ( !isset($pdo) ) {
+  $pdo = connect(); 
+}   
     ?>
 
 
@@ -17,9 +20,11 @@ session_start();
 
     <?php 
 
-    $query_doc = "SELECT * from usuarios where id_usuario=$id_doctor and rol=2 and sn_activo=1";
-    $resultado_doc = $conexion->query($query_doc);
-    while($ver = $resultado_doc->fetch_assoc())
+    $SQL = "SELECT * from usuarios where id_usuario=$id_doctor and rol=2 and sn_activo=1";
+    $query = $pdo->prepare($sql);
+    $query->execute();
+    $list = $query->fetchAll();
+    foreach ($list as $ver) 
     {
      ?>
 

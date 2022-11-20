@@ -132,7 +132,7 @@ $id_usu=$_SESSION['id'];
                     <div id="loader" class="text-center">
                         <div class="col-md-offset-4">
                             <img src="loader.gif" style="width: 100px"></div>
-                        </div>
+                        </div> 
 
                         <!-- PEDIATRIA -->
                         <?php if ($id_especialidad==1): ?>

@@ -116,7 +116,10 @@
     if (isset($_POST['4_5metodoSi'])){ $metodoSi4_5 = $_POST['4_5metodoSi'];} else {$metodoSi4_5='';}
     if (isset($_POST['4_6papanicolao'])){ $papanicolao4_6 = $_POST['4_6papanicolao'];} else {$papanicolao4_6='';}
 
-    include '../../conexion_i.php';
+    include '../../conexion.php';
+    if ( !isset($pdo) ) {
+        $pdo = connect(); 
+    }
 
     /*
 ANTES
@@ -138,25 +141,33 @@ CAMBIO
         }*/
     
 
-    $result = mysqli_query($conexion,"SELECT id_Paciente FROM pacientes WHERE id_doctor=$id_doctor and id_Paciente=(SELECT MAX(id_Paciente) FROM pacientes WHERE id_doctor=$id_doctor)");
-    $row = mysqli_fetch_array($result);
+    $sql = mysqli_query($conexion,"SELECT id_Paciente FROM pacientes WHERE id_doctor=$id_doctor and id_Paciente=(SELECT MAX(id_Paciente) FROM pacientes WHERE id_doctor=$id_doctor)");
+    $query = $pdo->prepare($sql);
+    $query->execute();
+    $row = $query->fetchAll();
     $row1 =  $row['id_Paciente'] + 1;
 
 
-	$add="INSERT INTO pacientes(id_doctor, id_Paciente, fl_File, nb_Paciente, fh_Ingreso, fh_Nacimiento, nu_Edad, id_Sexo,de_Ocupacion, nu_Celular, de_Email, de_Otros_datos, de_Estado_civil, id_Sangre,de_Religion, nb_Emergencia, nu_Emergencia, de_Domicilio,id_Aseguradora,sn_Activo) VALUES ('$id_doctor','$row1','$file','$nb_Paciente', '$fh_Ingreso', '$fh_Nacimiento', '$nu_Edad', '$id_Sexo','$de_Ocupacion', '$nu_Celular', '$de_Email', '$de_Otros_datos', '$de_Estado_civil', '$id_Sangre','$de_Religion', '$nb_Emergencia', '$nu_Emergencia', '$de_Domicilio', '$id_Aseguradora', '1')";
-	$resent=mysqli_query($conexion, $add);
+	$sql="INSERT INTO pacientes(id_doctor, id_Paciente, fl_File, nb_Paciente, fh_Ingreso, fh_Nacimiento, nu_Edad, id_Sexo,de_Ocupacion, nu_Celular, de_Email, de_Otros_datos, de_Estado_civil, id_Sangre,de_Religion, nb_Emergencia, nu_Emergencia, de_Domicilio,id_Aseguradora,sn_Activo) VALUES ('$id_doctor','$row1','$file','$nb_Paciente', '$fh_Ingreso', '$fh_Nacimiento', '$nu_Edad', '$id_Sexo','$de_Ocupacion', '$nu_Celular', '$de_Email', '$de_Otros_datos', '$de_Estado_civil', '$id_Sangre','$de_Religion', '$nb_Emergencia', '$nu_Emergencia', '$de_Domicilio', '$id_Aseguradora', '1')";
+    $query = $pdo->prepare($sql);
+    $query->execute();
 
-	$add_antecedentes="INSERT INTO antecedentes(id_doctor, id_paciente) VALUES ('$id_doctor','$row1')";
-	$ejecutar_recetas=mysqli_query($conexion, $add_antecedentes);
+	$sql="INSERT INTO antecedentes(id_doctor, id_paciente) VALUES ('$id_doctor','$row1')";
+    $query = $pdo->prepare($sql);
+    $query->execute();
 
-	$add_datos_fiscales="INSERT INTO datos_fiscales(id_doctor, id_paciente, razon_social, RFC, domicilio, colonia, estado, municipio, correo) VALUES ('$id_doctor','$row1','$razon_social','$RFC','$domicilio', '$colonia', '$estado', '$municipio', '$correo')";
-	$ejecutar_datos_fiscales=mysqli_query($conexion, $add_datos_fiscales);
+	$sql="INSERT INTO datos_fiscales(id_doctor, id_paciente, razon_social, RFC, domicilio, colonia, estado, municipio, correo) VALUES ('$id_doctor','$row1','$razon_social','$RFC','$domicilio', '$colonia', '$estado', '$municipio', '$correo')";
+    $query = $pdo->prepare($sql);
+    $query->execute();
     
     //MAX DE ANTECEDENTES DEL QUESTIONARIO
-    $result = mysqli_query($conexion,"SELECT id FROM antecedentes_c WHERE id_doctor=$id_doctor and id_Paciente= $row1");
-    if ($rowAntecedente = mysqli_fetch_array($result))
-    {
-        $max =  $rowAntecedente['id'] + 1;
+    $sql = "SELECT id FROM antecedentes_c WHERE id_doctor=$id_doctor and id_Paciente= $row1";
+    $query = $pdo->prepare($sql);
+    $query->execute();
+    $row = $query->fetchAll();
+    if ($buscar > 0)
+	{
+        $max =  $row['id'] + 1;
     } else{
         $max = 1;
     }
@@ -164,26 +175,28 @@ CAMBIO
     //PREGUNTA 1.1: DIABETES
     $val = 0; if  ($diabetesSi1_1 == "on"){ $val = 1; } else { $val = 0; }
 
-    $pregunta="INSERT INTO antecedentes_c (id, id_doctor, id_paciente, tipoAntecedente, pregunta, preguntadesc, Respuesta, Detalle, fechaActualiza, fechaUltimaMod) 
+    $sql="INSERT INTO antecedentes_c (id, id_doctor, id_paciente, tipoAntecedente, pregunta, preguntadesc, Respuesta, Detalle, fechaActualiza, fechaUltimaMod) 
     VALUES ($max, $id_doctor, $row1, 1, 1 , 'DIABETES',  $val, '" . strtoupper($diabetesDetalle1_1) . "', '".$fecha ."' , '". $fecha . "')";
 
-	if ($resent=mysqli_query($conexion, $pregunta)){
+$query = $pdo->prepare($sql);
+if ($query->execute()){
         echo "Pregunta1.1: Guardado correctamente";
     } else{
-        printf("Errormessage: %s\n", mysqli_error($conexion));
+        printf("Errormessage: %s\n");
     }
 
      //PREGUNTA 1.2: HIPERTENSION ARTERIAL
     $max = $max + 1;
      $val = 0; if  ($haSi1_2 == "on"){ $val = 1; } else { $val = 0; }
 
-     $pregunta="INSERT INTO antecedentes_c (id, id_doctor, id_paciente, tipoAntecedente, pregunta, preguntadesc, Respuesta, Detalle, fechaActualiza, fechaUltimaMod) 
+     $sql="INSERT INTO antecedentes_c (id, id_doctor, id_paciente, tipoAntecedente, pregunta, preguntadesc, Respuesta, Detalle, fechaActualiza, fechaUltimaMod) 
      VALUES ($max, $id_doctor, $row1, 1, 2 , 'HIPERTENSION ARTERIAL',  $val, '" . strtoupper($haDetalle1_2) . "', '".$fecha ."' , '". $fecha . "')";
- 
-     if ($resent=mysqli_query($conexion, $pregunta)){
+    
+    $query = $pdo->prepare($sql);
+	if ($query->execute()){
          echo "Pregunta1.2: Guardado correctamente";
      } else{
-         printf("Errormessage: %s\n", mysqli_error($conexion));
+         printf("Errormessage: %s\n");
      }
 
      //PREGUNTA 1.3 NEUROPATIAS
@@ -191,13 +204,14 @@ CAMBIO
 
      $val = 0; if  ($neuroSi1_3 == "on"){ $val = 1; } else { $val = 0; }
 
-     $pregunta="INSERT INTO antecedentes_c (id, id_doctor, id_paciente, tipoAntecedente, pregunta, preguntadesc, Respuesta, Detalle, fechaActualiza, fechaUltimaMod) 
+     $sql="INSERT INTO antecedentes_c (id, id_doctor, id_paciente, tipoAntecedente, pregunta, preguntadesc, Respuesta, Detalle, fechaActualiza, fechaUltimaMod) 
      VALUES ($max, $id_doctor, $row1, 1, 3 , 'NEUROPATIAS',  $val, '" . strtoupper($neuroDetalle1_3) . "', '".$fecha ."' , '". $fecha . "')";
- 
-     if ($resent=mysqli_query($conexion, $pregunta)){
+    
+    $query = $pdo->prepare($sql);
+	if ($query->execute()){
          echo "Pregunta1.3: Guardado correctamente";
      } else{
-         printf("Errormessage: %s\n", mysqli_error($conexion));
+         printf("Errormessage: %s\n");
      }
 
      //PREGUNTA 1.4 CANCER
@@ -205,13 +219,14 @@ CAMBIO
 
      $val = 0; if  ($cancerSi1_4 == "on"){ $val = 1; } else { $val = 0; }
 
-     $pregunta="INSERT INTO antecedentes_c (id, id_doctor, id_paciente, tipoAntecedente, pregunta, preguntadesc, Respuesta, Detalle, fechaActualiza, fechaUltimaMod) 
+     $sql="INSERT INTO antecedentes_c (id, id_doctor, id_paciente, tipoAntecedente, pregunta, preguntadesc, Respuesta, Detalle, fechaActualiza, fechaUltimaMod) 
      VALUES ($max, $id_doctor, $row1, 1, 4 , 'CANCER',  $val, '" . strtoupper($cancerDetalle1_4) . "', '".$fecha ."' , '". $fecha . "')";
- 
-     if ($resent=mysqli_query($conexion, $pregunta)){
+    
+    $query = $pdo->prepare($sql);
+	if ($query->execute()){
          echo "Pregunta1.4: Guardado correctamente";
      } else{
-         printf("Errormessage: %s\n", mysqli_error($conexion));
+         printf("Errormessage: %s\n");
      }
 
      //PREGUNTA 1.5: CARDIOPATIAS
@@ -219,13 +234,14 @@ CAMBIO
 
      $val = 0; if  ($cardiopatiasSi1_5 == "on"){ $val = 1; } else { $val = 0; }
 
-     $pregunta="INSERT INTO antecedentes_c (id, id_doctor, id_paciente, tipoAntecedente, pregunta, preguntadesc, Respuesta, Detalle, fechaActualiza, fechaUltimaMod) 
+     $sql="INSERT INTO antecedentes_c (id, id_doctor, id_paciente, tipoAntecedente, pregunta, preguntadesc, Respuesta, Detalle, fechaActualiza, fechaUltimaMod) 
      VALUES ($max, $id_doctor, $row1, 1, 5 , 'CARDIOPATIAS',  $val, '" . strtoupper($cardiopatiasDetalle1_5) . "', '".$fecha ."' , '". $fecha . "')";
- 
-     if ($resent=mysqli_query($conexion, $pregunta)){
+    
+    $query = $pdo->prepare($sql);
+	if ($query->execute()){
          echo "Pregunta1.5: Guardado correctamente";
      } else{
-         printf("Errormessage: %s\n", mysqli_error($conexion));
+         printf("Errormessage: %s\n");
      }
      
      //PREGUNTA 1.6: MALFORMACIONES
@@ -233,13 +249,14 @@ CAMBIO
 
      $val = 0; if  ($malformSi1_6 == "on"){ $val = 1; } else { $val = 0; }
 
-     $pregunta="INSERT INTO antecedentes_c (id, id_doctor, id_paciente, tipoAntecedente, pregunta, preguntadesc, Respuesta, Detalle, fechaActualiza, fechaUltimaMod) 
+     $sql="INSERT INTO antecedentes_c (id, id_doctor, id_paciente, tipoAntecedente, pregunta, preguntadesc, Respuesta, Detalle, fechaActualiza, fechaUltimaMod) 
      VALUES ($max, $id_doctor, $row1, 1, 6 , 'MALFORMACIONES',  $val, '" . strtoupper($malformDetalle1_6) . "', '".$fecha ."' , '". $fecha . "')";
- 
-     if ($resent=mysqli_query($conexion, $pregunta)){
+    
+    $query = $pdo->prepare($sql);
+	if ($query->execute()){
          echo "Pregunta1.6: Guardado correctamente";
      } else{
-         printf("Errormessage: %s\n", mysqli_error($conexion));
+         printf("Errormessage: %s\n");
      }
 
 
@@ -248,13 +265,14 @@ CAMBIO
 
      $val = 0; if  ($tabaquismoSi2_1 == "on"){ $val = 1; } else { $val = 0; }
 
-     $pregunta="INSERT INTO antecedentes_c (id, id_doctor, id_paciente, tipoAntecedente, pregunta, preguntadesc, Respuesta, Detalle, fechaActualiza, fechaUltimaMod) 
+     $sql="INSERT INTO antecedentes_c (id, id_doctor, id_paciente, tipoAntecedente, pregunta, preguntadesc, Respuesta, Detalle, fechaActualiza, fechaUltimaMod) 
      VALUES ($max, $id_doctor, $row1, 2, 1 , 'TABAQUISMO',  $val, '" . strtoupper($tabaquismoDetalle2_1) . "', '".$fecha ."' , '". $fecha . "')";
- 
-     if ($resent=mysqli_query($conexion, $pregunta)){
+    
+    $query = $pdo->prepare($sql);
+	if ($query->execute()){
          echo "Pregunta2.1: Guardado correctamente";
      } else{
-         printf("Errormessage: %s\n", mysqli_error($conexion));
+         printf("Errormessage: %s\n");
      }
 
      
@@ -263,13 +281,14 @@ CAMBIO
 
      $val = 0; if  ( $alcoholSi2_2 == "on"){ $val = 1; } else { $val = 0; }
 
-     $pregunta="INSERT INTO antecedentes_c (id, id_doctor, id_paciente, tipoAntecedente, pregunta, preguntadesc, Respuesta, Detalle, fechaActualiza, fechaUltimaMod) 
+     $sql="INSERT INTO antecedentes_c (id, id_doctor, id_paciente, tipoAntecedente, pregunta, preguntadesc, Respuesta, Detalle, fechaActualiza, fechaUltimaMod) 
      VALUES ($max, $id_doctor, $row1, 2, 2 , 'ALCOHOL',  $val, '" . strtoupper($alcoholDetalle2_2) . "', '".$fecha ."' , '". $fecha . "')";
- 
-     if ($resent=mysqli_query($conexion, $pregunta)){
+    
+    $query = $pdo->prepare($sql);
+	if ($query->execute()){
          echo "Pregunta2.2: Guardado correctamente";
      } else{
-         printf("Errormessage: %s\n", mysqli_error($conexion));
+         printf("Errormessage: %s\n");
      }
      
      //PREGUNTA 2.3: ALIMENTACIÓN ADECUADA
@@ -277,13 +296,14 @@ CAMBIO
 
      $val = 0; if  ( $alimenSi2_3 == "on"){ $val = 1; } else { $val = 0; }
 
-     $pregunta="INSERT INTO antecedentes_c (id, id_doctor, id_paciente, tipoAntecedente, pregunta, preguntadesc, Respuesta, Detalle, fechaActualiza, fechaUltimaMod) 
+     $sql="INSERT INTO antecedentes_c (id, id_doctor, id_paciente, tipoAntecedente, pregunta, preguntadesc, Respuesta, Detalle, fechaActualiza, fechaUltimaMod) 
      VALUES ($max, $id_doctor, $row1, 2, 3 , 'ALIMENTACIÓN ADECUADA',  $val, '" . strtoupper($alimenDetalle2_3) . "', '".$fecha ."' , '". $fecha . "')";
- 
-     if ($resent=mysqli_query($conexion, $pregunta)){
+    
+    $query = $pdo->prepare($sql);
+	if ($query->execute()){
          echo "Pregunta2.3: Guardado correctamente";
      } else{
-         printf("Errormessage: %s\n", mysqli_error($conexion));
+         printf("Errormessage: %s\n");
      }
     
      //PREGUNTA 2.4: USO DE DROGAS RECREATIVAS
@@ -291,13 +311,14 @@ CAMBIO
 
      $val = 0; if  ( $drogasSi2_4 == "on"){ $val = 1; } else { $val = 0; }
 
-     $pregunta="INSERT INTO antecedentes_c (id, id_doctor, id_paciente, tipoAntecedente, pregunta, preguntadesc, Respuesta, Detalle, fechaActualiza, fechaUltimaMod) 
+     $sql="INSERT INTO antecedentes_c (id, id_doctor, id_paciente, tipoAntecedente, pregunta, preguntadesc, Respuesta, Detalle, fechaActualiza, fechaUltimaMod) 
      VALUES ($max, $id_doctor, $row1, 2, 4 , 'USO DE DROGAS RECREATIVAS',  $val, '" . strtoupper($drogasDetalle2_4) . "', '".$fecha ."' , '". $fecha . "')";
  
-     if ($resent=mysqli_query($conexion, $pregunta)){
+    $query = $pdo->prepare($sql);
+    if ($query->execute()){
          echo "Pregunta2.4: Guardado correctamente";
      } else{
-         printf("Errormessage: %s\n", mysqli_error($conexion));
+         printf("Errormessage: %s\n");
      }
     
    
@@ -306,25 +327,27 @@ CAMBIO
 
      $val = 0; if  ( $medicaSi2_5 == "on"){ $val = 1; } else { $val = 0; }
 
-     $pregunta="INSERT INTO antecedentes_c (id, id_doctor, id_paciente, tipoAntecedente, pregunta, preguntadesc, Respuesta, Detalle, fechaActualiza, fechaUltimaMod) 
+     $sql="INSERT INTO antecedentes_c (id, id_doctor, id_paciente, tipoAntecedente, pregunta, preguntadesc, Respuesta, Detalle, fechaActualiza, fechaUltimaMod) 
      VALUES ($max, $id_doctor, $row1, 2, 5 , '¿QUÉ MEDICAMENTOS UTILIZA COMUNMENTE?',  $val, '" . strtoupper($medicaDetalle2_5) . "', '".$fecha ."' , '". $fecha . "')";
  
-     if ($resent=mysqli_query($conexion, $pregunta)){
+    $query = $pdo->prepare($sql);
+    if ($query->execute()){
          echo "Pregunta2.5: Guardado correctamente";
      } else{
-         printf("Errormessage: %s\n", mysqli_error($conexion));
+         printf("Errormessage: %s\n");
      }
 
      //PREGUNTA 2.6 TIPO DE SANGUINIO
      $max = $max + 1;
  
-     $pregunta="INSERT INTO antecedentes_c (id, id_doctor, id_paciente, tipoAntecedente, pregunta, preguntadesc, Respuesta, Detalle, fechaActualiza, fechaUltimaMod) 
+     $sql="INSERT INTO antecedentes_c (id, id_doctor, id_paciente, tipoAntecedente, pregunta, preguntadesc, Respuesta, Detalle, fechaActualiza, fechaUltimaMod) 
      VALUES ($max, $id_doctor, $row1, 2, 6 , 'TIPO DE SANGUINIO',  0, '" . strtoupper($tipoSangre2_6) . "', '".$fecha ."' , '". $fecha . "')";
- 
-     if ($resent=mysqli_query($conexion, $pregunta)){
+    
+    $query = $pdo->prepare($sql);
+	if ($query->execute()){
          echo "Pregunta2.6: Guardado correctamente";
      } else{
-         printf("Errormessage: %s\n", mysqli_error($conexion));
+         printf("Errormessage: %s\n");
      }
      
      //PREGUNTA 2.7 PESO
@@ -347,13 +370,14 @@ CAMBIO
         
         }
 
-     $pregunta="INSERT INTO antecedentes_c (id, id_doctor, id_paciente, tipoAntecedente, pregunta, preguntadesc, Respuesta, Detalle, fechaActualiza, fechaUltimaMod) 
+     $sql="INSERT INTO antecedentes_c (id, id_doctor, id_paciente, tipoAntecedente, pregunta, preguntadesc, Respuesta, Detalle, fechaActualiza, fechaUltimaMod) 
      VALUES ($max, $id_doctor, $row1, 2, 7 , 'PESO',  $val, '" . $descripcion . "', '".$fecha ."' , '". $fecha . "')";
  
-     if ($resent=mysqli_query($conexion, $pregunta)){
+    $query = $pdo->prepare($sql);
+    if ($query->execute()){
          echo "Pregunta2.7: Guardado correctamente";
      } else{
-         printf("Errormessage: %s\n", mysqli_error($conexion));
+         printf("Errormessage: %s\n");
      }
   
     //PREGUNTA 3.1: DIABETES
@@ -361,13 +385,14 @@ CAMBIO
 
     $val = 0; if  ( $diabetesSi3_1 == "on"){ $val = 1; } else { $val = 0; }
 
-    $pregunta="INSERT INTO antecedentes_c (id, id_doctor, id_paciente, tipoAntecedente, pregunta, preguntadesc, Respuesta, Detalle, fechaActualiza, fechaUltimaMod) 
+    $sql="INSERT INTO antecedentes_c (id, id_doctor, id_paciente, tipoAntecedente, pregunta, preguntadesc, Respuesta, Detalle, fechaActualiza, fechaUltimaMod) 
     VALUES ($max, $id_doctor, $row1, 3, 1 , 'DIABETES',  $val, '" . strtoupper($diabetesDetalle3_1) . "', '".$fecha ."' , '". $fecha . "')";
 
-    if ($resent=mysqli_query($conexion, $pregunta)){
+    $query = $pdo->prepare($sql);
+    if ($query->execute()){
         echo "Pregunta3.1: Guardado correctamente";
     } else{
-        printf("Errormessage: %s\n", mysqli_error($conexion));
+        printf("Errormessage: %s\n");
     }
 
     //PREGUNTA 3.2:  HIPERTENSION ARTERIAL
@@ -375,13 +400,14 @@ CAMBIO
 
     $val = 0; if  ( $haSi3_2 == "on"){ $val = 1; } else { $val = 0; }
 
-    $pregunta="INSERT INTO antecedentes_c (id, id_doctor, id_paciente, tipoAntecedente, pregunta, preguntadesc, Respuesta, Detalle, fechaActualiza, fechaUltimaMod) 
+    $sql="INSERT INTO antecedentes_c (id, id_doctor, id_paciente, tipoAntecedente, pregunta, preguntadesc, Respuesta, Detalle, fechaActualiza, fechaUltimaMod) 
     VALUES ($max, $id_doctor, $row1, 3, 2 , 'HIPERTENSION ARTERIAL',  $val, '" . strtoupper($haDetalle3_2) . "', '".$fecha ."' , '". $fecha . "')";
 
-    if ($resent=mysqli_query($conexion, $pregunta)){
+    $query = $pdo->prepare($sql);
+    if ($query->execute()){
         echo "Pregunta3.2: Guardado correctamente";
     } else{
-        printf("Errormessage: %s\n", mysqli_error($conexion));
+        printf("Errormessage: %s\n");
     }
 
     //PREGUNTA 3.3: PROBLEMA DE TIROIDES   
@@ -389,13 +415,14 @@ CAMBIO
 
     $val = 0; if  ( $tiroidesSi3_3 == "on"){ $val = 1; } else { $val = 0; }
 
-    $pregunta="INSERT INTO antecedentes_c (id, id_doctor, id_paciente, tipoAntecedente, pregunta, preguntadesc, Respuesta, Detalle, fechaActualiza, fechaUltimaMod) 
+    $sql="INSERT INTO antecedentes_c (id, id_doctor, id_paciente, tipoAntecedente, pregunta, preguntadesc, Respuesta, Detalle, fechaActualiza, fechaUltimaMod) 
     VALUES ($max, $id_doctor, $row1, 3, 3 , 'PROBLEMA DE TIROIDES',  $val, '" . strtoupper($tiroidesDetalle3_3) . "', '".$fecha ."' , '". $fecha . "')";
 
-    if ($resent=mysqli_query($conexion, $pregunta)){
+    $query = $pdo->prepare($sql);
+    if ($query->execute()){
         echo "Pregunta3.3: Guardado correctamente";
     } else{
-        printf("Errormessage: %s\n", mysqli_error($conexion));
+        printf("Errormessage: %s\n");
     }
 
     //PREGUNTA 3.4: ALERGIAS   
@@ -403,13 +430,14 @@ CAMBIO
 
     $val = 0; if  ( $alergiasSi3_4 == "on"){ $val = 1; } else { $val = 0; }
 
-    $pregunta="INSERT INTO antecedentes_c (id, id_doctor, id_paciente, tipoAntecedente, pregunta, preguntadesc, Respuesta, Detalle, fechaActualiza, fechaUltimaMod) 
+    $sql="INSERT INTO antecedentes_c (id, id_doctor, id_paciente, tipoAntecedente, pregunta, preguntadesc, Respuesta, Detalle, fechaActualiza, fechaUltimaMod) 
     VALUES ($max, $id_doctor, $row1, 3, 4 , 'ALERGIAS',  $val, '" . strtoupper($alergiasDetalle3_4) . "', '".$fecha ."' , '". $fecha . "')";
 
-    if ($resent=mysqli_query($conexion, $pregunta)){
+    $query = $pdo->prepare($sql);
+    if ($query->execute()){
         echo "Pregunta3.4: Guardado correctamente";
     } else{
-        printf("Errormessage: %s\n", mysqli_error($conexion));
+        printf("Errormessage: %s\n");
     }
     
 
@@ -418,13 +446,14 @@ CAMBIO
 
     $val = 0; if  ( $cpSi3_5 == "on"){ $val = 1; } else { $val = 0; }
     
-    $pregunta="INSERT INTO antecedentes_c (id, id_doctor, id_paciente, tipoAntecedente, pregunta, preguntadesc, Respuesta, Detalle, fechaActualiza, fechaUltimaMod) 
+    $sql="INSERT INTO antecedentes_c (id, id_doctor, id_paciente, tipoAntecedente, pregunta, preguntadesc, Respuesta, Detalle, fechaActualiza, fechaUltimaMod) 
     VALUES ($max, $id_doctor, $row1, 3, 5 , 'CIRUGIAS PREVIAS',  $val, '" . strtoupper($cpDetalle3_5) . "', '".$fecha ."' , '". $fecha . "')";
     
-    if ($resent=mysqli_query($conexion, $pregunta)){
+    $query = $pdo->prepare($sql);
+	if ($query->execute()){
         echo "Pregunta3.5: Guardado correctamente";
     } else{
-        printf("Errormessage: %s\n", mysqli_error($conexion));
+        printf("Errormessage: %s\n");
     }
         
     
@@ -433,13 +462,14 @@ CAMBIO
 
    $val = 0; if  ( $hpSi3_6 == "on"){ $val = 1; } else { $val = 0; }
     
-   $pregunta="INSERT INTO antecedentes_c (id, id_doctor, id_paciente, tipoAntecedente, pregunta, preguntadesc, Respuesta, Detalle, fechaActualiza, fechaUltimaMod) 
+   $sql="INSERT INTO antecedentes_c (id, id_doctor, id_paciente, tipoAntecedente, pregunta, preguntadesc, Respuesta, Detalle, fechaActualiza, fechaUltimaMod) 
    VALUES ($max, $id_doctor, $row1, 3, 6 , 'HOSPITALIZACIONES PREVIAS',  $val, '" . strtoupper($hpDetalle3_6) . "', '".$fecha ."' , '". $fecha . "')";
    
-   if ($resent=mysqli_query($conexion, $pregunta)){
+   $query = $pdo->prepare($sql);
+	if ($query->execute()){
        echo "Pregunta3.6: Guardado correctamente";
    } else{
-       printf("Errormessage: %s\n", mysqli_error($conexion));
+       printf("Errormessage: %s\n");
    }
       
    //PREGUNTA 3.7: FRACTURAS  
@@ -447,13 +477,14 @@ CAMBIO
 
    $val = 0; if  ( $fracturasSi3_7 == "on"){ $val = 1; } else { $val = 0; }
     
-   $pregunta="INSERT INTO antecedentes_c (id, id_doctor, id_paciente, tipoAntecedente, pregunta, preguntadesc, Respuesta, Detalle, fechaActualiza, fechaUltimaMod) 
+   $sql="INSERT INTO antecedentes_c (id, id_doctor, id_paciente, tipoAntecedente, pregunta, preguntadesc, Respuesta, Detalle, fechaActualiza, fechaUltimaMod) 
    VALUES ($max, $id_doctor, $row1, 3, 7 , 'FACTURAS',  $val, '" . strtoupper($fracturasDetalle3_7) . "', '".$fecha ."' , '". $fecha . "')";
    
-   if ($resent=mysqli_query($conexion, $pregunta)){
+   $query = $pdo->prepare($sql);
+	if ($query->execute()){
        echo "Pregunta3.7: Guardado correctamente";
    } else{
-       printf("Errormessage: %s\n", mysqli_error($conexion));
+       printf("Errormessage: %s\n");
    }    
 
    //PREGUNTA 3.8: ¿SUFRE USTED DE ALGUNA OTRA ENFERMEDAD?  
@@ -461,62 +492,67 @@ CAMBIO
 
    $val = 0; if  ( $otraSi3_8 == "on"){ $val = 1; } else { $val = 0; }
     
-   $pregunta="INSERT INTO antecedentes_c (id, id_doctor, id_paciente, tipoAntecedente, pregunta, preguntadesc, Respuesta, Detalle, fechaActualiza, fechaUltimaMod) 
+   $sql="INSERT INTO antecedentes_c (id, id_doctor, id_paciente, tipoAntecedente, pregunta, preguntadesc, Respuesta, Detalle, fechaActualiza, fechaUltimaMod) 
    VALUES ($max, $id_doctor, $row1, 3, 8 , '¿SUFRE USTED DE ALGUNA OTRA ENFERMEDAD?',  $val, '" . strtoupper($otraDetalle3_8) . "', '".$fecha ."' , '". $fecha . "')";
    
-   if ($resent=mysqli_query($conexion, $pregunta)){
+   $query = $pdo->prepare($sql);
+	if ($query->execute()){
        echo "Pregunta3.7: Guardado correctamente";
    } else{
-       printf("Errormessage: %s\n", mysqli_error($conexion));
+       printf("Errormessage: %s\n");
    }    
 
 
    //PREGUNTA 4.1: EDAD DE PRIMERA MENSTRUACION 
    $max = $max + 1;
 
-   $pregunta="INSERT INTO antecedentes_c (id, id_doctor, id_paciente, tipoAntecedente, pregunta, preguntadesc, Respuesta, Detalle, fechaActualiza, fechaUltimaMod) 
+   $sql="INSERT INTO antecedentes_c (id, id_doctor, id_paciente, tipoAntecedente, pregunta, preguntadesc, Respuesta, Detalle, fechaActualiza, fechaUltimaMod) 
    VALUES ($max, $id_doctor, $row1, 4, 1 , 'EDAD DE PRIMERA MENSTRUACION',  0, '" . strtoupper($menstruacion4_1) . "', '".$fecha ."' , '". $fecha . "')";
    
-   if ($resent=mysqli_query($conexion, $pregunta)){
+   $query = $pdo->prepare($sql);
+	if ($query->execute()){
        echo "Pregunta4.1: Guardado correctamente";
    } else{
-       printf("Errormessage: %s\n", mysqli_error($conexion));
+       printf("Errormessage: %s\n");
    }    
 
   //PREGUNTA 4.2: ¿CADA CUANTO TIENE SU PERIODO?
   $max = $max + 1;
 
-  $pregunta="INSERT INTO antecedentes_c (id, id_doctor, id_paciente, tipoAntecedente, pregunta, preguntadesc, Respuesta, Detalle, fechaActualiza, fechaUltimaMod) 
+  $sql="INSERT INTO antecedentes_c (id, id_doctor, id_paciente, tipoAntecedente, pregunta, preguntadesc, Respuesta, Detalle, fechaActualiza, fechaUltimaMod) 
   VALUES ($max, $id_doctor, $row1, 4, 2 , '¿CADA CUANTO TIENE SU PERIODO?',  0, '" . strtoupper($cadaCuanto4_2) . "', '".$fecha ."' , '". $fecha . "')";
   
-  if ($resent=mysqli_query($conexion, $pregunta)){
+  $query = $pdo->prepare($sql);
+	if ($query->execute()){
       echo "Pregunta4.2: Guardado correctamente";
   } else{
-      printf("Errormessage: %s\n", mysqli_error($conexion));
+      printf("Errormessage: %s\n");
   }    
 
   //PREGUNTA 4.3: ¿CUÁNTOS DIAS DURA SU PERIODO?
   $max = $max + 1;
 
-  $pregunta="INSERT INTO antecedentes_c (id, id_doctor, id_paciente, tipoAntecedente, pregunta, preguntadesc, Respuesta, Detalle, fechaActualiza, fechaUltimaMod) 
+  $sql="INSERT INTO antecedentes_c (id, id_doctor, id_paciente, tipoAntecedente, pregunta, preguntadesc, Respuesta, Detalle, fechaActualiza, fechaUltimaMod) 
   VALUES ($max, $id_doctor, $row1, 4, 3 , '¿CUÁNTOS DIAS DURA SU PERIODO?',  0, '" . strtoupper($duraPeriodo4_3) . "', '".$fecha ."' , '". $fecha . "')";
   
-  if ($resent=mysqli_query($conexion, $pregunta)){
+  $query = $pdo->prepare($sql);
+	if ($query->execute()){
       echo "Pregunta4.3: Guardado correctamente";
   } else{
-      printf("Errormessage: %s\n", mysqli_error($conexion));
+      printf("Errormessage: %s\n");
   }    
   
     //PREGUNTA 4.4: ¿QUÉ DIA INICIO SU ULTIMO PERIODO?
     $max = $max + 1;
 
-    $pregunta="INSERT INTO antecedentes_c (id, id_doctor, id_paciente, tipoAntecedente, pregunta, preguntadesc, Respuesta, Detalle, fechaActualiza, fechaUltimaMod) 
+    $sql="INSERT INTO antecedentes_c (id, id_doctor, id_paciente, tipoAntecedente, pregunta, preguntadesc, Respuesta, Detalle, fechaActualiza, fechaUltimaMod) 
     VALUES ($max, $id_doctor, $row1, 4, 4 , '¿QUÉ DIA INICIO SU ULTIMO PERIODO?',  0, '" . strtoupper($inicioUltimo4_4) . "', '".$fecha ."' , '". $fecha . "')";
 
-    if ($resent=mysqli_query($conexion, $pregunta)){
+    $query = $pdo->prepare($sql);
+    if ($query->execute()){
         echo "Pregunta4.4: Guardado correctamente";
     } else{
-        printf("Errormessage: %s\n", mysqli_error($conexion));
+        printf("Errormessage: %s\n");
     }    
 
     //PREGUNTA 4.5: ¿UTILIZA ALGUN METODO ANTICONCEPTIVO?
@@ -524,10 +560,11 @@ CAMBIO
 
     $val = 0; if  ( $metodoSi4_5 == "on"){ $val = 1; } else { $val = 0; }
    
-    $pregunta="INSERT INTO antecedentes_c (id, id_doctor, id_paciente, tipoAntecedente, pregunta, preguntadesc, Respuesta, Detalle, fechaActualiza, fechaUltimaMod) 
+    $sql="INSERT INTO antecedentes_c (id, id_doctor, id_paciente, tipoAntecedente, pregunta, preguntadesc, Respuesta, Detalle, fechaActualiza, fechaUltimaMod) 
     VALUES ($max, $id_doctor, $row1, 4, 5 , '¿UTILIZA ALGUN METODO ANTICONCEPTIVO?',  $val, '" . strtoupper($metodoDetalle4_5) . "', '".$fecha ."' , '". $fecha . "')";
 
-    if ($resent=mysqli_query($conexion, $pregunta)){
+    $query = $pdo->prepare($sql);
+    if ($query->execute()){
         echo "Pregunta4.5: Guardado correctamente";
     } else{
         printf("Errormessage: %s\n", mysqli_error($conexion));
@@ -536,13 +573,14 @@ CAMBIO
 //PREGUNTA 4.6: FECHA DE SU ULTIMO PAPANICOLAO
    $max = $max + 1;
 
-$pregunta="INSERT INTO antecedentes_c (id, id_doctor, id_paciente, tipoAntecedente, pregunta, preguntadesc, Respuesta, Detalle, fechaActualiza, fechaUltimaMod) 
+$sql="INSERT INTO antecedentes_c (id, id_doctor, id_paciente, tipoAntecedente, pregunta, preguntadesc, Respuesta, Detalle, fechaActualiza, fechaUltimaMod) 
 VALUES ($max, $id_doctor, $row1, 4, 6 , 'FECHA DE SU ULTIMO PAPANICOLAO',  0, '" . strtoupper($papanicolao4_6) . "', '".$fecha ."' , '". $fecha . "')";
 
-if ($resent=mysqli_query($conexion, $pregunta)){
+$query = $pdo->prepare($sql);
+	if ($query->execute()){
     echo "Pregunta4.6: Guardado correctamente";
 } else{
-    printf("Errormessage: %s\n", mysqli_error($conexion));
+    printf("Errormessage: %s\n");
 }   
 
 

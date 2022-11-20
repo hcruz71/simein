@@ -5,15 +5,20 @@ use setasign\Fpdi\Fpdi;
 session_start();
 if (isset($_SESSION['percentiles'])) {
 
-    include '../conexion_i.php';
+    include '../conexion.php';
+    if ( !isset($pdo) ) {
+        $pdo = connect(); 
+    }
     $id_doctor=$_SESSION['id_usuario'];
     $id_pac_get=$_SESSION['id_pac_get'];
     $query_pac0 = "SELECT peso, talla, edad FROM historial_clinico where id_doctor=$id_doctor and id_Paciente=$id_pac_get and activo=1";
-    $resultado_pac1 = $conexion->query($query_pac0);
+    $query = $pdo->prepare($query_pac0);
+    $query->execute();
+    $resultado_pac1 = $query->fetchAll();
 
     //$VariablePercentila[] = 0;
     $i = 0;
-    while($row_pac1 = $resultado_pac1->fetch_assoc())
+    foreach ($resultado_pac1 as $row_pac1) 
     {
         if ( $row_pac1['talla']<> "" && $row_pac1['edad'] <> "" ){ 
           $VariablePercentila[$i] = [$row_pac1['talla'], $row_pac1['edad']];
@@ -23,16 +28,20 @@ if (isset($_SESSION['percentiles'])) {
 
 
     $query_c = "SELECT MAX(id) as id FROM historial_clinico where id_doctor=$id_doctor and id_paciente=$id_pac_get and activo=1";
-    $resultado_c = $conexion->query($query_c);
-    while($row_c = $resultado_c->fetch_assoc())
+    $query = $pdo->prepare($query_c);
+    $query->execute();
+    $resultado_pac1 = $query->fetchAll();
+    foreach ($resultado_pac1 as $row_c) 
 
     {
       $id=$row_c['id'];
 
     }
-      $query_c2 = "SELECT peso, talla, edad FROM historial_clinico where id=$id";
-      $resultado_c2 = $conexion->query($query_c2);
-      while($row_c2 = $resultado_c2->fetch_assoc())
+      $sql = "SELECT peso, talla, edad FROM historial_clinico where id=$id";
+      $query = $pdo->prepare($sql);
+      $query->execute();
+      $list = $query->fetchAll();
+      foreach ($list as $row_c2) 
       {
         $PESO=$row_c2['peso'];
         $TALLA=$row_c['talla'];

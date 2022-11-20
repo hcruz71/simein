@@ -5,23 +5,34 @@ if(!isset($_SESSION)) {
 	session_start();
 }
 $id_doctor=$_SESSION['id_usuario'];
-include '../conexion_i.php';
+include '../conexion.php';	
+  
+    try {
+        if ( !isset($pdo) ) {
+            $pdo = connect(); 
+        }                       
+    } catch (PDOException $e) {
+         echo 'Falló la conexión: ' . $e->getMessage();
+         die();
+    }    
 header("Content-type: text/html; charset=utf8");
  //BUSCAR PACIENTES
 	if($_POST['buscar_pac']=="")
 	{
 		$tabla="";
-		$query="SELECT nb_Paciente, id_doctor, nu_Celular, nu_Edad, id_Paciente FROM pacientes WHERE id_doctor=$id_doctor and sn_Activo=1 ORDER BY id_Paciente desc ";
+		$sql="SELECT nb_Paciente, id_doctor, nu_Celular, nu_Edad, id_Paciente FROM pacientes WHERE id_doctor=$id_doctor and sn_Activo=1 ORDER BY id_Paciente desc ";
 		if(isset($_POST['buscar_pac']))
 		{
-			$q=$conexion->real_escape_string($_POST['buscar_pac']);
-			$query="SELECT nb_Paciente, id_doctor, nu_Celular, nu_Edad, id_Paciente FROM pacientes WHERE id_doctor=$id_doctor and
+			$q=$_POST['buscar_pac'];
+			$sql="SELECT nb_Paciente, id_doctor, nu_Celular, nu_Edad, id_Paciente FROM pacientes WHERE id_doctor=$id_doctor and
 				nb_Paciente LIKE '%".$q."%' ORDER BY nb_Paciente ASC ";
 		}
 
-		
-		$buscar=$conexion->query($query);
-		if ($buscar->num_rows > 0)
+		$query = $pdo->prepare($sql);
+		$query->execute();
+
+	   $buscar= $query->rowCount();
+	   if ($buscar > 0)
 		{
 			$tabla.='<div class="table-responsive">
 						<table class="table table-hover">
@@ -38,8 +49,9 @@ header("Content-type: text/html; charset=utf8");
 							</thead>
 							<tbody style="width: 100%;">';
 
-			while($fila= $buscar->fetch_assoc())
-			{
+				$list = $query->fetchAll();
+				foreach ($list as $fila) 
+				{
 				$tabla.=
 				'<tr class="btn-gris">
 					<td><img src="" class="img-responsive" style="width: 40px; border-radius: 10%"></td>
@@ -71,16 +83,19 @@ header("Content-type: text/html; charset=utf8");
 	if(isset($_POST['buscar_pac']))
 	{
 		$tabla="";
-		$query="SELECT nb_Paciente, id_doctor, nu_Celular, nu_Edad, id_Paciente FROM pacientes WHERE id_doctor=$id_doctor and sn_Activo=1 ORDER BY id_Paciente desc ";
+		$sql="SELECT nb_Paciente, id_doctor, nu_Celular, nu_Edad, id_Paciente FROM pacientes WHERE id_doctor=$id_doctor and sn_Activo=1 ORDER BY id_Paciente desc ";
 		if(isset($_POST['buscar_pac']))
 		{
-			$q=$conexion->real_escape_string($_POST['buscar_pac']);
-			$query="SELECT nb_Paciente, id_doctor, nu_Celular, nu_Edad, id_Paciente FROM pacientes WHERE id_doctor=$id_doctor and sn_Activo=1 and
+			$q=$_POST['buscar_pac'];
+			$sql="SELECT nb_Paciente, id_doctor, nu_Celular, nu_Edad, id_Paciente FROM pacientes WHERE id_doctor=$id_doctor and sn_Activo=1 and
 				nb_Paciente LIKE '%".$q."%' ORDER BY nb_Paciente ASC ";
 		}
 
-		$buscar=$conexion->query($query);
-		if ($buscar->num_rows > 0)
+		$query = $pdo->prepare($sql);
+		$query->execute();
+
+	   $buscar= $query->rowCount();
+	   if ($buscar > 0)
 		{
 			$tabla.='<div class="table-responsive">
 						<table class="table table-hover">
@@ -96,8 +111,9 @@ header("Content-type: text/html; charset=utf8");
 							</thead>
 							<tbody style="width: 100%;">';
 
-			while($fila= $buscar->fetch_assoc())
-			{
+				$list = $query->fetchAll();
+				foreach ($list as $fila) 
+				{
 				$tabla.=
 				'<tr class="btn-gris">
 					<td><img src="" class="img-responsive" style="width: 40px; border-radius: 5%"></td>

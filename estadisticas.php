@@ -22,20 +22,26 @@
 //utf8_decode($row['municipio'];
 $id_doctor=$_SESSION['id_usuario'];
 
-    require 'conexion_i.php';
+    require 'conexion.php'; 
+    if ( !isset($pdo) ) {
+        $pdo = connect(); 
+    }   
 
-
-    $query_doc = "SELECT count(id_doctor) AS F FROM pacientes where id_doctor=$id_doctor and id_Sexo='Femenino'";
-    $resultado_doc = $conexion->query($query_doc);
-    while($row_doc = $resultado_doc->fetch_assoc())
+    $sql = "SELECT count(id_doctor) AS F FROM pacientes where id_doctor=$id_doctor and id_Sexo='Femenino'";
+    $query = $pdo->prepare($sql);
+    $query->execute();
+    $list = $query->fetchAll();
+    foreach ($list as $row_doc) 
     {
         $F=$row_doc['F'];
 
     }
 
-    $query_m = "SELECT count(id_doctor) AS M FROM pacientes where id_doctor=$id_doctor and id_Sexo='Masculino'";
-    $resultado_m = $conexion->query($query_m);
-    while($row_m = $resultado_m->fetch_assoc())
+    $sql = "SELECT count(id_doctor) AS M FROM pacientes where id_doctor=$id_doctor and id_Sexo='Masculino'";
+    $query = $pdo->prepare($sql);
+    $query->execute();
+    $list = $query->fetchAll();
+    foreach ($list as $row_m) 
     {
         $M=$row_m['M'];
 

@@ -1,6 +1,11 @@
  <?php 
     session_start();
 
+    require 'conexion.php'; 
+    if ( !isset($pdo) ) {
+      $pdo = connect(); 
+    }   
+
     if (isset($_POST['id_ant'])) {
 
         $id=$_POST['id_ant'];
@@ -9,9 +14,10 @@
         $ant_np=$_POST['ant_np'];
         $ant_go=$_POST['ant_go'];
         $ant_alergicos=$_POST['ant_alergicos'];
-        include '../conexion_i.php';
-        $sentencia="update antecedentes set ant_hf='$ant_hf', ant_pp='$ant_pp', ant_np='$ant_np', ant_go='$ant_go', alergicos='$ant_alergicos' WHERE id='$id'";
-        $resent=mysqli_query($conexion,$sentencia);
+        
+        $sql="update antecedentes set ant_hf='$ant_hf', ant_pp='$ant_pp', ant_np='$ant_np', ant_go='$ant_go', alergicos='$ant_alergicos' WHERE id='$id'";
+        $query = $pdo->prepare($sql);
+        $query->execute();
         echo "update";
     }
 
@@ -34,18 +40,20 @@
         $diagnostico=$_POST['txt_diagnosticos'];
         $temperatura=$_POST['temperatura'];
         $fecha=date('y-m-d');
-        include '../conexion_i.php';
+        
 
         if($_POST['id_historial']==""){
 
-        $sentencia="INSERT INTO historial_clinico(id_doctor, id_paciente, fecha, padecimiento, exploracion, peso, talla, temperatura, imc, fc, fr, fur, semanas, diagnostico, gabinete, receta, activo) values ('$id_doctor', '$id_pac_get', '$fecha', '$padecimiento', '$exploracion', '$peso', '$talla', '$temperatura', '$imc', '$fc', '$fr', '$fur', '$semanas', '$diagnostico', '$gabinete', '$receta', '1')";
-        $resent=mysqli_query($conexion,$sentencia);
+        $sql="INSERT INTO historial_clinico(id_doctor, id_paciente, fecha, padecimiento, exploracion, peso, talla, temperatura, imc, fc, fr, fur, semanas, diagnostico, gabinete, receta, activo) values ('$id_doctor', '$id_pac_get', '$fecha', '$padecimiento', '$exploracion', '$peso', '$talla', '$temperatura', '$imc', '$fc', '$fr', '$fur', '$semanas', '$diagnostico', '$gabinete', '$receta', '1')";
+        $query = $pdo->prepare($sql);
+        $query->execute();
         echo " Historial Insertado";
 
         }else{
 
-        $sentencia="update historial_clinico set padecimiento='$padecimiento', exploracion='$exploracion', gabinete='$gabinete', receta='$receta', peso='$peso', talla='$talla', imc='$imc', fur='$fur', fc='$fc', semanas='$semanas', fr='$fr', diagnostico='$diagnostico', temperatura='$temperatura' WHERE id='$id'";
-        $resent=mysqli_query($conexion,$sentencia);
+        $sql="update historial_clinico set padecimiento='$padecimiento', exploracion='$exploracion', gabinete='$gabinete', receta='$receta', peso='$peso', talla='$talla', imc='$imc', fur='$fur', fc='$fc', semanas='$semanas', fr='$fr', diagnostico='$diagnostico', temperatura='$temperatura' WHERE id='$id'";
+        $query = $pdo->prepare($sql);
+        $query->execute();
         echo "Historial Guardado";
             
         }
@@ -66,16 +74,15 @@
         $id_honorarios=$_POST['id_honorarios'];
         $id_doctor=$_SESSION['id_usuario'];
 
-
-        include '../conexion_i.php';
-        $sentencia="update doctor set id_alergicos='$id_alergicos', id_hf='$id_hf', id_pp='$id_pp', id_np='$id_np', id_go='$id_go', id_exploracion='$id_exploracion', id_signos_vitales='$id_signos_vitales', id_diagnosticos='$id_diagnosticos', id_gabinete='$id_gabinete', id_honorarios='$id_honorarios' WHERE id_doctor='$id_doctor'";
-        $resent=mysqli_query($conexion,$sentencia);
+        $sql="update doctor set id_alergicos='$id_alergicos', id_hf='$id_hf', id_pp='$id_pp', id_np='$id_np', id_go='$id_go', id_exploracion='$id_exploracion', id_signos_vitales='$id_signos_vitales', id_diagnosticos='$id_diagnosticos', id_gabinete='$id_gabinete', id_honorarios='$id_honorarios' WHERE id_doctor='$id_doctor'";
+        $query = $pdo->prepare($sql);
+        $query->execute();
         echo "consulta";
         echo $id_alergicos;
     }
 
     if (isset($_POST['id_asistente'])) {
-        include '../conexion_i.php';
+        
         $id_doctor=$_SESSION['id_usuario'];
         $id=$_POST['id_asistente'];
         $nombre_asistente=$_POST['nombre_asistente'];
@@ -87,13 +94,15 @@
 
         if ($_POST['id_asistente']=="") {
 
-            $sentencia="INSERT INTO usuarios(id_usuario, usuario, nb_usuario, pw_usuario, fecha_ing, id_antecedentes, id_historial, rol, sn_activo) values ('$id_doctor', '$nombre_asistente', '$correo_asistente', '$pass_asistente', '$fecha', '$id_antecedente_asistente', '$id_historial_asistente', '2', '1')";
-            $resent=mysqli_query($conexion,$sentencia);
+            $sql="INSERT INTO usuarios(id_usuario, usuario, nb_usuario, pw_usuario, fecha_ing, id_antecedentes, id_historial, rol, sn_activo) values ('$id_doctor', '$nombre_asistente', '$correo_asistente', '$pass_asistente', '$fecha', '$id_antecedente_asistente', '$id_historial_asistente', '2', '1')";
+            $query = $pdo->prepare($sql);
+            $query->execute();
             echo "Insert Asistente";
         }else{
 
-            $sentencia="update usuarios set usuario='$nombre_asistente', nb_usuario='$correo_asistente', pw_usuario='$pass_asistente', id_antecedentes='$id_antecedente_asistente', id_historial='$id_historial_asistente' WHERE id='$id'";
-            $resent=mysqli_query($conexion,$sentencia);
+            $sql="update usuarios set usuario='$nombre_asistente', nb_usuario='$correo_asistente', pw_usuario='$pass_asistente', id_antecedentes='$id_antecedente_asistente', id_historial='$id_historial_asistente' WHERE id='$id'";
+            $query = $pdo->prepare($sql);
+            $query->execute();
             echo "Update Asistentes";
         }
     } 
@@ -105,19 +114,20 @@
         $pass_actual=$_POST['pass_actual'];
         $pass=$_POST['pass'];
         $re_pass=$_POST['re_pass'];
-        include '../conexion_i.php';
+        
 
-        $resent_pw="SELECT pw_usuario from usuarios where pw_usuario='$pass_actual' and id=$id_pass";
-        $resent_pw=mysqli_query($conexion,$resent_pw);
-        while ($row=mysqli_fetch_row ($resent_pw)){
-            $row1=$row[0];
-        }
-        if (isset($row1)) {
+        $sql="SELECT pw_usuario from usuarios where pw_usuario='$pass_actual' and id=$id_pass";
+        $query = $pdo->prepare($sql);
+		$query->execute();
+	    $buscar= $query->rowCount();
+	    if ($buscar > 0)
+        {
             if ($pass>0) {
                 if ($pass==$re_pass) {
-                    $sentencia="update usuarios set pw_usuario='$re_pass' WHERE id='$id_pass'";
-                    $resent=mysqli_query($conexion,$sentencia);
-                    echo $resent;
+                    $sql="update usuarios set pw_usuario='$re_pass' WHERE id='$id_pass'";
+                    $query = $pdo->prepare($sql);
+		            $query->execute();
+                    echo $sql;
                 }else{
                     echo "no coincide";
                 }
@@ -130,7 +140,7 @@
         
     }
     if (isset($_POST['id_concepto'])) {
-        include '../conexion_i.php';
+        
         $id_doctor=$_SESSION['id_usuario'];
         $id=$_POST['id_concepto'];
         $concepto=$_POST['concepto'];
@@ -138,32 +148,34 @@
 
         if ($_POST['id_concepto']=="") {
 
-            $sentencia="INSERT INTO cat_honorarios(id_doctor, concepto, total, activo) values ('$id_doctor', '$concepto', '$total', '1')";
-            $resent=mysqli_query($conexion,$sentencia);
+            $sql="INSERT INTO cat_honorarios(id_doctor, concepto, total, activo) values ('$id_doctor', '$concepto', '$total', '1')";
+            $query = $pdo->prepare($sql);
+		    $query->execute();
             echo "Insert Concepto";
         }else{
 
-            $sentencia="update cat_honorarios set concepto='$concepto', total='$total' WHERE id='$id'";
-            $resent=mysqli_query($conexion,$sentencia);
+            $sql="update cat_honorarios set concepto='$concepto', total='$total' WHERE id='$id'";
+            $query = $pdo->prepare($sql);
+		    $query->execute();
             echo "Update Concepto";
         }
     }
 
     if (isset($_POST['concept'])) {
-        include '../conexion_i.php';
         $id_doctor=$_SESSION['id_usuario'];
         $concepto=$_POST['concept'];
         $total=$_POST['total_concept'];
         $id_pac_get=$_SESSION['id_pac_get'];
         $fecha=date('y-m-d');
 
-        $sentencia="INSERT INTO honorarios(id_doctor, id_paciente, fecha, concepto, total, activo) values ('$id_doctor', '$id_pac_get', '$fecha', '$concepto', '$total', '1')";
-        $resent=mysqli_query($conexion,$sentencia);
+        $sql="INSERT INTO honorarios(id_doctor, id_paciente, fecha, concepto, total, activo) values ('$id_doctor', '$id_pac_get', '$fecha', '$concepto', '$total', '1')";
+        $query = $pdo->prepare($sql);
+		$query->execute();
         echo "Insert Concepto PAC";
     }
 
     if (isset($_POST['prefijo'])) {
-        include '../conexion_i.php';
+        
         $id_doctor=$_SESSION['id_usuario'];
         $prefijo=$_POST['prefijo'];
         $nombre=$_POST['nombre'];
@@ -174,23 +186,24 @@
         $de_cProf=$_POST['de_cProf'];
         $direccion=$_POST['direccion'];
 
-        $sentencia="update doctor set atencion='$prefijo', celular='$celular', telefono='$telefono', telefono='$telefono', de_cEsp='$de_cEsp', de_cProf='$de_cProf', direccion='$direccion', correo='$correo' where id_doctor='$id_doctor'";
-        $resent=mysqli_query($conexion,$sentencia);
+        $sql="update doctor set atencion='$prefijo', celular='$celular', telefono='$telefono', telefono='$telefono', de_cEsp='$de_cEsp', de_cProf='$de_cProf', direccion='$direccion', correo='$correo' where id_doctor='$id_doctor'";
+        $query = $pdo->prepare($sql);
+		$query->execute();
         echo "update doctor";
     }
 
     if (isset($_POST['load_receta'])) {
-        include '../conexion_i.php';
         $img_rec=$_POST['load_receta'];
         $id=$_POST['id'];
-        $sentencia="update templates_recetas set img_rec='". $img_rec. "' where id_template=13";
-        $resent=mysqli_query($conexion,$sentencia);
+        $sql="update templates_recetas set img_rec='". $img_rec. "' where id_template=13";
+        $query = $pdo->prepare($sql);
+		$query->execute();
         echo($img_rec);
 
     }
 
     if (isset($_POST['id_template_modal'])) {
-        include '../conexion_i.php';
+       
         $img_rec=$_POST['file_update_receta_text'];
         $id=$_POST['id_template_modal'];
         $nom_top=$_POST['nom_top'];
@@ -204,15 +217,17 @@
         $id_doctor=$_SESSION['id_usuario'];
         if ($id=="") {
 
-            $sentencia="INSERT INTO templates_recetas(id_doctor, descripcion, nom_left, nom_top, fecha_right, fecha_top, rec_left, rec_top, img_rec, font_size, activo) values ('$id_doctor', '$descripcion', '$nom_left', '$nom_top', '$fecha_right', '$fecha_top', '$rec_left', '$rec_top', '$img_rec', '$font_size', '1')";
-            $resent=mysqli_query($conexion,$sentencia);
-            echo $resent;
+            $sql="INSERT INTO templates_recetas(id_doctor, descripcion, nom_left, nom_top, fecha_right, fecha_top, rec_left, rec_top, img_rec, font_size, activo) values ('$id_doctor', '$descripcion', '$nom_left', '$nom_top', '$fecha_right', '$fecha_top', '$rec_left', '$rec_top', '$img_rec', '$font_size', '1')";
+            $query = $pdo->prepare($sql);
+		    $query->execute();
+            echo $sql;
 
         }else{
 
-            $sentencia="update templates_recetas set img_rec='". $img_rec. "', nom_top='". $nom_top. "', nom_left='". $nom_left. "', fecha_top='". $fecha_top. "', fecha_right='". $fecha_right. "', font_size='". $font_size. "', rec_top='". $rec_top. "', rec_left='". $rec_left. "', descripcion='". $descripcion. "' where id_template=$id";
-            $resent=mysqli_query($conexion,$sentencia);
-            echo $resent;
+            $sql="update templates_recetas set img_rec='". $img_rec. "', nom_top='". $nom_top. "', nom_left='". $nom_left. "', fecha_top='". $fecha_top. "', fecha_right='". $fecha_right. "', font_size='". $font_size. "', rec_top='". $rec_top. "', rec_left='". $rec_left. "', descripcion='". $descripcion. "' where id_template=$id";
+            $query = $pdo->prepare($sql);
+		    $query->execute();
+            echo $sql;
 
         }
         

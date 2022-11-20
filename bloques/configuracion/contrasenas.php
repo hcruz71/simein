@@ -3,7 +3,15 @@
 $id=$_SESSION['id'];
 $id_doctor=$_SESSION['id_usuario'];
 
-    require 'conexion.php';
+    include 'conexion.php';
+    try {
+        if ( !isset($pdo) ) {
+            $pdo = connect(); 
+        }                       
+    } catch (PDOException $e) {
+        echo 'Falló la conexión: ' . $e->getMessage();
+        die();
+    }
 
 
     $sql = "SELECT * FROM usuarios where id_usuario=$id_doctor";

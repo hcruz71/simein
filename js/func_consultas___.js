@@ -429,7 +429,7 @@ function calcularEdad()
     }
 // BUSCADOR MED
 
-// BUSCADOR ALERGIAS
+// BUSCADOR ALERGIAS 
     $(obtener_registros_alergias());
 
     function obtener_registros_alergias(add_ant_alergicos)

@@ -64,6 +64,7 @@
 	    url:"db/antecedentes/antecedentes.php",
 	    data:{add_ant_alergicos:add_ant_alergicos},
 	    success:function(r){
+			console.log("CUEST:",r);
             $('#ant_alergicos').val($('#ant_alergicos').val() + r+ ('\n'));
             guardarAnt();
             $('#add_ant_alergicos').val("");

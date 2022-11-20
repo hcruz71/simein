@@ -28,12 +28,17 @@ session_start();
 $id_doctor=$_SESSION['id_usuario'];
 $id_usu=$_SESSION['id'];
 
-    require 'conexion_i.php';
+    require 'conexion.php'; 
+    if ( !isset($pdo) ) {
+      $pdo = connect(); 
+    }   
 
 
-    $query_doc = "SELECT * FROM doctor where id_doctor=$id_doctor";
-    $resultado_doc = $conexion->query($query_doc);
-    while($row_doc = $resultado_doc->fetch_assoc())
+    $sql = "SELECT * FROM doctor where id_doctor=$id_doctor";
+    $query = $pdo->prepare($sql);
+    $query->execute();
+    $list = $query->fetchAll();
+    foreach ($list as $row_doc) 
     {
         $a=$row_doc['atencion'];
         $id=$row_doc['id_doctor'];
@@ -61,9 +66,11 @@ $id_usu=$_SESSION['id'];
 
     }
 
-     $query_esp = "SELECT * FROM especialidades where id_especialidad=$id_especialidad";
-    $resultado_esp = $conexion->query($query_esp);
-    while($row_esp = $resultado_esp->fetch_assoc())
+    $sql = "SELECT * FROM especialidades where id_especialidad=$id_especialidad";
+    $query = $pdo->prepare($sql);
+    $query->execute();
+    $list = $query->fetchAll();
+    foreach ($list as $row_esp) 
     {
         $id_esp=$row_esp['de_especialidad'];
 
@@ -73,9 +80,11 @@ $id_usu=$_SESSION['id'];
     $id_doctor=$_SESSION['id_usuario'];
 
 
-    $query_doc = "SELECT * FROM usuarios where id=$id_usu";
-    $resultado_doc = $conexion->query($query_doc);
-    while($row_doc = $resultado_doc->fetch_assoc())
+    $sql = "SELECT * FROM usuarios where id=$id_usu";
+    $query = $pdo->prepare($sql);
+    $query->execute();
+    $list = $query->fetchAll();
+    foreach ($list as $row_doc)
     {   
         $id_antecedentes=$row_doc['id_antecedentes'];
         $id_historial=$row_doc['id_historial'];

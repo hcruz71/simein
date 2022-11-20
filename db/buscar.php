@@ -2,8 +2,9 @@
 session_start();
 $id_doctor=$_SESSION['id_usuario'];
 include '../conexion.php';
+$pdo = connect(); 
 if ( !isset($pdo) ) {
-	$pdo = connect(); 
+	
 }
 
 //BUSCAR PACIENTES AGENDA

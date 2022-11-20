@@ -6,12 +6,17 @@ session_start();
  header("Content-type: text/html; charset=utf8");
 $id_doctor=$_SESSION['id_usuario'];
 
-    require '../conexion_i.php';
+    require '../conexion.php';
+    if ( !isset($pdo) ) {
+        $pdo = connect(); 
+    }
 
 
-    $query_doc = "SELECT * FROM templates_recetas where id_doctor='".$id_doctor."' and id_template='".$_POST['id_template']."'";
-    $resultado_doc = $conexion->query($query_doc);
-    while($row_doc = $resultado_doc->fetch_assoc())
+    $sql = "SELECT * FROM templates_recetas where id_doctor='".$id_doctor."' and id_template='".$_POST['id_template']."'";
+    $query = $pdo->prepare($sql);
+    $query->execute();
+    $list = $query->fetchAll();
+	foreach ($list as $row_doc) 
     {
         $img_rec=$row_doc['img_rec'];
         $nom_left=$row_doc['nom_left'];

@@ -103,7 +103,6 @@ $(document).ready(function(){
                           $sql="SELECT count(id_doctor) AS total from historial_clinico WHERE id_doctor=1";
                           
                           $query = $pdo->prepare($sql);
-                          $query->bindParam(':idDoctor', $id_doctor, PDO::PARAM_STR);
 
                           $query->execute();
                           $list = $query->fetchAll();

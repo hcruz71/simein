@@ -1,5 +1,9 @@
  <?php 
     session_start();
+    require 'conexion.php'; 
+    if ( !isset($pdo) ) {
+      $pdo = connect(); 
+    }   
 
     if (isset($_POST['id_historial'])) {
 
@@ -22,11 +26,12 @@
         $temperatura=$_POST['temperatura'];
         $fecha=date('y-m-d');
         $formato_p=$_POST['formato_p'];
-        include '../conexion_i.php';
 
-            $query_pac = "SELECT * FROM pacientes where id_doctor=$id_doctor and id_Paciente=$id_pac_get";
-            $resultado_pac = $conexion->query($query_pac);
-            while($row_pac = $resultado_pac->fetch_assoc())
+            $sql = "SELECT * FROM pacientes where id_doctor=$id_doctor and id_Paciente=$id_pac_get";
+            $query = $pdo->prepare($sql);
+            $query->execute();
+            $list = $query->fetchAll();
+        	foreach ($list as $row_pac) 
             {
 
                 $fh_Nacimiento=$row_pac['fh_Nacimiento'];
@@ -40,15 +45,17 @@
 
         if($_POST['id_historial']==""){
 
-        $sentencia="INSERT INTO historial_clinico(id_doctor, id_paciente, fecha, padecimiento, exploracion, peso, talla, temperatura, imc, fc, fr, fur, semanas, diagnostico, gabinete, receta, activo, edad) values ('$id_doctor', '$id_pac_get', '$fecha', '$padecimiento', '$exploracion', '$peso', '$talla', '$temperatura', '$imc', '$fc', '$fr', '$fur', '$semanas', '$diagnostico', '$gabinete', '$receta', '1', '$meses')";
-        $resent=mysqli_query($conexion,$sentencia);
-        var_dump($resent);
+        $sql="INSERT INTO historial_clinico(id_doctor, id_paciente, fecha, padecimiento, exploracion, peso, talla, temperatura, imc, fc, fr, fur, semanas, diagnostico, gabinete, receta, activo, edad) values ('$id_doctor', '$id_pac_get', '$fecha', '$padecimiento', '$exploracion', '$peso', '$talla', '$temperatura', '$imc', '$fc', '$fr', '$fur', '$semanas', '$diagnostico', '$gabinete', '$receta', '1', '$meses')";
+        $query = $pdo->prepare($sql);
+        $query->execute();
+        
 
         }else{
 
-        $sentencia="update historial_clinico set padecimiento='$padecimiento', exploracion='$exploracion', gabinete='$gabinete', receta='$receta', peso='$peso', talla='$talla', imc='$imc', fur='$fur', fc='$fc', semanas='$semanas', fr='$fr', diagnostico='$diagnostico', temperatura='$temperatura' WHERE id='$id'";
-        $resent=mysqli_query($conexion,$sentencia);
-         var_dump($resent);
+        $sql="update historial_clinico set padecimiento='$padecimiento', exploracion='$exploracion', gabinete='$gabinete', receta='$receta', peso='$peso', talla='$talla', imc='$imc', fur='$fur', fc='$fc', semanas='$semanas', fr='$fr', diagnostico='$diagnostico', temperatura='$temperatura' WHERE id='$id'";
+        $query = $pdo->prepare($sql);
+        $query->execute();
+        
             
         }
     }

@@ -1,10 +1,15 @@
     <?php 
         session_start();
         $id_doctor=$_SESSION['id_usuario'];
-        require_once "../../../conexion_i.php";
-        $query_doc = "SELECT * from templates_recetas where id_doctor=$id_doctor and activo=1";
-        $resultado_doc = $conexion->query($query_doc);
-        while($ver = $resultado_doc->fetch_assoc())
+        require "../../../conexion.php";
+        if ( !isset($pdo) ) {
+          $pdo = connect(); 
+        }
+        $sql = "SELECT * from templates_recetas where id_doctor=$id_doctor and activo=1";
+        $query = $pdo->prepare($sql);
+        $query->execute();
+        $list = $query->fetchAll();
+        foreach ($list as $ver) 
         {
           $id=$ver['id_template'];
           $descripcion=$ver['descripcion'];

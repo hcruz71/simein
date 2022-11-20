@@ -26,7 +26,6 @@
                     </div>
                 </div>
     <br><br>
-
     <?php include 'bloques/pacientes/nuevo_foto.php'; ?>
 <br><br>
     <div class="row">

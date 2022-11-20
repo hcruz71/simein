@@ -406,6 +406,7 @@ function calcularEdad()
     $('#btn_add_alergias').click(function(e){
     e.preventDefault();
     var datos=$('#form_add_alergias').serialize();
+    console.log ("MANDA ALERGIA:",datos);
     $.ajax({
         type:"POST",
         url:"db/antecedentes/antecedentes.php",

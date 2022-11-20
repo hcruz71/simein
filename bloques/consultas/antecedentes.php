@@ -33,6 +33,7 @@
 						<div class="panel-body">
 								<?php if ($id_alergicos==1): ?>
 								<!-- ALERGIAS-->
+								
 									<div class="col-md-12">
 										<br>
 										<h3 >Alergias</h3>
@@ -53,7 +54,7 @@
 											
 									</div><!--//ALERGIAS-->
 								<?php endif ?>
-
+								
 								<?php if ($id_hf==1): ?>
 									<!-- ANT HEREDO-FAM-->
 									<div class="col-md-12">
@@ -134,6 +135,7 @@
 								<?php endif ?>
 							</div>
 						</div>
+						
 					</form>
 				</div>
 			</div>
@@ -142,16 +144,22 @@
 <script type="text/javascript">
    function agregarALERGICOS(){
 	var add_ant_alergicos=$('#add_ant_alergicos').val();
+	//var add_ant_alergicos = document.getElementById("ant_alergicos").value
 	$.ajax({
 	    type:"POST",
 	    url:"db/antecedentes/antecedentes.php",
 	    data:{add_ant_alergicos:add_ant_alergicos},
 	    success:function(r){
+			console.log("RESP:",r);
             $('#ant_alergicos').val($('#ant_alergicos').val() + r+ ('\n'));
+			//document.getElementById("ant_alergicos").value = document.getElementById("ant_alergicos").value + r+ ('\n');
             guardarAnt();
             $('#add_ant_alergicos').val("");
             $('#add_ant_alergicos').focus();
             $('#tabla_res_alergias').html("");
+
+
+
 	    }
 	});
 

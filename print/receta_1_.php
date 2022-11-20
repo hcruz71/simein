@@ -47,19 +47,24 @@ session_start();
     $id_paciente=$_POST['id_paciente_receta'];
     $left_nom=150;
 
-    require '../conexion_i.php';
-        $sql_pac="SELECT * FROM pacientes where id_doctor=$id_doctor and id_Paciente=$id_paciente";
-    //la variable  $mysqli viene de connect_db que lo traigo con el require("connect_db.php");
-        $result_pac=mysqli_query($conexion,$sql_pac);
-        while ($row_pac=mysqli_fetch_assoc($result_pac))
+    require '../conexion.php';
+    if ( !isset($pdo) ) {
+        $pdo = connect(); 
+    }
+    $sql="SELECT * FROM pacientes where id_doctor=$id_doctor and id_Paciente=$id_paciente";
+    $query = $pdo->prepare($sql);
+    $query->execute();
+    $list = $query->fetchAll();
+	foreach ($list as $row_pac) 
         {
                 $nom_paciente=$row_pac['nb_Paciente'];
         }
 
-        $sql_doc="SELECT * FROM doctor where id_doctor=$id_doctor";
-    //la variable  $mysqli viene de connect_db que lo traigo con el require("connect_db.php");
-        $result_pac=mysqli_query($conexion,$sql_doc);
-        while ($row_doc=mysqli_fetch_assoc($result_pac))
+    $sql="SELECT * FROM doctor where id_doctor=$id_doctor";
+    $query = $pdo->prepare($sql);
+    $query->execute();
+    $list = $query->fetchAll();
+	foreach ($list as $row_doc) 
         {
                 $nom_doc=$row_doc['atencion'].' '.$row_doc['nombre'];
                 $especialidad=$row_doc['especialidad'];

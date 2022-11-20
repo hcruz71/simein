@@ -9,7 +9,11 @@ $id_doctor=$_SESSION['id_usuario'];
 $id_pac_get=$_SESSION['id_pac_get'];
 
 	# conectare la base de datos
-include '../../conexion_i.php';
+include '../../conexion.php';
+if ( !isset($pdo) ) {
+    $pdo = connect(); 
+}  
+
 
 $id_doctor=$_SESSION['id_usuario'];
 
@@ -25,9 +29,11 @@ CAMBIO
  
 */
 
-    $query1 = "SELECT * FROM doctor where id_doctor=$id_doctor";
-    $resultado_doc = $conexion->query($query1);
-    while($row_doc = $resultado_doc->fetch_assoc())
+    $sql = "SELECT * FROM doctor where id_doctor=$id_doctor";
+    $query = $pdo->prepare($sql);
+    $query->execute();
+    $list = $query->fetchAll();
+	foreach ($list as $row_doc) 
     {
         $a=$row_doc['atencion'];
         $id=$row_doc['id_doctor'];
@@ -68,9 +74,12 @@ CAMBIO
  
 */
 
-        $query1 = "SELECT * FROM especialidades where id_especialidad=$id_especialidad";
-        $resultado_doc = $conexion->query($query1);
-        while($row_esp= $resultado_doc->fetch_assoc())
+        $sql = "SELECT * FROM especialidades where id_especialidad=$id_especialidad";
+        $query = $pdo->prepare($sql);
+        $query->execute();
+        $list = $query->fetchAll();
+	    foreach ($list as $row_esp) 
+    //    while($row_esp= $resultado_doc->fetch_assoc())
     {
         $id_esp=$row_esp['de_especialidad'];
 
@@ -85,32 +94,33 @@ CAMBIO
 		$adjacents  = 4; //brecha entre páginas después de varios adyacentes
 		$offset = ($page - 1) * $per_page;
 		//Cuenta el número total de filas de la tabla*/
-		$count_query   = mysqli_query($conexion,"SELECT count(*) AS numrows FROM historial_clinico where id_doctor=$id_doctor and id_paciente=$id_pac_get and activo=1 ORDER BY id DESC");
-		if ($row= mysqli_fetch_array($count_query)){$numrows = $row['numrows'];}
+		$sql = "SELECT count(*) AS numrows FROM historial_clinico where id_doctor=$id_doctor and id_paciente=$id_pac_get and activo=1 ORDER BY id DESC";
+        $query = $pdo->prepare($sql);
+        $query->execute();
+
+		$buscar= $query->rowCount();
+		if ($buscar > 0)
+		//if ($row= mysqli_fetch_array($count_query))
+        {
+            $numrows = $buscar;
+        }
 		$total_pages = ceil($numrows/$per_page);
 		$reload = 'index.php';
-        //consulta principal para recuperar los datos
-                /* 
-        ANTES
-       $query = mysqli_query($conexion,"SELECT * FROM historial_clinico where id_doctor=$id_doctor and id_paciente=$id_pac_get and activo=1 ORDER BY id DESC LIMIT $offset,$per_page ");
-		. .
-        while($row = mysqli_fetch_array($query)){
+        
 
-        AHORA
-        $q2 = "SELECT * FROM historial_clinico where id_doctor=$id_doctor and id_paciente=$id_pac_get and activo=1 ORDER BY id DESC LIMIT $offset,$per_page ");
-        $query = $conexion->query($q2);
-        ... 
-        while($row = $query->fetch_assoc())
-        */
+		$sql = "SELECT * FROM historial_clinico where id_doctor=$id_doctor and id_paciente=$id_pac_get and activo=1 ORDER BY id DESC LIMIT $offset,$per_page ";
+        $query = $pdo->prepare($sql);
+        $query->execute();
 
-		$q2 = "SELECT * FROM historial_clinico where id_doctor=$id_doctor and id_paciente=$id_pac_get and activo=1 ORDER BY id DESC LIMIT $offset,$per_page ";
-        $query = $conexion->query($q2);
-
-		if ($numrows>0){
+		$buscar= $query->rowCount();
+		if ($buscar > 0)
+		{
 			?>
 <div class="">
 	<?php
-	 while($row = $query->fetch_assoc()){
+     $list = $query->fetchAll();
+     foreach ($list as $row) {
+	 //while($row = $query->fetch_assoc()){
 		?>
 	
     <div class="row">
@@ -295,9 +305,12 @@ CAMBIO
 
 
                                                         <?php
-                                                        $sql=mysqli_query($conexion, "SELECT * FROM templates_recetas where id_doctor=$id_doctor and activo=1");
-                                                            
-                                                            while($res=mysqli_fetch_assoc($sql)){      
+                                                        $sql="SELECT * FROM templates_recetas where id_doctor=$id_doctor and activo=1";
+                                                        $query = $pdo->prepare($sql);
+                                                        $query->execute();
+                                                        $list = $query->fetchAll();
+				                                        foreach ($list as $fila) {    
+                                                        //    while($res=mysqli_fetch_assoc($sql)){      
                                                             ?>
 
 
@@ -391,9 +404,17 @@ CAMBIO
                         </tr>
 
                         <?php 
-                        include '../../conexion_i.php';
+                        include '../../conexion.php';
+                        try {
+                            if ( !isset($pdo) ) {
+                                $pdo = connect(); 
+                            }                       
+                        } catch (PDOException $e) {
+                            echo 'Falló la conexión: ' . $e->getMessage();
+                            die();
+                        }
                         $id_paciente=$_SESSION['id_pac_get'];
-                            $id_doctor=$_SESSION['id_usuario'];
+                        $id_doctor=$_SESSION['id_usuario'];
                         
                                                   /* 
         ANTES
@@ -406,10 +427,14 @@ CAMBIO
         ... 
         while($res_fecha = $rquery->fetch_assoc())
         */      
-                        $q2 = "SELECT * FROM historial_clinico where id_doctor=$id_doctor and id_paciente=$id_paciente and activo=1";
-                        $query = $conexion->query($q2);
+                        $sql = "SELECT * FROM historial_clinico where id_doctor=$id_doctor and id_paciente=$id_paciente and activo=1";
+                        $query = $pdo->prepare($sql);
+                        $query->execute();
+                        $list = $query->fetchAll();
+				        foreach ($list as $res_fecha) {
+                       
                         
-                        while($res_fecha = $query->fetch_assoc()){
+                       // while($res_fecha = $query->fetch_assoc()){
                         ?>
 
                         <tr>
@@ -640,9 +665,14 @@ CAMBIO
 
 
                                                         <?php
-                                                        $sql=mysqli_query($conexion, "SELECT * FROM templates_recetas where id_doctor=$id_doctor and activo=1");
+                                                        $sql="SELECT * FROM templates_recetas where id_doctor=$id_doctor and activo=1";
+                                                        $query = $pdo->prepare($sql);
+                                                        $query->execute();
+                                                        $list = $query->fetchAll();
+				                                        foreach ($list as $res) {
+
                                                             
-                                                            while($res=mysqli_fetch_assoc($sql)){      
+                                                            //while($res=mysqli_fetch_assoc($sql)){      
                                                             ?>
 
 
