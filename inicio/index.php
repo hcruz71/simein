@@ -279,7 +279,7 @@
       </form>
       <div class="contact-info"  style="text-align: center;">
         <i class="fa fa-envelope-o" style="color: #72a7d9"></i> <a href="mailto:contact@example.com">hector.cruz@matrixsoftware.com</a>
-        <i class="fa fa-phone" style="color: #72a7d9"></i> +52 667 333 23 02
+        <i class="fa fa-phone" style="color: #72a7d9"></i> +52 667 574 5077
         <a href="https://www.facebook.com/profile.php?id=100031950023299" class="facebook" target="_blank"><i class="fa fa-facebook"></i> SIMEIN MX</a>
       </div>
     <div class="container">

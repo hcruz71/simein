@@ -117,6 +117,9 @@
     if (isset($_POST['4_6papanicolao'])){ $papanicolao4_6 = $_POST['4_6papanicolao'];} else {$papanicolao4_6='';}
 
     include '../../conexion.php';
+    if ( !isset($pdo) ) {
+        $pdo = connect(); 
+    }
 
 
     $sql = "SELECT id_Paciente FROM pacientes WHERE id_doctor=$id_doctor and id_Paciente=(SELECT MAX(id_Paciente) FROM pacientes WHERE id_doctor=$id_doctor)";
@@ -140,15 +143,14 @@
     $ejecutar_datos_fiscales=$query->execute();
     
     //MAX DE ANTECEDENTES DEL QUESTIONARIO
-    $sql = "SELECT id FROM antecedentes_c WHERE id_doctor=$id_doctor and id_Paciente= $row1";
+    //$sql = "SELECT id FROM antecedentes_c WHERE id_doctor=$id_doctor and id_Paciente= $row1";
+    $sql = "SELECT id FROM antecedentes_c ORDER BY id DESC LIMIT 0, 1";
     $query = $pdo->prepare($sql);
     $query->execute();
     $list = $query->fetchAll();
     foreach ($list as $row) {
-        $max=$row['id']+1;
-    } else{
-        $max = 1;
-    }
+            $max=$row['id']+1;        
+    } 
 
    
     //PREGUNTA 1.1: DIABETES
