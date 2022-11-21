@@ -11,11 +11,17 @@
 		<tbody >
 			<?php
 			include	'../../../conexion.php';
+			if ( !isset($pdo) ) {
+				$pdo = connect(); 
+			  } 
 			session_start();
 			$id_doctor=$_SESSION['id_usuario'];
 			$id_pac_get=$_SESSION['id_pac_get'];
             $sql=mysql_query("SELECT * FROM archivos where id_doctor=$id_doctor and id_paciente=$id_pac_get and id_tipo=2 and activo=1 ORDER BY id DESC");
-            while($res=mysql_fetch_assoc($sql)){       
+			$query = $pdo->prepare($sql);
+          $query->execute();
+          $list = $query->fetchAll();
+          foreach ($list as $row_pac) {
             ?>
                                 
 			<tr class="btn-gris">
@@ -39,7 +45,10 @@
 		$id_doctor=$_SESSION['id_usuario'];
 		$id_pac_get=$_SESSION['id_pac_get'];
 	    $sql=mysql_query("SELECT * FROM archivos where id_doctor=$id_doctor and id_paciente=$id_pac_get and id_tipo=2 and activo=1 ORDER BY id DESC");
-	    while($res=mysql_fetch_assoc($sql)){       
+		$query = $pdo->prepare($sql);
+          $query->execute();
+          $list = $query->fetchAll();
+          foreach ($list as $row_pac) {       
 	    ?>
 
 		<!-- Modal -->

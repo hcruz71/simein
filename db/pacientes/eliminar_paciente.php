@@ -7,19 +7,13 @@
   
     
  	  include '../../conexion.php';
-     try {
-      if ( !isset($pdo) ) {
-          $pdo = connect(); 
-      }                       
-     } catch (PDOException $e) {
-      echo 'Falló la conexión: ' . $e->getMessage();
-      die();
+     if ( !isset($pdo) ) {
+      $pdo = connect(); 
     }
 
       $sql = "DELETE FROM pacientes WHERE id_doctor = '$doctor' AND  id_Paciente ='$registro'";  
       $query = $pdo->prepare($sql);
-      $query->execute();
-      $result = $query->fetchAll();
+      $result = $query->execute();
       //$row = mysqli_festch_array($result);  
       echo json_encode(array('result' => $result  ));  
 ?>

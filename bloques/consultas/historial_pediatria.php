@@ -101,13 +101,14 @@ $id_doctor=$_SESSION['id_usuario'];
         $adjacents  = 4; //brecha entre páginas después de varios adyacentes
         $offset = ($page - 1) * $per_page;
         //Cuenta el número total de filas de la tabla*/
-        $count_query   = "SELECT count(*) AS numrows FROM historial_clinico where id_doctor=$id_doctor and id_paciente=$id_pac_get and activo=1 ORDER BY id DESC";
+        $sql   = "SELECT count(*) AS numrows FROM historial_clinico where id_doctor=$id_doctor and id_paciente=$id_pac_get and activo=1 ORDER BY id DESC";
         $query = $pdo->prepare($sql);
         $query->execute();
         $row= $query->rowCount();
+        $list = $query->fetchAll();
 		if ($row > 0)
         {
-            $numrows = $row['numrows'];
+            $numrows = $list[0]['numrows'];
         }
         $total_pages = ceil($numrows/$per_page);
         $reload = 'index.php';
@@ -128,7 +129,6 @@ $id_doctor=$_SESSION['id_usuario'];
         ?>
     <div class="row" style="margin-top: 40px"></div>
     <div class="row">
-    <p>HACZ Power</p>
         <!-- inicio consultas -->
         <div class="col-md-10">
             <div class="accrodion-regular">
@@ -718,6 +718,7 @@ $id_doctor=$_SESSION['id_usuario'];
                 url:'db/fetch.php',
                 dataType:"json",
                 success:function(r){
+                    /*
                     $('#id_historial').val(r.id);
                     $('#txt_padecimiento').val(r.padecimiento);
                     $('#txt_exploracion').val(r.exploracion);
@@ -733,6 +734,30 @@ $id_doctor=$_SESSION['id_usuario'];
                     $('#receta').val(r.receta);
                     $('#txt_diagnosticos').val(r.diagnostico);
                     $('#txt_recetas').val(r.receta);
+                    */
+                    document.getElementById("id_historial").value = r.id;
+                    document.getElementById("txt_padecimiento").value = r.padecimiento;
+                    if (document.getElementById("txt_exploracion") ){
+                        document.getElementById("txt_exploracion").value = r.exploracion;
+                    }
+                    if (document.getElementById("txt_gabinete")) {
+                        document.getElementById("txt_gabinete").value = r.gabinete;
+                    } 
+                    document.getElementById("fecha").value = r.fecha;
+                    document.getElementById("temperatura").value = r.temperatura;
+                    document.getElementById("peso").value = r.peso;
+                    document.getElementById("talla").value = r.talla;
+                    document.getElementById("fc").value = r.fc;
+                    document.getElementById("fr").value = r.fr;
+                    document.getElementById("imc").value = r.imc;
+                    document.getElementById("fur").value = r.fur;
+                    document.getElementById("semanas").value = r.semanas;
+                    if (document.getElementById("receta")) {
+                        document.getElementById("receta").value = r.receta;
+                    }
+                    document.getElementById("txt_diagnosticos").value = r.diagnostico;
+                    document.getElementById("txt_recetas").value = r.receta;
+
                 }
             })
     }

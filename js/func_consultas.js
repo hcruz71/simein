@@ -884,7 +884,7 @@ function subirDocumentos(){
 
  
  function limpiarConsultas(){
-    $('#id_historial').val("");
+    /*$('#id_historial').val("");
     $('#txt_padecimiento').val("");
     $('#txt_exploracion').val("");
     $('#txt_gabinete').val("");
@@ -898,7 +898,29 @@ function subirDocumentos(){
     $('#temperatura').val("");
     $('#imc').val("");
     $('#txt_honorarios').val("");
-    $('#txt_diagnosticos').val("");
+    $('#txt_diagnosticos').val("");*/
+    document.getElementById("id_historial").value = "";
+    document.getElementById("txt_padecimiento").value = "";
+    if (document.getElementById("txt_exploracion") ){
+        document.getElementById("txt_exploracion").value =  "";
+    }
+    if (document.getElementById("txt_gabinete")) {
+        document.getElementById("txt_gabinete").value =  "";
+    } 
+    document.getElementById("fecha").value =  "";
+    document.getElementById("temperatura").value =  "";
+    document.getElementById("peso").value =  "";
+    document.getElementById("talla").value =  "";
+    document.getElementById("fc").value =  "";
+    document.getElementById("fr").value =  "";
+    document.getElementById("imc").value =  "";
+    document.getElementById("fur").value =  "";
+    document.getElementById("semanas").value =  "";
+    if (document.getElementById("receta")) {
+        document.getElementById("receta").value = "";
+    }
+    document.getElementById("txt_diagnosticos").value = "";
+    document.getElementById("txt_recetas").value = "";
  }
 
     function eliminarConsulta(delete_consulta){ 

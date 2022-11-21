@@ -12,9 +12,11 @@
      
     */
  if ($id_doctor==1) {
-	$query1 = "SELECT id, ant_hf, ant_pp, ant_np, ant_go, ant_otros, alergicos FROM antecedentes where id_doctor=$id_doctor and id_Paciente=$id_paciente";
-	$resultado_doc = $conexion->query($query1);
-	while($res_ant_echo = $resultado_doc->fetch_assoc()){
+	$sql = "SELECT id, ant_hf, ant_pp, ant_np, ant_go, ant_otros, alergicos FROM antecedentes where id_doctor=$id_doctor and id_Paciente=$id_paciente";
+	$query = $pdo->prepare($sql);
+    $query->execute();
+    $list = $query->fetchAll();
+	foreach ($list as $res_ant_echo) {
 		$id=$res_ant_echo['id'];
 		$ant_hf=$res_ant_echo['ant_hf'];
 		$ant_pp=$res_ant_echo['ant_pp'];

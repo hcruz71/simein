@@ -6,7 +6,7 @@ $id_doctor=$_SESSION['id_usuario'];
 $id_pac_get=$_SESSION['id_pac_get'];
 
     # conectare la base de datos
-    require 'conexion.php'; 
+    include 'conexion.php'; 
     if ( !isset($pdo) ) {
       $pdo = connect(); 
     }
@@ -99,9 +99,10 @@ $id_doctor=$_SESSION['id_usuario'];
         $query = $pdo->prepare($sql);
         $query->execute();
         $row= $query->rowCount();
+        $list = $query->fetchAll();
 		if ($row > 0)
         {
-            $numrows = $row['numrows'];
+            $numrows = $list[0]['numrows'];
         }
         $total_pages = ceil($numrows/$per_page);
         $reload = 'index.php';
@@ -709,7 +710,7 @@ $id_doctor=$_SESSION['id_usuario'];
                 url:'db/fetch.php',
                 dataType:"json",
                 success:function(r){
-                    $('#id_historial').val(r.id);
+                   /* $('#id_historial').val(r.id);
                     $('#txt_padecimiento').val(r.padecimiento);
                     $('#txt_exploracion').val(r.exploracion);
                     $('#txt_gabinete').val(r.gabinete);
@@ -723,7 +724,31 @@ $id_doctor=$_SESSION['id_usuario'];
                     $('#semanas').val(r.semanas);
                     $('#receta').val(r.receta);
                     $('#txt_diagnosticos').val(r.diagnostico);
-                    $('#txt_recetas').val(r.receta);
+                    $('#txt_recetas').val(r.receta);*/
+                    
+                    document.getElementById("id_historial").value = r.id;
+                    document.getElementById("txt_padecimiento").value = r.padecimiento;
+                    if (document.getElementById("txt_exploracion") ){
+                        document.getElementById("txt_exploracion").value = r.exploracion;
+                    }
+                    if (document.getElementById("txt_gabinete")) {
+                        document.getElementById("txt_gabinete").value = r.gabinete;
+                    } 
+                    document.getElementById("fecha").value = r.fecha;
+                    document.getElementById("temperatura").value = r.temperatura;
+                    document.getElementById("peso").value = r.peso;
+                    document.getElementById("talla").value = r.talla;
+                    document.getElementById("fc").value = r.fc;
+                    document.getElementById("fr").value = r.fr;
+                    document.getElementById("imc").value = r.imc;
+                    document.getElementById("fur").value = r.fur;
+                    document.getElementById("semanas").value = r.semanas;
+                    if (document.getElementById("receta")) {
+                        document.getElementById("receta").value = r.receta;
+                    }
+                    document.getElementById("txt_diagnosticos").value = r.diagnostico;
+                    document.getElementById("txt_recetas").value = r.receta;
+
                 }
             })
     }

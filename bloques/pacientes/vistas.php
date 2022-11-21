@@ -1,7 +1,9 @@
 <?php 
-  $sentencia_pac="SELECT * from pacientes WHERE id_doctor=$id_doctor and id_paciente=$id_paciente";
-  $resultado_pac=mysql_query($sentencia_pac);
-  while($filas_pac=mysql_fetch_assoc($resultado_pac))
+  $sql="SELECT * from pacientes WHERE id_doctor=$id_doctor and id_paciente=$id_paciente";
+  $query = $pdo->prepare($sql);
+    $query->execute();
+    $list = $query->fetchAll();
+	foreach ($list as $filas_pac) 
   {
     $file=$filas_pac['fl_File'];
     $nombre=$filas_pac['nb_Paciente'];
@@ -24,9 +26,11 @@
     $id_Aseguradora=$filas_pac['id_Aseguradora'];
   }
 
-  $sentencia_fisco="SELECT * from datos_fiscales WHERE id_doctor=$id_doctor and id_paciente=$id_paciente";
-  $resultado_fisco=mysql_query($sentencia_fisco);
-  while($filas_fisco=mysql_fetch_assoc($resultado_fisco))
+  $sql="SELECT * from datos_fiscales WHERE id_doctor=$id_doctor and id_paciente=$id_paciente";
+  $query = $pdo->prepare($sql);
+    $query->execute();
+    $list = $query->fetchAll();
+	foreach ($list as $filas_fisco) 
   {
     $rfc=$filas_fisco['RFC'];
     $razon_social=$filas_fisco['razon_social'];

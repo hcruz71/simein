@@ -11,6 +11,9 @@
 		<tbody >
 			<?php
 			include	'../../../conexion.php';
+      if ( !isset($pdo) ) {
+        $pdo = connect(); 
+    } 
 			session_start();
 			$id_doctor=$_SESSION['id_usuario'];
 			$id_pac_get=$_SESSION['id_pac_get'];

@@ -20,7 +20,7 @@ if ( !isset($pdo) ) {
 
     <?php 
 
-    $SQL = "SELECT * from usuarios where id_usuario=$id_doctor and rol=2 and sn_activo=1";
+    $sql = "SELECT * from usuarios where id_usuario=$id_doctor and rol=2 and sn_activo=1";
     $query = $pdo->prepare($sql);
     $query->execute();
     $list = $query->fetchAll();

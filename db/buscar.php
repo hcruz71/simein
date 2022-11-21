@@ -336,7 +336,7 @@ if ( !isset($pdo) ) {
 		if(isset($_POST['med']))
 		{
 			//$q=$conexion->real_escape_string($_POST['med']);
-			$q=_POST['med'];
+			$q=$_POST['med'];
 			$sql="SELECT * FROM cat_med WHERE nombrecomercial LIKE '%".$q."%' OR presentacion LIKE '%".$q."%' OR envoltura LIKE '%".$q."%' OR ingrediente LIKE '%".$q."%' LIMIT 10";
 		}
 

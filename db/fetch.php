@@ -117,7 +117,7 @@ if(isset($_POST["delete_consulta"]))
      $query = $pdo->prepare($sql);
      $query->execute();
      $row_hc = $query->fetchAll();
-     echo json_encode($row_hc);    
+     echo json_encode($row_hc[0]);    
  }
 
    if(isset($_POST["delete_concepto"]))  

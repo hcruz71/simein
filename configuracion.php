@@ -17,7 +17,7 @@
         <?php include 'componentes/nav-left.php' ?>
         <!-- end left sidebar -->
 <?php
-session_start();
+//session_start();
 //utf8_decode($row['municipio'];
 $id_doctor=$_SESSION['id_usuario'];
 
