@@ -5,16 +5,13 @@
 
 
 function calcular_edad($fecha){
-  $fecha_nac = new DateTime(date('Y-m-d',strtotime($fecha)));
+ /* $fecha_nac = new DateTime(date('Y-m-d',strtotime($fecha)));
   $fecha_hoy =  new DateTime(date('Y-m-d',time())); 
-  $edad = date_diff($fecha_hoy,$fecha_nac); 
-  /*$nacimiento = new DateTime($fecha);
+  $edad = date_diff($fecha_hoy,$fecha_nac); */
+  $nacimiento = new DateTime($fecha);
   $ahora = new DateTime(date("Y-m-d"));
   $diferencia = $ahora->diff($nacimiento);
-  return $diferencia->format("%y");*/
-
-
-
+  $edad = $diferencia;
   return $edad;
 }
 
