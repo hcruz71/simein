@@ -49,17 +49,17 @@
                     $('#foto_pac').val(data.fl_File);
                     */
 
-                    //console.log ("DATA", data);
-                    document.getElementById("id_pac").value = data[0].id_Paciente;
-                    document.getElementById("busqueda").value = data[0].nb_Paciente;
-                    document.getElementById("nu_Edad").value = data[0].nu_Edad;
-                    document.getElementById("de_Ocupacion").value = data[0].de_Ocupacion;
-                    document.getElementById("fh_Nacimiento").value = data[0].fh_Nacimiento;
-                    document.getElementById("id_Sexo").value = data[0].id_Sexo;
-                    document.getElementById("nu_Celular").value = data[0].nu_Celular;
-                    document.getElementById("de_Email").value = data[0].de_Email;
-                    document.getElementById("de_Ocupacion").value = data[0].de_Ocupacion;
-                    document.getElementById("foto_pac").value = data[0].fl_File;
+                    console.log ("DATA", data);
+                    document.getElementById("id_pac").value = data.id_Paciente;
+                    document.getElementById("busqueda").value = data.nb_Paciente;
+                    document.getElementById("nu_Edad").value = data.nu_Edad;
+                    document.getElementById("de_Ocupacion").value = data.de_Ocupacion;
+                    document.getElementById("fh_Nacimiento").value = data.fh_Nacimiento;
+                    document.getElementById("id_Sexo").value = data.id_Sexo;
+                    document.getElementById("nu_Celular").value = data.nu_Celular;
+                    document.getElementById("de_Email").value = data.de_Email;
+                    document.getElementById("de_Ocupacion").value = data.de_Ocupacion;
+                    document.getElementById("foto_pac").value = data.fl_File;
                     
 
 

@@ -94,6 +94,7 @@
 
                    }
                });
+               console.log("DATASSS:", data);
             $('#id_cita').val(calEvents.id);
             $('#busquedaU').val(calEvents.title);
             $('#nu_CelularU').val(calEvents.celular);
