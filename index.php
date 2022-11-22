@@ -106,7 +106,7 @@ $(document).ready(function(){
 
                           $query->execute();
                           $list = $query->fetchAll();
-                          foreach ($list as $resultado) {
+                          foreach ($list as $filas) {
 
                          /* $id_paciente=$ver['id_Paciente'];
 
