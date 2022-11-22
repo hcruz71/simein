@@ -44,7 +44,7 @@
     <div class="container clearfix">
       <div class="contact-info float-left">
         <i class="fa fa-envelope-o" style="color: #72a7d9"></i> <a href="mailto:contact@example.com">hector.cruz@matrixsoftware.com</a>
-        <i class="fa fa-phone" style="color: #72a7d9"></i> +52 667 333 23 02
+        <i class="fa fa-phone" style="color: #72a7d9"></i> +52 667 574 50 77
       </div>
       <!--<div class="social-links float-right">
         <a href="#" class="twitter"><i class="fa fa-twitter"></i></a>
