@@ -5,8 +5,8 @@
 
 
 function calcular_edad($fecha){
-  $fecha_nac = new DateTime(date('Y/m/d',strtotime($fecha)));
-  $fecha_hoy =  new DateTime(date('Y/m/d',time())); 
+  $fecha_nac = new DateTime(date('Y-m-d',strtotime($fecha)));
+  $fecha_hoy =  new DateTime(date('Y-m-d',time())); 
   $edad = date_diff($fecha_hoy,$fecha_nac); 
   return $edad;
 }

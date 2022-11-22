@@ -19,10 +19,10 @@
                                             $fecha= date("Y-m-d");
 
                                             $sql="SELECT * FROM agenda AS A INNER JOIN pacientes AS P ON (A.id_doctor = P.id_doctor) AND (A.id_Paciente = P.id_Paciente) WHERE A.id_doctor=$id_doctor and A.START LIKE '%".$fecha."%' ORDER BY A.start ASC";
-                                         
-
-                                          $result=mysql_query($sql);
-                                          while($ver=mysql_fetch_assoc($result)){
+                                            $query = $pdo->prepare($sql);
+                                            $query->execute();
+                                            $list = $query->fetchAll();
+                                            foreach ($list as $ver) {
                                          ?>
                                          
                                            <div style="border: 1px solid #ccc; border-radius: 1em">
@@ -36,9 +36,11 @@
 
                                                     <?php 
                                                         $id_paciente=$ver['id_Paciente'];
-                                                          $sentencia="SELECT count(id_doctor) AS total from historial_clinico WHERE id_doctor=$id_doctor and id_paciente=$id_paciente";
-                                                          $resultado=mysql_query($sentencia);
-                                                          while($filas=mysql_fetch_assoc($resultado))
+                                                          $sql="SELECT count(id_doctor) AS total from historial_clinico WHERE id_doctor=$id_doctor and id_paciente=$id_paciente";
+                                                          $query = $pdo->prepare($sql);
+                                                          $query->execute();
+                                                          $list = $query->fetchAll();
+                                                          foreach ($list as $filas) 
                                                           {
                                                             if ($filas['total']==0) {
                                                                 echo "Nota: Este paciente es de primera vez";
@@ -49,9 +51,11 @@
                                                         ?>
 
                                                         <?php 
-                                                          $sentencia="SELECT max(fecha) AS fecha from historial_clinico WHERE id_doctor=$id_doctor and id_paciente=$id_paciente";
-                                                          $resultado=mysql_query($sentencia);
-                                                          while($filas=mysql_fetch_assoc($resultado))
+                                                          $sql="SELECT max(fecha) AS fecha from historial_clinico WHERE id_doctor=$id_doctor and id_paciente=$id_paciente";
+                                                          $query = $pdo->prepare($sql);
+                                                          $query->execute();
+                                                          $list = $query->fetchAll();
+                                                          foreach ($list as $filas) {
                                                           {
                                                             if ($filas['fecha']==0) {
                                                                 echo "";
