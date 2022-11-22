@@ -1,9 +1,6 @@
 <?php 
  //error_reporting(0);
 
-
-
-
 function calcular_edad($fecha){
  /* $fecha_nac = new DateTime(date('Y-m-d',strtotime($fecha)));
   $fecha_hoy =  new DateTime(date('Y-m-d',time())); 
@@ -15,10 +12,23 @@ function calcular_edad($fecha){
   return $edad;
 }
 
-  $sql = "SELECT fl_File, nb_Paciente, nu_Telefono, nu_Celular, de_Email, id_Sexo, fh_Nacimiento, fh_Ingreso, nu_Edad, id_Sangre, de_Religion,  de_Ocupacion, nb_Emergencia, fh_Ingreso, nu_Emergencia, de_Estado_civil, de_Otros_datos   from pacientes WHERE id_doctor=$id_doctor and id_paciente=$id_paciente";
+if(!isset($_SESSION)) {
+  session_start();
+}
 
-  $query = $pdo->prepare($sql);
-  $query->execute();
+$id_paciente=$_SESSION['id_pac_get'];
+
+      $sql = "SELECT fl_File, nb_Paciente, nu_Telefono, nu_Celular, de_Email, id_Sexo, fh_Nacimiento, fh_Ingreso, nu_Edad, id_Sangre, de_Religion,  de_Ocupacion, nb_Emergencia, fh_Ingreso, nu_Emergencia, de_Estado_civil, de_Otros_datos   from pacientes WHERE id_doctor=$id_doctor and id_paciente=$id_paciente";
+
+      $query = $pdo->prepare($sql);
+      try {
+        $query->execute();  
+    } catch (PDOException $e) {
+        echo 'Falló la conexión: ' . $e->getMessage();
+        echo $sql;
+        die();
+    } 
+  
   $list = $query->fetchAll();
 	foreach ($list as $filas_pac) 
   {
