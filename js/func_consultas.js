@@ -486,7 +486,7 @@ function calcularEdad()
                     $('#ant_alergicos').val($('#ant_alergicos').val()+ ('\n') + data.listado);
                     $("#tabla_res_alergias").html("");
                     $("#add_ant_alergicos").val("");
-                    $("#add_ant_alergicos").focus("");
+                    $("#add_ant_alergicos").focus(""); 
            }
        });
     }

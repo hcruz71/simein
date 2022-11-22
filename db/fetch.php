@@ -15,7 +15,7 @@
      $query = $pdo->prepare($sql);
      $query->execute();
      $row = $query->fetchAll();
-     echo json_encode($row);  
+     echo json_encode($row[0]);  
  } 
 
   if(isset($_POST["select"]))  
@@ -24,7 +24,7 @@
      $query = $pdo->prepare($sql);
      $query->execute();
      $row_hc = $query->fetchAll();
-     echo json_encode($row_hc); 
+     echo json_encode($row_hc[0]); 
  }
 
    if(isset($_POST["id_pac_cita"]))  
@@ -34,7 +34,7 @@
      $query = $pdo->prepare($sql);
      $query->execute();
      $row_hc = $query->fetchAll();
-     echo json_encode($row_hc); 
+     echo json_encode($row_hc[0]); 
  }
 
     if(isset($_POST["id_asistente"]))  
@@ -44,7 +44,7 @@
      $query = $pdo->prepare($sql);
      $query->execute();
      $row_hc = $query->fetchAll();
-     echo json_encode($row_hc);  
+     echo json_encode($row_hc[0]);  
  }
 
      if(isset($_POST["id_delete"]))  
@@ -81,7 +81,7 @@ if(isset($_POST["id_dx"]))
      $query = $pdo->prepare($sql);
      $query->execute();
      $row_hc = $query->fetchAll();
-     echo json_encode($row_hc);  
+     echo json_encode($row_hc[0]);  
  }
 
  if(isset($_POST["id_gab"]))  
@@ -90,7 +90,7 @@ if(isset($_POST["id_dx"]))
      $query = $pdo->prepare($sql);
      $query->execute();
      $row_hc = $query->fetchAll();
-     echo json_encode($row_hc);   
+     echo json_encode($row_hc[0]);   
  }
 
      if(isset($_POST["id_med"]))  
@@ -99,7 +99,7 @@ if(isset($_POST["id_dx"]))
      $query = $pdo->prepare($sql);
      $query->execute();
      $row_hc = $query->fetchAll();
-     echo json_encode($row_hc);  
+     echo json_encode($row_hc[0]);  
  }
 
 
@@ -144,7 +144,7 @@ if(isset($_POST["delete_consulta"]))
      $query = $pdo->prepare($sql);
      $query->execute();
      $row_hc = $query->fetchAll();
-     echo json_encode($row_hc);   
+     echo json_encode($row_hc[0]);   
  }
 
     if(isset($_POST["id_template"]))  
@@ -153,7 +153,7 @@ if(isset($_POST["delete_consulta"]))
      $query = $pdo->prepare($sql);
      $query->execute();
      $row_hc = $query->fetchAll();
-     echo json_encode($row_hc);    
+     echo json_encode($row_hc[0]);    
  }
 
     if(isset($_POST["id_arc_img"]))  
@@ -162,7 +162,7 @@ if(isset($_POST["delete_consulta"]))
      $query = $pdo->prepare($sql);
      $query->execute();
      $row_hc = $query->fetchAll();
-     echo json_encode($row_hc);   
+     echo json_encode($row_hc[0]);   
  }
 
     if(isset($_POST["id_delete_receta"]))  
@@ -181,7 +181,7 @@ if(isset($_POST["delete_consulta"]))
      $query = $pdo->prepare($sql);
      $query->execute();
      $row_hc = $query->fetchAll();
-     echo json_encode($row_hc);   
+     echo json_encode($row_hc[0]);   
  }
 
       if(isset($_POST["load_doc"]))  
@@ -190,6 +190,6 @@ if(isset($_POST["delete_consulta"]))
      $query = $pdo->prepare($sql);
      $query->execute();
      $row_hc = $query->fetchAll();
-     echo json_encode($row_hc);  
+     echo json_encode($row_hc[0]);  
  }
  ?>

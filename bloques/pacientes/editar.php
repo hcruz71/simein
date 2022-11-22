@@ -32,19 +32,31 @@
   $query = $pdo->prepare($sql);
   $query->execute();
   $list = $query->fetchAll();
-  foreach ($list as $filas_fisco) 
-  //while($filas_fisco=mysql_fetch_assoc($resultado_fisco))
-  {
-    $rfc=$filas_fisco['RFC'];
-    $razon_social=$filas_fisco['razon_social'];
-    $domicilio=$filas_fisco['domicilio'];
-    $colonia=$filas_fisco['colonia'];
-    $estado=$filas_fisco['estado'];
-    $municipio=$filas_fisco['municipio'];
-    $cp=$filas_fisco['cp'];
-    $correo=$filas_fisco['correo'];
-
-  }
+  $buscar= $query->rowCount();
+	if ($buscar > 0)
+    {
+		foreach ($list as $filas_fisco) 
+		{
+			$rfc=$filas_fisco['RFC'];
+			$razon_social=$filas_fisco['razon_social'];
+			$domicilio=$filas_fisco['domicilio'];
+			$colonia=$filas_fisco['colonia'];
+			$estado=$filas_fisco['estado'];
+			$municipio=$filas_fisco['municipio'];
+			$cp=$filas_fisco['cp'];
+			$correo=$filas_fisco['correo'];
+  		}
+	} else {
+		$rfc="";
+		$razon_social="";
+		$domicilio="";
+		$colonia="";
+		$estado="";
+		$municipio="";
+		$cp="";
+		$correo="";
+	}
+  
 ?> 
 <div class="col-md-12">
 	<form id="form_editar_pac">
