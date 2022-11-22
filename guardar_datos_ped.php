@@ -24,7 +24,9 @@
         $semanas=$_POST['semanas'];
         $diagnostico=$_POST['txt_diagnosticos'];
         $temperatura=$_POST['temperatura'];
-        $fecha=date('y-m-d');
+        //$fecha=date('y-m-d');
+        $date = new DateTime("now", new DateTimeZone('America/Mazatlan') );
+        $fecha = $date->format('Y-m-d');
         $formato_p=$_POST['formato_p'];
 
             $sql = "SELECT * FROM pacientes where id_doctor=$id_doctor and id_Paciente=$id_pac_get";

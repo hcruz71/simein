@@ -39,8 +39,9 @@
         $semanas=$_POST['semanas'];
         $diagnostico=$_POST['txt_diagnosticos'];
         $temperatura=$_POST['temperatura'];
-        $fecha=date('y-m-d');
-        
+        //$fecha=date('y-m-d');
+        $date = new DateTime("now", new DateTimeZone('America/Mazatlan') );
+        $fecha = $date->format('Y-m-d');
 
         if($_POST['id_historial']==""){
 
@@ -90,7 +91,9 @@
         $pass_asistente=$_POST['pass_asistente'];
         $id_antecedente_asistente=$_POST['id_antecedente_asistente'];
         $id_historial_asistente=$_POST['id_historial_asistente'];
-        $fecha=date('y-m-d');
+        //$fecha=date('y-m-d');
+        $date = new DateTime("now", new DateTimeZone('America/Mazatlan') );
+        $fecha = $date->format('Y-m-d');
 
         if ($_POST['id_asistente']=="") {
 
@@ -166,7 +169,9 @@
         $concepto=$_POST['concept'];
         $total=$_POST['total_concept'];
         $id_pac_get=$_SESSION['id_pac_get'];
-        $fecha=date('y-m-d');
+        //$fecha=date('y-m-d');
+        $date = new DateTime("now", new DateTimeZone('America/Mazatlan') );
+        $fecha = $date->format('Y-m-d');
 
         $sql="INSERT INTO honorarios(id_doctor, id_paciente, fecha, concepto, total, activo) values ('$id_doctor', '$id_pac_get', '$fecha', '$concepto', '$total', '1')";
         $query = $pdo->prepare($sql);

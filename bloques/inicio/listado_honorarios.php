@@ -27,7 +27,9 @@
 												</thead>
 												<tbody style="width: 100%;">
 		                                            <?php 
-		                                            $fecha= date("Y-m-d");
+                                                    $date = new DateTime("now", new DateTimeZone('America/Mazatlan') );
+                                                    $fecha = $date->format('Y-m-d');
+                                                    
                                                     $sql= "SELECT * FROM honorarios AS A INNER JOIN pacientes AS P ON (A.id_doctor = P.id_doctor) AND (A.id_Paciente = P.id_Paciente) WHERE A.id_doctor=$id_doctor and A.activo=1 and A.fecha LIKE '%".$fecha."%' ORDER BY A.fecha ASC";
                                                     $query = $pdo->prepare($sql);
                                                     try {
@@ -65,7 +67,9 @@
                                 		</tbody>
 									</table>
                                     <?php 
-                                                    $fecha= date("Y-m-d");
+                                                    
+                                                    $date = new DateTime("now", new DateTimeZone('America/Mazatlan') );
+                                                    $fecha = $date->format('Y-m-d');
 
                                                     $sql="SELECT SUM(total) AS total FROM honorarios WHERE id_doctor=$id_doctor and activo=1 and fecha LIKE '%".$fecha."%'";
                                                     $query = $pdo->prepare($sql);

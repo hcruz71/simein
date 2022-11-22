@@ -17,7 +17,9 @@
   $celular_repre=$_POST['celular_repre'];
   $correo_repre=$_POST['correo_repre'];
   $domicilio_repre=$_POST['domicilio_repre'];
-  $fecha=date('Y-m-d');
+  //$fecha=date('Y-m-d');
+  $date = new DateTime("now", new DateTimeZone('America/Mazatlan') );
+  $fecha = $date->format('Y-m-d');
 
   
   $sql="SELECT MAX(id_usuario) FROM usuarios";
@@ -55,7 +57,9 @@
   $nu_cEsp=$_POST['nu_cEsp'];
   $nu_cProf=$_POST['nu_cProf'];
   $id_doctor_add=$_POST['id_doctor_add'];
-  $fecha=date('y-m-d');
+  //$fecha=date('y-m-d');
+  $date = new DateTime("now", new DateTimeZone('America/Mazatlan') );
+  $fecha = $date->format('Y-m-d');
 
     if ($id_doctor_add=="") {
       $resent_max="SELECT MAX(id_usuario) FROM usuarios";

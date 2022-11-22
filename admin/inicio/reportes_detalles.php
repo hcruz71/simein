@@ -482,7 +482,9 @@
                       <label for="">Especialidad:</label>
                       <select name="id_especialidad" id="id_especialidad" class="form-control">
                         <?php 
-                        $fecha= date("y-m-d");
+                        
+                        $date = new DateTime("now", new DateTimeZone('America/Mazatlan') );
+                        $fecha = $date->format('Y-m-d');
                         $id_coordinador=$_SESSION['id_usuario'];
                         $sql1="SELECT * FROM especialidades where sn_activo=1";
                           $result1=mysql_query($sql1);

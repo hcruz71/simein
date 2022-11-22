@@ -235,5 +235,5 @@ $('#btn_editar_pac').click(function(e){
     });
 
     return false;
-    });
+    })
 

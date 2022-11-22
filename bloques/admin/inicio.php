@@ -16,8 +16,10 @@
                                         <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
                                             <div class="card-body">
                                             <?php 
-                                            $fecha= date("Y-m-d");
-
+                                        
+                                            $date = new DateTime("now", new DateTimeZone('America/Mazatlan') );
+                                            $fecha = $date->format('Y-m-d');
+                              
                                             $sql="SELECT * FROM agenda AS A INNER JOIN pacientes AS P ON (A.id_doctor = P.id_doctor) AND (A.id_Paciente = P.id_Paciente) WHERE A.id_doctor=$id_doctor and A.START LIKE '%".$fecha."%' ORDER BY A.start ASC";
                                             $query = $pdo->prepare($sql);
                                             $query->execute();

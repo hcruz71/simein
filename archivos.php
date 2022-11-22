@@ -44,7 +44,9 @@
         $id_doctor=$_SESSION['id_usuario'];
         $id_pac_get=$_SESSION['id_pac_get'];
         $archivo=$_POST['datos'];
-        $fecha=date('Y-m-d');
+        //$fecha=date('Y-m-d');
+        $date = new DateTime("now", new DateTimeZone('America/Mazatlan') );
+        $fecha = $date->format('Y-m-d');
         $sql="INSERT INTO archivos(id_doctor, id_paciente, archivo, id_tipo, activo, fecha) values ('$id_doctor', '$id_pac_get', '$archivo', '1', '1', '$fecha')";
         $query = $pdo->prepare($sql);
         $query->execute(); 
@@ -57,7 +59,9 @@
         $id_doctor=$_SESSION['id_usuario'];
         $id_pac_get=$_SESSION['id_pac_get'];
         $archivo=$_POST['documentos'];
-        $fecha=date('Y-m-d');
+        //$fecha=date('Y-m-d');
+        $date = new DateTime("now", new DateTimeZone('America/Mazatlan') );
+        $fecha = $date->format('Y-m-d');
         $sql="INSERT INTO archivos(id_doctor, id_paciente, archivo, id_tipo, activo, fecha) values ('$id_doctor', '$id_pac_get', '$archivo', '2', '1', '$fecha')";
         $query = $pdo->prepare($sql);
         $query->execute(); 

@@ -11,7 +11,8 @@
     //DATOS GENERALES
     $file=$_POST['foto_pac'];
     $nb_Paciente=$_POST['nb_Paciente'];
-    $fh_Ingreso=date('Y-m-d');
+    $date = new DateTime("now", new DateTimeZone('America/Mazatlan') );
+    $fh_Ingreso = $date->format('Y-m-d');
     $fh_Nacimiento=$_POST['fh_Nacimiento'];
     $nu_Edad=$_POST['nu_Edad'];
     $id_Sexo=$_POST['id_Sexo'];

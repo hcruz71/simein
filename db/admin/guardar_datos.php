@@ -23,7 +23,8 @@
     $celular_repre=$_POST['celular_repre'];
     $correo_repre=$_POST['correo_repre'];
     $domicilio_repre=$_POST['domicilio_repre'];
-    $fecha=date('Y-m-d');
+    $date = new DateTime("now", new DateTimeZone('America/Mazatlan') );
+    $fecha = $date->format('Y-m-d');
 
     //Insert a usuarios
     try {
@@ -68,7 +69,8 @@
   $nu_cEsp=$_POST['nu_cEsp'];
   $nu_cProf=$_POST['nu_cProf'];
   $id_doctor_add=$_POST['id_doctor_add'];
-  $fecha=date('Y-m-d');
+  $date = new DateTime("now", new DateTimeZone('America/Mazatlan') );
+  $fecha = $date->format('Y-m-d');
 
   $sql="INSERT INTO usuarios(id_usuario, usuario, nb_usuario, pw_usuario, rol, fecha_ing, id_asesor, sn_activo, id_antecedentes, id_historial) VALUES ('$row1', '$nombre_doctor', '$correo_doctor', '123', '1', '$fecha', '$id_coordinador', '1', '1', '1')";
   try{
