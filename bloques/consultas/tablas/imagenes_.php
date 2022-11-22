@@ -13,8 +13,11 @@
 			session_start();
 			$id_doctor=$_SESSION['id_usuario'];
 			$id_pac_get=$_SESSION['id_pac_get'];
-            $sql=mysql_query("SELECT * FROM archivos where id_doctor=$id_doctor and id_paciente=$id_pac_get and id_tipo=1");
-            while($res=mysql_fetch_assoc($sql)){       
+            $sql="SELECT * FROM archivos where id_doctor=$id_doctor and id_paciente=$id_pac_get and id_tipo=1";
+			$query = $pdo->prepare($sql);
+			$query->execute();
+			$list = $query->fetchAll();
+			foreach ($list as $res) {      
             ?>
                                 
 			<tr class="btn-gris">

@@ -376,7 +376,7 @@ $id_doctor=$_SESSION['id_usuario'];
                         <?php 
                         $id_paciente=$_SESSION['id_pac_get'];
                         $id_doctor=$_SESSION['id_usuario'];
-                        $sql=mysql_query("SELECT * FROM historial_clinico where id_doctor=$id_doctor and id_paciente=$id_paciente and activo=1");
+                        $sql="SELECT * FROM historial_clinico where id_doctor=$id_doctor and id_paciente=$id_paciente and activo=1";
                         $query = $pdo->prepare($sql);
                         $query->execute();
                         $list = $query->fetchAll();

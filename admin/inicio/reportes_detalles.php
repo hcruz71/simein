@@ -6,8 +6,11 @@
 
           <?php 
             $id_representante=$_GET['id_Representante'];
-            $sql=mysql_query("SELECT usuario FROM usuarios where id_usuario=$id_representante");
-              while($res=mysql_fetch_assoc($sql)){  
+            $sql="SELECT usuario FROM usuarios where id_usuario=$id_representante";
+            $query = $pdo->prepare($sql);
+            $query->execute();
+            $list = $query->fetchAll();
+            foreach ($list as $res) {
              ?>
               <h3><?php 
               echo $res['usuario'];?></h3>
@@ -27,8 +30,11 @@
       $primerdia= $fecha->format('Y/m/d');
       $fecha->modify('last day of this month');
       $ultimodia= $fecha->format('Y/m/d');
-      $sql=mysql_query("SELECT SUM(total) AS total FROM venta_expediente where id_asesor=$id_representante and metodo=2 and fecha_venta Between '$primerdia' and '$ultimodia'");
-        while($res=mysql_fetch_assoc($sql)){  
+      $sql="SELECT SUM(total) AS total FROM venta_expediente where id_asesor=$id_representante and metodo=2 and fecha_venta Between '$primerdia' and '$ultimodia'";
+      $query = $pdo->prepare($sql);
+      $query->execute();
+      $list = $query->fetchAll();
+      foreach ($list as $res) {
     ?>
 
     <div class="col-md-3">
@@ -88,8 +94,12 @@
       $fecha->modify('last day of this month');
       $ultimodia= $fecha->format('Y/m/d');
 
-      $sql=mysql_query("SELECT count(id_coordinador) AS total FROM venta_expediente where id_asesor=$id_representante and metodo=2 and fecha_venta Between '$primerdia' and '$ultimodia'");
-        while($res=mysql_fetch_assoc($sql)){  
+      $sql="SELECT count(id_coordinador) AS total FROM venta_expediente where id_asesor=$id_representante and metodo=2 and fecha_venta Between '$primerdia' and '$ultimodia'";
+      $query = $pdo->prepare($sql);
+
+      $query->execute();
+      $list = $query->fetchAll();
+      foreach ($list as $res) {
     ?>
     <div class="col-md-3">
         <div class="page-header">
@@ -126,8 +136,11 @@
                       $fecha->modify('last day of this month');
                       $ultimodia= $fecha->format('Y/m/d');
 
-                      $sql=mysql_query("SELECT count(id_coordinador) AS total FROM venta_expediente where id_asesor=$id_representante and metodo=1");
-                        while($res=mysql_fetch_assoc($sql)){  
+                      $sql="SELECT count(id_coordinador) AS total FROM venta_expediente where id_asesor=$id_representante and metodo=1";
+                      $query = $pdo->prepare($sql);
+                      $query->execute();
+                      $list = $query->fetchAll();
+                      foreach ($list as $res) {
                        ?>
                         <h1><?php 
                         echo $res['total'];?><label></label></h1>
@@ -155,8 +168,11 @@
                       $fecha->modify('last day of this month');
                       $ultimodia= $fecha->format('Y/m/d');
 
-                      $sql=mysql_query("SELECT count(id_coordinador) AS total FROM venta_expediente where id_asesor=$id_representante and metodo=2");
-                        while($res=mysql_fetch_assoc($sql)){  
+                      $sql="SELECT count(id_coordinador) AS total FROM venta_expediente where id_asesor=$id_representante and metodo=2";
+                      $query = $pdo->prepare($sql);
+                      $query->execute();
+                      $list = $query->fetchAll();
+                      foreach ($list as $res) {
                        ?>
                         <h1><?php 
                         echo $res['total'];?><label></label></h1>
@@ -212,8 +228,10 @@
                                             <?php 
                                             $id_representante=$_GET['id_Representante'];
                                             $sql="SELECT * FROM agenda AS A INNER JOIN pacientes AS P ON (A.id_doctor = P.id_doctor) AND (A.id_Paciente = P.id_Paciente) WHERE A.id_doctor=$id_representante GROUP BY A.status ASC";
-                                              $result=mysql_query($sql);
-                                              while($ver=mysql_fetch_assoc($result)){
+                                            $query = $pdo->prepare($sql);
+                                            $query->execute();
+                                            $list = $query->fetchAll();
+                                            foreach ($list as $ver) {
 
                                              ?>
                                              <?php 
@@ -245,9 +263,12 @@
                                                         <?php 
                                                           $id_representante=$_GET['id_Representante'];
                                                           $status=$ver['status'];
-                                                          $sql1="SELECT count(id) AS total FROM agenda WHERE status='$status' AND id_doctor=$id_representante GROUP BY status";
-                                                          $result1=mysql_query($sql1);
-                                                          while($ver1=mysql_fetch_assoc($result1)){
+                                                          $sql="SELECT count(id) AS total FROM agenda WHERE status='$status' AND id_doctor=$id_representante GROUP BY status";
+                                                          $query = $pdo->prepare($sql);
+
+                                                          $query->execute();
+                                                          $list = $query->fetchAll();
+                                                          foreach ($list as $ver1) {
 
                                                           echo $ver1['total']; 
                                                         } 
@@ -313,8 +334,10 @@
                                         <?php 
                                         $id_coordinador=$_SESSION['id_usuario'];
                                         $sql="SELECT * FROM doctor where id_asesor=$id_representante";
-                                          $result=mysql_query($sql);
-                                          while($ver=mysql_fetch_assoc($result)){
+                                        $query = $pdo->prepare($sql);
+                                        $query->execute();
+                                        $list = $query->fetchAll();
+                                        foreach ($list as $ver) {
                                          ?>
                                              <tr class="btn-gris">
                                                   <td><img src="<?php echo $ver['prefil'] ?>" class="img-responsive" style="width: 50px; border-radius: 50%"></td>
@@ -486,9 +509,11 @@
                         $date = new DateTime("now", new DateTimeZone('America/Mazatlan') );
                         $fecha = $date->format('Y-m-d');
                         $id_coordinador=$_SESSION['id_usuario'];
-                        $sql1="SELECT * FROM especialidades where sn_activo=1";
-                          $result1=mysql_query($sql1);
-                          while($ver1=mysql_fetch_assoc($result1)){
+                        $sql="SELECT * FROM especialidades where sn_activo=1";
+                        $query = $pdo->prepare($sql);
+                        $query->execute();
+                        $list = $query->fetchAll();
+                        foreach ($list as $ver1) {
                             ?>
 
                           <option value="<?php echo $ver1['id_especialidad']; ?>"><?php echo $ver1['de_especialidad']; ?></option>

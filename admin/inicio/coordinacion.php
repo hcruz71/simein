@@ -26,8 +26,11 @@
                       $fecha->modify('last day of this month');
                       $ultimodia= $fecha->format('Y/m/d');
 
-                      $sql=mysql_query("SELECT SUM(total) AS total FROM venta_expediente where id_coordinador=$id_doctor and metodo=2 and fecha_venta Between '$primerdia' and '$ultimodia'");
-                        while($res=mysql_fetch_assoc($sql)){  
+                      $sql="SELECT SUM(total) AS total FROM venta_expediente where id_coordinador=$id_doctor and metodo=2 and fecha_venta Between '$primerdia' and '$ultimodia'";
+                      $query = $pdo->prepare($sql);
+                          $query->execute();
+                          $list = $query->fetchAll();
+                          foreach ($list as $res) { 
                        ?>
                         <h2><i class="fa fa-dollar-sign"></i><?php 
                         echo number_format ( $res['total'] );?><label>.00</label></h2>
@@ -54,8 +57,11 @@
                       $fecha->modify('last day of this month');
                       $ultimodia= $fecha->format('Y/m/d');
 
-                      $sql=mysql_query("SELECT count(id_coordinador) AS total FROM venta_expediente where id_coordinador=$id_doctor and metodo=2 and fecha_venta Between '$primerdia' and '$ultimodia'");
-                        while($res=mysql_fetch_assoc($sql)){  
+                      $sql="SELECT count(id_coordinador) AS total FROM venta_expediente where id_coordinador=$id_doctor and metodo=2 and fecha_venta Between '$primerdia' and '$ultimodia'";
+                      $query = $pdo->prepare($sql);
+                          $query->execute();
+                          $list = $query->fetchAll();
+                          foreach ($list as $res) {
                        ?>
                         <h1><?php 
                         echo $res['total'];?><label></label></h1>
@@ -79,8 +85,11 @@
                     </div>
                     <div class="card-body" style="text-align: center;">
                         <?php
-                        $sql=mysql_query("SELECT count(id_usuario) AS total FROM usuarios where id_asesor=$id_doctor and rol=4");
-                        while($res=mysql_fetch_assoc($sql)){  
+                        $sql="SELECT count(id_usuario) AS total FROM usuarios where id_asesor=$id_doctor and rol=4";
+                        $query = $pdo->prepare($sql);
+                          $query->execute();
+                          $list = $query->fetchAll();
+                          foreach ($list as $res) {
                         
                        ?>
                         <h1><?php echo $res['total']; ?></h1>
@@ -109,8 +118,11 @@
                       $fecha->modify('last day of this month');
                       $ultimodia= $fecha->format('Y/m/d');
 
-                      $sql=mysql_query("SELECT count(id_coordinador) AS total FROM venta_expediente where id_coordinador=$id_doctor and metodo=1");
-                        while($res=mysql_fetch_assoc($sql)){  
+                      $sql="SELECT count(id_coordinador) AS total FROM venta_expediente where id_coordinador=$id_doctor and metodo=1";
+                      $query = $pdo->prepare($sql);
+                          $query->execute();
+                          $list = $query->fetchAll();
+                          foreach ($list as $res) {
                        ?>
                         <h1><?php 
                         echo $res['total'];?><label></label></h1>
@@ -171,8 +183,10 @@
                                         $fecha = $date->format('Y-m-d');
                                         $id_coordinador=$_SESSION['id_usuario'];
                                         $sql="SELECT * FROM doctor where id_asesor=$id_coordinador and rol=4 ";
-                                          $result=mysql_query($sql);
-                                          while($ver=mysql_fetch_assoc($result)){
+                                        $query = $pdo->prepare($sql);
+                                        $query->execute();
+                                        $list = $query->fetchAll();
+                                        foreach ($list as $ver) {
                                          ?>
                                              <tr class="btn-gris">
                                     <td><img src="<?php echo $ver['prefil'] ?>" class="img-responsive" style="width: 50px; border-radius: 50%"></td>
@@ -241,8 +255,10 @@
                                         $fecha = $date->format('Y-m-d');
                                         $id_coordinador=$_SESSION['id_usuario'];
                                         $sql="SELECT * FROM doctor where id_asesor=$id_coordinador and rol=1";
-                                          $result=mysql_query($sql);
-                                          while($ver=mysql_fetch_assoc($result)){
+                                        $query = $pdo->prepare($sql);
+                                        $query->execute();
+                                        $list = $query->fetchAll();
+                                        foreach ($list as $ver) {
                                          ?>
                                              <tr class="btn-gris">
                                                   <td><img src="<?php echo $ver['prefil'] ?>" class="img-responsive" style="width: 50px; border-radius: 50%"></td>
@@ -476,9 +492,12 @@
                         $date = new DateTime("now", new DateTimeZone('America/Mazatlan') );
                         $fecha = $date->format('Y-m-d');
                         $id_coordinador=$_SESSION['id_usuario'];
-                        $sql1="SELECT * FROM especialidades where sn_activo=1";
-                          $result1=mysql_query($sql1);
-                          while($ver1=mysql_fetch_assoc($result1)){
+                        $sql="SELECT * FROM especialidades where sn_activo=1";
+                        $query = $pdo->prepare($sql);
+
+                          $query->execute();
+                          $list = $query->fetchAll();
+                          foreach ($list as $ver1) {
                             ?>
 
                           <option value="<?php echo $ver1['id_especialidad']; ?>"><?php echo $ver1['de_especialidad']; ?></option>

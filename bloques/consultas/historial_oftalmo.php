@@ -659,8 +659,11 @@ $id_doctor=$_SESSION['id_usuario'];
                         include '../../conexion.php';
                         $id_paciente=$_SESSION['id_pac_get'];
                             $id_doctor=$_SESSION['id_usuario'];
-                        $sql_fecha=mysql_query("SELECT * FROM historial_clinico where id_doctor=$id_doctor and id_paciente=$id_paciente and activo=1");
-                        while($res_fecha=mysql_fetch_assoc($sql_fecha)){
+                        $sql="SELECT * FROM historial_clinico where id_doctor=$id_doctor and id_paciente=$id_paciente and activo=1";
+                        $query = $pdo->prepare($sql);
+                        $query->execute();
+                        $list = $query->fetchAll();
+                        foreach ($list as $res_fecha) {
                         ?>
 
                         <tr>

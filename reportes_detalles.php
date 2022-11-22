@@ -51,9 +51,11 @@ $(document).ready(function(){
                     columns: [
                     <?php 
                         $id_paciente=$ver['id_Paciente'];
-                          $sentencia="SELECT count(id_doctor) AS total from historial_clinico WHERE id_doctor=1";
-                          $resultado=mysql_query($sentencia);
-                          while($filas=mysql_fetch_assoc($resultado))
+                          $sql="SELECT count(id_doctor) AS total from historial_clinico WHERE id_doctor=1";
+                          $query = $pdo->prepare($sql);
+                          $query->execute();
+                          $list = $query->fetchAll();
+                          foreach ($list as $filas) 
                           {
                         ?>
 

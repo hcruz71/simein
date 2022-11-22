@@ -30,10 +30,14 @@ session_start();
     $correo=$_POST['correo'];
 
 include '../../conexion.php';
-	$pad_up="update pacientes set fl_File='". $fl_File ."', nb_Paciente='$nb_Paciente', fh_Nacimiento='$fh_Nacimiento', nu_Edad='$nu_Edad', id_Sexo='$id_Sexo', de_Ocupacion='$de_Ocupacion', nu_Celular='$nu_Celular', de_Email='$de_Email', de_Otros_datos='$de_Otros_datos', de_Estado_civil='$de_Estado_civil', id_Sangre='$id_Sangre', de_Religion='$de_Religion', nb_Emergencia='$nb_Emergencia', nu_Emergencia='$nu_Emergencia', de_Domicilio='$de_Domicilio', id_Aseguradora='$id_Aseguradora' WHERE id_doctor='$id_doctor' and id_Paciente='$id_paciente'";
-	$resent=mysql_query($pad_up);
+if ( !isset($pdo) ) {
+    $pdo = connect(); 
+}
+	$sql="update pacientes set fl_File='". $fl_File ."', nb_Paciente='$nb_Paciente', fh_Nacimiento='$fh_Nacimiento', nu_Edad='$nu_Edad', id_Sexo='$id_Sexo', de_Ocupacion='$de_Ocupacion', nu_Celular='$nu_Celular', de_Email='$de_Email', de_Otros_datos='$de_Otros_datos', de_Estado_civil='$de_Estado_civil', id_Sangre='$id_Sangre', de_Religion='$de_Religion', nb_Emergencia='$nb_Emergencia', nu_Emergencia='$nu_Emergencia', de_Domicilio='$de_Domicilio', id_Aseguradora='$id_Aseguradora' WHERE id_doctor='$id_doctor' and id_Paciente='$id_paciente'";
+    $query = $pdo->prepare($sql);
+    $query->execute();
 
-	$up_datos_fiscales="update datos_fiscales set razon_social='$razon_social', RFC='$RFC', domicilio='$domicilio', colonia='$colonia', estado='$estado', municipio='$municipio', correo='$correo' WHERE id_doctor='$id_doctor' and id_Paciente='$id_paciente'";
-	$ejecutar_datos_fiscales=mysql_query($up_datos_fiscales);
-    echo $id_paciente;
+	$sql="update datos_fiscales set razon_social='$razon_social', RFC='$RFC', domicilio='$domicilio', colonia='$colonia', estado='$estado', municipio='$municipio', correo='$correo' WHERE id_doctor='$id_doctor' and id_Paciente='$id_paciente'";
+    $query = $pdo->prepare($sql);
+    $query->execute();
 ?>

@@ -16,8 +16,10 @@
             $id_doctor=$_POST['id_doctor'];
             $status=$_POST['status'];
             $sql="SELECT * FROM agenda AS A INNER JOIN pacientes AS P ON (A.id_doctor = P.id_doctor) AND (A.id_Paciente = P.id_Paciente) WHERE A.id_doctor=$id_doctor and status='$status'";
-              $result=mysql_query($sql);
-              while($ver=mysql_fetch_assoc($result)){
+            $query = $pdo->prepare($sql);
+            $query->execute();
+            $list = $query->fetchAll();
+            foreach ($list as $ver) {
 
              ?>
              <?php 

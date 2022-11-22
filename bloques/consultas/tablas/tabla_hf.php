@@ -4,10 +4,12 @@
 	session_start();
 	$id_doctor=$_SESSION['id_usuario'];
 	$id_pac_get=$_SESSION['id_pac_get'];
-  	$sentencia="SELECT * from listado where id_doctor=$id_doctor and id_paciente=$id_pac_get";
-  	$resultado=mysql_query($sentencia);
-  	while($filas=mysql_fetch_assoc($resultado))
-  	{
+  	$sql="SELECT * from listado where id_doctor=$id_doctor and id_paciente=$id_pac_get";
+	$query = $pdo->prepare($sql);
+	$query->execute();
+	$list = $query->fetchAll();
+	foreach ($list as $filas) 
+	{
   	?>
   	
   		<div class="col-md-11">
