@@ -5,17 +5,17 @@
 
 
 function calcular_edad($fecha){
-  /*$fecha_nac = new DateTime(date('Y-m-d',strtotime($fecha)));
+  $fecha_nac = new DateTime(date('Y-m-d',strtotime($fecha)));
   $fecha_hoy =  new DateTime(date('Y-m-d',time())); 
-  $edad = date_diff($fecha_hoy,$fecha_nac); */
-  $nacimiento = new DateTime($fecha);
+  $edad = date_diff($fecha_hoy,$fecha_nac); 
+  /*$nacimiento = new DateTime($fecha);
   $ahora = new DateTime(date("Y-m-d"));
   $diferencia = $ahora->diff($nacimiento);
-  return $diferencia->format("%y");
+  return $diferencia->format("%y");*/
 
 
 
-  //return $edad;
+  return $edad;
 }
 
   $sql = "SELECT fl_File, nb_Paciente, nu_Telefono, nu_Celular, de_Email, id_Sexo, fh_Nacimiento, fh_Ingreso, nu_Edad, id_Sangre, de_Religion,  de_Ocupacion, nb_Emergencia, fh_Ingreso, nu_Emergencia, de_Estado_civil, de_Otros_datos   from pacientes WHERE id_doctor=$id_doctor and id_paciente=$id_paciente";
