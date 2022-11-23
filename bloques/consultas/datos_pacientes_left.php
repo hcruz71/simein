@@ -16,8 +16,6 @@ function calcular_edad($fecha){
 if(!isset($_SESSION)) {
   session_start();
 }
-
-var_dump ($_GET);
 //$_SESSION['id_pac_get']=$_GET['id_Paciente'];
 //$id_paciente=$_GET['id_Paciente'];
 $id_paciente=$_SESSION['id_pac_get'];

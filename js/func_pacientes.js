@@ -213,7 +213,6 @@ $('#btn_editar_pac').click(function(e){
                         alert('shs');
                     }else{
                         //CORIGE MODAL
-
                        location.href='consultas_2.php?id_Paciente='+r;
                     }
             }
