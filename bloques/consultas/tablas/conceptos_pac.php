@@ -18,7 +18,7 @@
           $query = $pdo->prepare($sql);
           $query->execute();
           $list = $query->fetchAll();
-          foreach ($list as $row_pac) 
+          foreach ($list as $filas) 
         	{
         	?>
             <tr>

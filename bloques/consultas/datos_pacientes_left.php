@@ -1,5 +1,6 @@
 <?php 
  //error_reporting(0);
+ //header("Refresh:0");
 
 function calcular_edad($fecha){
  /* $fecha_nac = new DateTime(date('Y-m-d',strtotime($fecha)));
@@ -16,7 +17,11 @@ if(!isset($_SESSION)) {
   session_start();
 }
 
+var_dump ($_GET);
+//$_SESSION['id_pac_get']=$_GET['id_Paciente'];
+//$id_paciente=$_GET['id_Paciente'];
 $id_paciente=$_SESSION['id_pac_get'];
+
 
       $sql = "SELECT fl_File, nb_Paciente, nu_Telefono, nu_Celular, de_Email, id_Sexo, fh_Nacimiento, fh_Ingreso, nu_Edad, id_Sangre, de_Religion,  de_Ocupacion, nb_Emergencia, fh_Ingreso, nu_Emergencia, de_Estado_civil, de_Otros_datos   from pacientes WHERE id_doctor=$id_doctor and id_paciente=$id_paciente";
 

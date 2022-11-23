@@ -40,4 +40,8 @@ if ( !isset($pdo) ) {
 	$sql="update datos_fiscales set razon_social='$razon_social', RFC='$RFC', domicilio='$domicilio', colonia='$colonia', estado='$estado', municipio='$municipio', correo='$correo' WHERE id_doctor='$id_doctor' and id_Paciente='$id_paciente'";
     $query = $pdo->prepare($sql);
     $query->execute();
+
+    echo ($id_paciente);
+
+
 ?>

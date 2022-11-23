@@ -9,10 +9,9 @@
 }
 
 $_SESSION['id_pac_get']=$_GET['id_Paciente'];
+$id_paciente=$_SESSION['id_pac_get'];
 
-if ($id_paciente != $_GET['id_Paciente']){
-  $id_paciente=$_GET['id_Paciente'];
-}
+
   
 
  ?>
@@ -29,13 +28,13 @@ if ($id_paciente != $_GET['id_Paciente']){
         <!-- end navbar -->
 
         <!-- left sidebar -->
-        <?php include 'bloques/consultas/datos_pacientes_left.php' ?>
+        <?php         
+        include 'bloques/consultas/datos_pacientes_left.php' 
+        ?>
         <!-- end left sidebar -->
 <?php
 
-if(!isset($_SESSION)) {
-    session_start();
-}
+
 //utf8_decode($row['municipio'];
 
 $id_doctor=$_SESSION['id_usuario'];
