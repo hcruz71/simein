@@ -6,11 +6,11 @@
     session_start();
 }
 
-if (!isset($_SESSION['id_pac_get'])){
-  $_SESSION['id_pac_get']=$_GET['id_Paciente'];
-}
-  $id_paciente=$_GET['id_Paciente'];
+$_SESSION['id_pac_get']=$_GET['id_Paciente'];
 
+if ($id_paciente != $_GET['id_Paciente']){
+  $id_paciente=$_GET['id_Paciente'];
+}
   
 
  ?>
