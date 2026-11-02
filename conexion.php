@@ -1,31 +1,20 @@
 <?php
-/*
-$host = '3573lf.stackhero-network.com';
-$basededatos = 'simeindb';
-$usuario = 'root';
-$contraseña = 'kx3QtnkJ2Boz1zPiFc4CCEV2QheQ2oYq';
-
-$conexion = new mysqli($host, $usuario,$contraseña, $basededatos);
-if ($conexion -> connect_errno)
-{
-  die("Fallo la conexion:(".$conexion -> mysqli_connect_errno().")".$conexion-> mysqli_connect_error());
-}*/
-
-//Nueva conexion PHP 8.1.14
-if (!function_exists('connect')) { 
+// Conexion PDO. Credenciales en variables de entorno (Heroku config vars del add-on Stackhero).
+if (!function_exists('connect')) {
 function connect() {
-   $host = '3573lf.stackhero-network.com';
-    $basededatos = 'simeindb';
-    $userr = 'root';
-    $password = 'kx3QtnkJ2Boz1zPiFc4CCEV2QheQ2oYq';
+    $host = getenv('STACKHERO_MYSQL_HOST');
+    $port = getenv('STACKHERO_MYSQL_PORT');
+    $basededatos = getenv('DB_NAME') ?: 'simeindb';
+    $userr = getenv('DB_USER') ?: 'root';
+    $password = getenv('STACKHERO_MYSQL_ROOT_PASSWORD');
     $options = array(
-      PDO::MYSQL_ATTR_SSL_CA=>'isrgrootx1.pem',
+      PDO::MYSQL_ATTR_SSL_CA=>__DIR__.'/isrgrootx1.pem',
       PDO::MYSQL_ATTR_SSL_VERIFY_SERVER_CERT => true,
-      PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION, 
+      PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
       PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"
      );
 
-  return new PDO('mysql:host='.$host.';dbname='.$basededatos, $userr, $password, $options);
+  return new PDO('mysql:host='.$host.';port='.$port.';dbname='.$basededatos, $userr, $password, $options);
 
 }
 }

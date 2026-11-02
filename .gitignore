@@ -1,0 +1,11 @@
+# Credenciales y configuracion local
+.env
+.env.*
+!.env.example
+*.cnf
+x.sh
+
+# Dependencias y artefactos
+vendor/
+node_modules/
+.DS_Store

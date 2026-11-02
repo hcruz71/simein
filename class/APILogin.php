@@ -3,7 +3,9 @@ class Capirestlogin {
 
 	function loginAPI($sFuncion, $arrDatos){
 	//API URL
-	$url = 'https://simein.herokuapp.com/api/Login/'.$sFuncion.'/';
+	// Llamada interna al mismo dyno; APP_URL permite apuntar a otra URL si hace falta
+	$base = getenv('APP_URL') ?: 'http://127.0.0.1:'.(getenv('PORT') ?: '80');
+	$url = rtrim($base, '/').'/api/Login/'.$sFuncion.'/';
 
 	//API key
 	$apiKey = 'Ve5muByyKs54wpm62d73lHEwDnXKGiYH1v6G7GyE';
@@ -21,6 +23,11 @@ class Capirestlogin {
 	curl_setopt($ch, CURLOPT_POSTFIELDS, $arrDatos);
 
 	$result = curl_exec($ch);
+
+	// Diagnostico (sin API key ni datos del POST)
+	error_log(sprintf('[APILogin] url=%s http=%d errno=%d error=%s tiempo=%.3fs',
+		$url, curl_getinfo($ch, CURLINFO_HTTP_CODE), curl_errno($ch), curl_error($ch),
+		curl_getinfo($ch, CURLINFO_TOTAL_TIME)));
 
 	//close cURL resource
 	curl_close($ch);

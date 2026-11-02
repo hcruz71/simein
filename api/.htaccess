@@ -1,4 +1,6 @@
 Options FollowSymLinks
+# CodeIgniter en modo produccion (sin display_errors; evita avisos de PHP 8.2 dentro del JSON)
+SetEnv CI_ENV production
 <IfModule mod_rewrite.c>
 	RewriteEngine on
 
