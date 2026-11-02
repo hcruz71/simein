@@ -125,7 +125,8 @@
             if ($pass>0) {
                 if ($pass==$re_pass) {
                     $sentencia="update usuarios set pw_usuario='$re_pass' WHERE id='$id_pass'";
-                    $resent=mysqli_query($conexion,$sentencia);
+                    $query = $pdo->prepare($sentencia);
+                    $resent = $query->execute();
                     echo $resent;
                 }else{
                     echo "no coincide";

@@ -179,7 +179,6 @@
             $sql="update cat_honorarios set concepto='$concepto', total='$total' WHERE id='$id'";
             $query = $pdo->prepare($sql);
             $resent = $query->execute();
-            $resent=mysqli_query($conexion,$sentencia);
             echo "Update Concepto";
         }
     }

@@ -1,6 +1,6 @@
 <?php
 
-include '../conexion.php';
+include '../../conexion.php';
 if ( !isset($pdo) ) {
     $pdo = connect(); 
 }
@@ -100,11 +100,13 @@ if ( !isset($pdo) ) {
     
 
 
-    $sql = mysqli_query($conexion,"SELECT id_Paciente FROM pacientes WHERE id_doctor=$id_doctor and id_Paciente=(SELECT MAX(id_Paciente) FROM pacientes WHERE id_doctor=$id_doctor)");
+    $sql = "SELECT id_Paciente FROM pacientes WHERE id_doctor=$id_doctor and id_Paciente=(SELECT MAX(id_Paciente) FROM pacientes WHERE id_doctor=$id_doctor)";
     $query = $pdo->prepare($sql);
     $query->execute();
-    $row = $query->fetchAll();
-    $row1 =  $row['id_Paciente'] + 1;
+    $list = $query->fetchAll();
+    foreach ($list as $row) {
+        $row1 =  $row['id_Paciente'] + 1;
+    }
 
 
 	$sql="INSERT INTO pacientes(id_doctor, id_Paciente, fl_File, nb_Paciente, fh_Ingreso, fh_Nacimiento, nu_Edad, id_Sexo,de_Ocupacion, nu_Celular, de_Email, de_Otros_datos, de_Estado_civil, id_Sangre,de_Religion, nb_Emergencia, nu_Emergencia, de_Domicilio,id_Aseguradora,sn_Activo) VALUES ('$id_doctor','$row1','$file','$nb_Paciente', '$fh_Ingreso', '$fh_Nacimiento', '$nu_Edad', '$id_Sexo','$de_Ocupacion', '$nu_Celular', '$de_Email', '$de_Otros_datos', '$de_Estado_civil', '$id_Sangre','$de_Religion', '$nb_Emergencia', '$nu_Emergencia', '$de_Domicilio', '$id_Aseguradora', '1')";
