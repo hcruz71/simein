@@ -1,11 +1,13 @@
 <?php
 // Conexion mysqli (no se incluye en ningun archivo; candidata a eliminarse).
-// Credenciales en variables de entorno (Heroku config vars del add-on Stackhero).
-$host = getenv('STACKHERO_MYSQL_HOST');
-$port = (int) getenv('STACKHERO_MYSQL_PORT');
-$basededatos = getenv('DB_NAME') ?: 'simeindb';
-$usuario = getenv('DB_USER') ?: 'root';
-$contraseña = getenv('STACKHERO_MYSQL_ROOT_PASSWORD');
+// Servidor y credenciales salen de db_config.php (variables de entorno).
+require_once __DIR__.'/db_config.php';
+$db = simein_db_config();
+$host = $db['host'];
+$port = (int) $db['port'];
+$basededatos = $db['database'];
+$usuario = $db['user'];
+$contraseña = $db['password'];
 $flags = MYSQLI_CLIENT_SSL;
 
 $conexion  = mysqli_init();

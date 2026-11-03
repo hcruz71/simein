@@ -1,14 +1,16 @@
 <?php
-// Conexion PDO. Credenciales en variables de entorno (Heroku config vars del add-on Stackhero).
+// Conexion PDO. Servidor y credenciales salen de db_config.php (variables de entorno).
 // sql_mode no estricto por sesion: el codigo inserta '' y omite columnas NOT NULL
 // (agenda.id_clinica, fechas vacias), como lo aceptaba el servidor anterior.
+require_once __DIR__.'/db_config.php';
 if (!function_exists('connect')) {
 function connect() {
-    $host = getenv('STACKHERO_MYSQL_HOST');
-    $port = getenv('STACKHERO_MYSQL_PORT');
-    $basededatos = getenv('DB_NAME') ?: 'simeindb';
-    $userr = getenv('DB_USER') ?: 'root';
-    $password = getenv('STACKHERO_MYSQL_ROOT_PASSWORD');
+    $db = simein_db_config();
+    $host = $db['host'];
+    $port = $db['port'];
+    $basededatos = $db['database'];
+    $userr = $db['user'];
+    $password = $db['password'];
     $options = array(
       PDO::MYSQL_ATTR_SSL_CA=>__DIR__.'/isrgrootx1.pem',
       PDO::MYSQL_ATTR_SSL_VERIFY_SERVER_CERT => true,

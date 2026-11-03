@@ -71,16 +71,20 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 | the query builder class.
 */
 
+// Servidor y credenciales salen de db_config.php (variables de entorno), igual que conexion.php.
+require_once __DIR__.'/../../../db_config.php';
+$simein_db = simein_db_config();
+
 $active_group = 'default';
 $query_builder = TRUE;
 
 $db['default'] = array(
 	'dsn'	=> '',
-	'hostname' => getenv('STACKHERO_MYSQL_HOST'),
-	'port' => getenv('STACKHERO_MYSQL_PORT'),
-	'username' => getenv('DB_USER') ?: 'root',
-	'password' => getenv('STACKHERO_MYSQL_ROOT_PASSWORD'),
-	'database' => getenv('DB_NAME') ?: 'simeindb',
+	'hostname' => $simein_db['host'],
+	'port' => $simein_db['port'],
+	'username' => $simein_db['user'],
+	'password' => $simein_db['password'],
+	'database' => $simein_db['database'],
 	'dbdriver' => 'mysqli',
 	'dbprefix' => '',
 	'pconnect' => FALSE,
